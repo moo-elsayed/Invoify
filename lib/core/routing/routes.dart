@@ -1,0 +1,6 @@
+class Routes {
+  static const splashView = 'splashView';
+  static const onboardingView = 'onboardingView';
+  static const loginView = 'loginView';
+  static const registerView = 'registerView';
+}

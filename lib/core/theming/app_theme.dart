@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'app_palette.dart';
+
+class AppTheme {
+  AppTheme._();
+
+  // ☀️ Light Theme
+  static ThemeData get lightTheme => ThemeData(
+        brightness: Brightness.light,
+        primaryColor: AppPalette.primaryBlueLight,
+        scaffoldBackgroundColor: AppPalette.bgLight,
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppPalette.bgLight,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          iconTheme: IconThemeData(color: AppPalette.textMainLight),
+          titleTextStyle: TextStyle(
+            color: AppPalette.textMainLight,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppPalette.primaryBlueLight,
+          brightness: Brightness.light,
+          primary: AppPalette.primaryBlueLight,
+          surface: AppPalette.surfaceLight,
+          onSurface: AppPalette.textMainLight,
+        ),
+        dialogTheme: const DialogThemeData(
+          backgroundColor: AppPalette.surfaceLight,
+          surfaceTintColor: Colors.transparent,
+        ),
+      );
+
+  // 🌙 Dark Theme
+  static ThemeData get darkTheme => ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: AppPalette.primaryBlueDark,
+        scaffoldBackgroundColor: AppPalette.bgDark,
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppPalette.bgDark,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          iconTheme: IconThemeData(color: AppPalette.textMainDark),
+          titleTextStyle: TextStyle(
+            color: AppPalette.textMainDark,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppPalette.primaryBlueDark,
+          brightness: Brightness.dark,
+          primary: AppPalette.primaryBlueDark,
+          surface: AppPalette.surfaceDark,
+          onSurface: AppPalette.textMainDark,
+        ).copyWith(
+          surface: AppPalette.surfaceDark,
+          surfaceTint: Colors.transparent,
+        ),
+        dialogTheme: const DialogThemeData(
+          backgroundColor: AppPalette.surfaceDark,
+          surfaceTintColor: Colors.transparent,
+        ),
+      );
+}
