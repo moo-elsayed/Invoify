@@ -50,5 +50,16 @@
   "codeCannotBeEmpty": "Code cannot be empty",
   "codeShouldBeAtLeast6Digits": "Code should be at least 6 digits",
   "nationalIdCannotBeEmpty": "National ID cannot be empty",
-  "nationalIdMustBe14Digits": "National ID must be 14 digits"
+  "nationalIdMustBe14Digits": "National ID must be 14 digits",
+  "onboardingSkip": "Skip",
+  "skip": "Skip",
+  "next": "Next",
+  "getStarted": "Get Started",
+  "onboardingTitle1": "Create Invoices Effortlessly",
+  "onboardingDescription1": "Generate professional invoices for your clients in seconds and manage all their details in one smart place.",
+  "onboardingTitle2": "Seamless Online Payments",
+  "onboardingDescription2": "Send invoices instantly via email with secure payment links, allowing clients to pay with a single click.",
+  "onboardingTitle3": "Smart Financial Analytics",
+  "onboardingDescription3": "Track your monthly earnings and overdue payments with interactive charts designed to boost your business growth.",
+  "appTagline": "Smart Invoicing & Payment Management"
 }

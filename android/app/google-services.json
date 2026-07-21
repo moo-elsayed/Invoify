@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "982039013208",
+    "project_id": "invoify-7757d",
+    "storage_bucket": "invoify-7757d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982039013208:android:bb9f897815052b3443e72d",
+        "android_client_info": {
+          "package_name": "com.invoify.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPfT58kKnLrYTz8zNNKnGJhi0ghceH2jc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

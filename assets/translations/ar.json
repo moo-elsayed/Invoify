@@ -5,7 +5,6 @@
   "system": "حسب النظام",
   "light": "فاتح",
   "dark": "داكن",
-
   "noInternetConnection": "لا يوجد اتصال بالإنترنت",
   "unexpectedError": "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً",
   "unauthorizedError": "غير مصرح لك بالوصول",
@@ -21,7 +20,6 @@
   "userDisabled": "تم تعطيل هذا الحساب",
   "operationNotAllowed": "العملية غير مسموح بها حالياً",
   "cacheError": "حدث خطأ في حفظ أو جلب البيانات المحلية",
-
   "emailCannotBeEmpty": "البريد الإلكتروني لا يمكن أن يكون فارغاً",
   "enterAValidEmailAddress": "يرجى إدخال بريد إلكتروني صحيح",
   "requiredField": "هذا الحقل مطلوب",
@@ -50,5 +48,16 @@
   "codeCannotBeEmpty": "الكود لا يمكن أن يكون فارغاً",
   "codeShouldBeAtLeast6Digits": "يجب أن يتكون الكود من 6 أرقام على الأقل",
   "nationalIdCannotBeEmpty": "الرقم القومي لا يمكن أن يكون فارغاً",
-  "nationalIdMustBe14Digits": "الرقم القومي يجب أن يتكون من 14 رقماً"
+  "nationalIdMustBe14Digits": "الرقم القومي يجب أن يتكون من 14 رقماً",
+  "onboardingSkip": "تخطي",
+  "skip": "تخطي",
+  "next": "التالي",
+  "getStarted": "ابدأ الآن",
+  "onboardingTitle1": "أنشئ فواتيرك بسهولة",
+  "onboardingDescription1": "صمم فواتير احترافية لعملائك في ثوانٍ معدودة، وأدر بياناتهم في مكان واحد بذكاء.",
+  "onboardingTitle2": "دفع أونلاين وآلي",
+  "onboardingDescription2": "أرسل الفواتير فوراً عبر الإيميل مع رابط دفع مباشر وآمن يتيح لعملائك السداد بنقرة واحدة.",
+  "onboardingTitle3": "تقارير وتحليلات دقيقة",
+  "onboardingDescription3": "تتبع أرباحك الشهرية والفواتير المتأخرة عبر رسومات بيانية تفاعلية تساعدك على نمو عملك.",
+  "appTagline": "إدارة الفواتير والمدفوعات الذكية"
 }

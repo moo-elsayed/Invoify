@@ -69,4 +69,21 @@ abstract class AppStrings {
   static String get nationalIdCannotBeEmpty => 'nationalIdCannotBeEmpty'.tr();
   static String get nationalIdMustBe14Digits =>
       'nationalIdMustBe14Digits'.tr();
+
+  // Onboarding & Action Navigation
+  static String get skip => 'skip'.tr();
+  static String get onboardingSkip => 'onboardingSkip'.tr();
+  static String get next => 'next'.tr();
+  static String get getStarted => 'getStarted'.tr();
+  static String get onboardingTitle1 => 'onboardingTitle1'.tr();
+  static String get onboardingDescription1 => 'onboardingDescription1'.tr();
+  static String get onboardingDesc1 => 'onboardingDescription1'.tr();
+  static String get onboardingTitle2 => 'onboardingTitle2'.tr();
+  static String get onboardingDescription2 => 'onboardingDescription2'.tr();
+  static String get onboardingDesc2 => 'onboardingDescription2'.tr();
+  static String get onboardingTitle3 => 'onboardingTitle3'.tr();
+  static String get onboardingDescription3 => 'onboardingDescription3'.tr();
+  static String get onboardingDesc3 => 'onboardingDescription3'.tr();
+  static String get appTagline => 'appTagline'.tr();
 }
+

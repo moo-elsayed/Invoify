@@ -45,6 +45,9 @@ class AppTextStyles {
   static TextStyle get font14Bold =>
       GoogleFonts.cairo(fontSize: 14.sp, fontWeight: FontWeight.w700);
 
+  static TextStyle get font15Medium =>
+      GoogleFonts.cairo(fontSize: 15.sp, fontWeight: FontWeight.w500);
+
   static TextStyle get font15SemiBold =>
       GoogleFonts.cairo(fontSize: 15.sp, fontWeight: FontWeight.w600);
 
