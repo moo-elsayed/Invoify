@@ -19,6 +19,7 @@ abstract class AppStrings {
   static String get somethingWentWrong => 'somethingWentWrong'.tr();
   static String get userNotFound => 'userNotFound'.tr();
   static String get wrongPassword => 'wrongPassword'.tr();
+  static String get invalidCredential => 'invalidCredential'.tr();
   static String get emailAlreadyInUse => 'emailAlreadyInUse'.tr();
   static String get invalidEmail => 'invalidEmail'.tr();
   static String get tooManyRequests => 'tooManyRequests'.tr();
@@ -85,5 +86,33 @@ abstract class AppStrings {
   static String get onboardingDescription3 => 'onboardingDescription3'.tr();
   static String get onboardingDesc3 => 'onboardingDescription3'.tr();
   static String get appTagline => 'appTagline'.tr();
+
+  // Auth Strings
+  static String get login => 'login'.tr();
+  static String get email => 'email'.tr();
+  static String get password => 'password'.tr();
+  static String get forgotPassword => 'forgotPassword'.tr();
+  static String get dontHaveAccount => 'dontHaveAccount'.tr();
+  static String get createAnAccount => 'createAnAccount'.tr();
+  static String get or => 'or'.tr();
+  static String get signInWithGoogle => 'signInWithGoogle'.tr();
+  static String get newAccount => 'newAccount'.tr();
+  static String get fullName => 'fullName'.tr();
+  static String get register => 'register'.tr();
+  static String get alreadyHaveAnAccount => 'alreadyHaveAnAccount'.tr();
+  static String get passwordReset => 'passwordReset'.tr();
+  static String get sendEmailResetLink => 'sendEmailResetLink'.tr();
+  static String get sendPasswordResetLink => 'sendPasswordResetLink'.tr();
+  static String get emailSent => 'emailSent'.tr();
+  static String get emailSentToReset => 'emailSentToReset'.tr();
+  static String get emailCreated => 'emailCreated'.tr();
+  static String get emailSentToVerify => 'emailSentToVerify'.tr();
+  static String get youShouldAcceptTermsAndConditions =>
+      'youShouldAcceptTermsAndConditions'.tr();
+  static String get termsAndConditionsP1 => 'termsAndConditionsP1'.tr();
+  static String get termsAndConditionsP2 => 'termsAndConditionsP2'.tr();
+  static String get ok => 'ok'.tr();
+  static String get noUserFoundForThatEmail => 'noUserFoundForThatEmail'.tr();
+  static String get pleaseVerifyYourEmail => 'pleaseVerifyYourEmail'.tr();
 }
 

@@ -141,10 +141,11 @@ class _TextFormFieldHelperState extends State<TextFormFieldHelper> {
       textAlign: widget.textAlign,
       style:
           widget.style ??
-          AppTextStyles.font16Regular.copyWith(color: context.colors.mainText),
+          AppTextStyles.font14Regular.copyWith(color: context.colors.mainText),
       textDirection: _textDirection,
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
+        isDense: true,
         suffixText: widget.suffixText,
         suffixStyle: widget.suffixStyle,
         fillColor: widget.fillColor ?? context.colors.surface,
@@ -152,7 +153,7 @@ class _TextFormFieldHelperState extends State<TextFormFieldHelper> {
         hintText: widget.hint,
         hintStyle:
             widget.hintStyle ??
-            AppTextStyles.font16Regular.copyWith(color: context.colors.subText),
+            AppTextStyles.font14Regular.copyWith(color: context.colors.subText),
         errorMaxLines: 4,
         errorStyle: AppTextStyles.font12Regular.copyWith(
           color: context.colors.error,
@@ -160,29 +161,40 @@ class _TextFormFieldHelperState extends State<TextFormFieldHelper> {
         labelText: widget.labelText,
         labelStyle: widget.labelStyle,
         prefixIcon: widget.prefixIcon,
+        prefixIconConstraints: BoxConstraints(
+          minWidth: 36.w,
+          minHeight: 36.h,
+        ),
         prefix: widget.prefix,
+        suffixIconConstraints: BoxConstraints(
+          minWidth: 40.w,
+          minHeight: 36.h,
+        ),
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: _toggleObscureText,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) =>
-                          ScaleTransition(scale: animation, child: child),
-                  child: Icon(
-                    key: ValueKey<bool>(_obscureText),
-                    _obscureText
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
-                    color: context.colors.subText,
-                    size: 24.sp,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) =>
+                            ScaleTransition(scale: animation, child: child),
+                    child: Icon(
+                      key: ValueKey<bool>(_obscureText),
+                      _obscureText
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      color: context.colors.subText,
+                      size: 20.sp,
+                    ),
                   ),
                 ),
               )
             : widget.suffixWidget,
         contentPadding:
             widget.contentPadding ??
-            EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+            EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
 
         border: outlineInputBorder(
           color: widget.borderColor ?? context.colors.border,

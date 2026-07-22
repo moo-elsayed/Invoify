@@ -6,6 +6,7 @@ abstract class AppAssets {
 
   // Icons & SVGs
   static const String iconCancel = 'assets/svgs/icons/icon-cancel.svg';
+  static const String googleIcon = 'assets/svgs/icons/google_icon.svg';
 
   // Onboarding Animations (JSONs)
   static const String onboardingAnimation1 = 'assets/jsons/onboarding1.json';

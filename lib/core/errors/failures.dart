@@ -14,12 +14,14 @@ class ServerFailure extends Failure {
   const ServerFailure({required super.error});
 
   factory ServerFailure.fromException(Object exception) {
-    final String errorStr = exception.toString();
+    final String errorStr = exception.toString().toLowerCase();
 
-    if (errorStr.contains('user-not-found')) {
-      return ServerFailure(error: AppStrings.userNotFound);
-    } else if (errorStr.contains('wrong-password')) {
-      return ServerFailure(error: AppStrings.wrongPassword);
+    if (errorStr.contains('invalid-credential') ||
+        errorStr.contains('invalid_credential') ||
+        errorStr.contains('invalid-login-credentials') ||
+        errorStr.contains('wrong-password') ||
+        errorStr.contains('user-not-found')) {
+      return ServerFailure(error: AppStrings.invalidCredential);
     } else if (errorStr.contains('email-already-in-use')) {
       return ServerFailure(error: AppStrings.emailAlreadyInUse);
     } else if (errorStr.contains('invalid-email')) {
@@ -33,7 +35,7 @@ class ServerFailure extends Failure {
     } else if (errorStr.contains('operation-not-allowed')) {
       return ServerFailure(error: AppStrings.operationNotAllowed);
     } else if (errorStr.contains('network-request-failed') ||
-        errorStr.contains('SocketException')) {
+        errorStr.contains('socketexception')) {
       return ServerFailure(error: AppStrings.noInternetConnection);
     }
 

@@ -50,12 +50,28 @@ class CustomMaterialButton extends StatelessWidget {
               .copyWith(height: 1.2),
     );
 
+    final content = icon != null
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 8.w,
+            children: isTrailingIcon
+                ? [textWidget, icon!]
+                : [icon!, textWidget],
+          )
+        : textWidget;
+
+    final buttonColor = backgroundColor ?? context.colors.primary;
+
     return MaterialButton(
-      color: backgroundColor ?? context.colors.primary,
+      color: buttonColor,
+      disabledColor: buttonColor,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       minWidth: maxWidth ? double.infinity : null,
       elevation: 0,
+      disabledElevation: 0,
       highlightElevation: 0,
       focusElevation: 0,
       hoverElevation: 0,
@@ -65,22 +81,33 @@ class CustomMaterialButton extends StatelessWidget {
       ),
       padding:
           padding ?? EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-      onPressed: onPressed,
-      child: isLoading
-          ? CupertinoActivityIndicator(
-              color: loadingIndicatorColor ?? AppPalette.white,
-            )
-          : icon != null
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 8.w,
-              children: isTrailingIcon
-                  ? [textWidget, icon!]
-                  : [icon!, textWidget],
-            )
-          : textWidget,
+      onPressed: isLoading ? () {} : onPressed,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Visibility(
+            visible: !isLoading,
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            child: content,
+          ),
+          if (isLoading)
+            Positioned.fill(
+              child: Center(
+                child: SizedBox(
+                  width: 20.r,
+                  height: 20.r,
+                  child: FittedBox(
+                    child: CupertinoActivityIndicator(
+                      color: loadingIndicatorColor ?? AppPalette.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

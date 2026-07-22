@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'app_palette.dart';
 
@@ -33,6 +34,12 @@ class AppTheme {
           backgroundColor: AppPalette.surfaceLight,
           surfaceTintColor: Colors.transparent,
         ),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       );
 
   // 🌙 Dark Theme
@@ -66,6 +73,12 @@ class AppTheme {
         dialogTheme: const DialogThemeData(
           backgroundColor: AppPalette.surfaceDark,
           surfaceTintColor: Colors.transparent,
+        ),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
         ),
       );
 }

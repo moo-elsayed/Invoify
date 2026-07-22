@@ -12,7 +12,20 @@
           "package_name": "com.invoify.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "982039013208-bljo4h4q6jdd0rajsluksq6mhquivp1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.invoify.app",
+            "certificate_hash": "01c7d080d13fffc8a226489343ed171e53c1d70d"
+          }
+        },
+        {
+          "client_id": "982039013208-ksbp9fcpclaa3bnpm22o4k3p2araviim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBPfT58kKnLrYTz8zNNKnGJhi0ghceH2jc"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982039013208-ksbp9fcpclaa3bnpm22o4k3p2araviim.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982039013208-m7su870n2chnuivd6rht07amf2pmflo5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.invoify.app"
+              }
+            }
+          ]
         }
       }
     }
