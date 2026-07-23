@@ -5,7 +5,6 @@ import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/network/api_helper.dart';
 import 'package:invoify/core/network/network_response.dart';
 import 'package:invoify/features/auth/data/models/user_model.dart';
-import '../../../domain/entities/user_entity.dart';
 import 'auth_remote_data_source.dart';
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
@@ -20,7 +19,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   static const String _usersCollection = 'users';
 
   @override
-  Future<NetworkResponse<UserEntity>> createUserWithEmailAndPassword({
+  Future<NetworkResponse<UserModel>> createUserWithEmailAndPassword({
     required String email,
     required String password,
     required String username,
@@ -55,7 +54,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
       await user.sendEmailVerification();
       await _firebaseAuth.signOut();
 
-      return userModel.toUserEntity();
+      return userModel;
     } on FirebaseAuthException catch (e) {
       if (e.code != 'email-already-in-use') {
         await _firebaseAuth.currentUser?.delete();
@@ -68,7 +67,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   }, functionName: 'createUserWithEmailAndPassword');
 
   @override
-  Future<NetworkResponse<UserEntity>> signInWithEmailAndPassword({
+  Future<NetworkResponse<UserModel>> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async => ApiHelper.executeSafely(() async {
@@ -90,12 +89,12 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
       throw BusinessException(AppStrings.pleaseVerifyYourEmail);
     }
 
-    final userEntity = UserModel.fromFirebaseUser(updatedUser).toUserEntity();
-    return await _getOrUpdateUserFromDB(userEntity);
+    final userModel = UserModel.fromFirebaseUser(updatedUser);
+    return await _getOrUpdateUserFromDB(userModel);
   }, functionName: 'signInWithEmailAndPassword');
 
   @override
-  Future<NetworkResponse<UserEntity>> googleSignIn() async =>
+  Future<NetworkResponse<UserModel>> googleSignIn() async =>
       ApiHelper.executeSafely(() async {
         final googleProvider = GoogleAuthProvider();
         final userCredential = await _firebaseAuth.signInWithProvider(
@@ -107,8 +106,8 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
           throw BusinessException(AppStrings.unexpectedError);
         }
 
-        final userEntity = UserModel.fromFirebaseUser(user).toUserEntity();
-        return await _getOrUpdateUserFromDB(userEntity);
+        final userModel = UserModel.fromFirebaseUser(user);
+        return await _getOrUpdateUserFromDB(userModel);
       }, functionName: 'googleSignIn');
 
   @override
@@ -122,6 +121,19 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
       }, functionName: 'forgetPassword');
 
   @override
+  Future<NetworkResponse<UserModel>> getUserInfo(String uid) async =>
+      ApiHelper.executeSafely(() async {
+        final docSnapshot = await _firestore
+            .collection(_usersCollection)
+            .doc(uid)
+            .get();
+        if (!docSnapshot.exists || docSnapshot.data() == null) {
+          throw Exception('user-not-found');
+        }
+        return UserModel.fromJson(docSnapshot.data()!);
+      }, functionName: 'getUserInfo');
+
+  @override
   Future<NetworkResponse<void>> signOut() async =>
       ApiHelper.executeSafely(() async {
         await _firebaseAuth.signOut();
@@ -131,25 +143,24 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   // Private Helper Methods
   // -------------------------------------------------------------------
 
-  Future<UserEntity> _getOrUpdateUserFromDB(UserEntity user) async {
+  Future<UserModel> _getOrUpdateUserFromDB(UserModel userModel) async {
     final docSnapshot = await _firestore
         .collection(_usersCollection)
-        .doc(user.uid)
+        .doc(userModel.uid)
         .get();
 
     if (docSnapshot.exists && docSnapshot.data() != null) {
       final storedUserData = docSnapshot.data()!;
-      await _firestore.collection(_usersCollection).doc(user.uid).update({
-        'isVerified': user.isVerified,
+      await _firestore.collection(_usersCollection).doc(userModel.uid).update({
+        'isVerified': userModel.isVerified,
       });
-      return UserModel.fromJson(storedUserData).toUserEntity();
+      return UserModel.fromJson(storedUserData);
     } else {
-      final userModel = UserModel.fromUserEntity(user);
       await _firestore
           .collection(_usersCollection)
-          .doc(user.uid)
+          .doc(userModel.uid)
           .set(userModel.toJson());
-      return userModel.toUserEntity();
+      return userModel;
     }
   }
 

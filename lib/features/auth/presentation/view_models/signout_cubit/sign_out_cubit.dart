@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/core/network/network_response.dart';
+import 'package:invoify/features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
 import '../../../domain/use_cases/sign_out_use_case.dart';
 
 part 'sign_out_state.dart';
@@ -15,6 +17,7 @@ class SignOutCubit extends Cubit<SignOutState> {
     final result = await _signOutUseCase();
     switch (result) {
       case NetworkSuccess<void>():
+        await getIt<UserInfoCubit>().clearUserLocally();
         emit(SignOutSuccess());
       case NetworkFailure<void>():
         emit(SignOutFailure(result.error));

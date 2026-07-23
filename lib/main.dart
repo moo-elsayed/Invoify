@@ -1,16 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/helpers/app_logger.dart';
 import 'core/helpers/di.dart';
+import 'core/helpers/simple_bloc_observer.dart';
 import 'core/routing/app_router.dart';
 import 'firebase_options.dart';
 import 'invoify.dart';
 
 void main() async {
-  final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  final WidgetsBinding widgetsBinding =
+      WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Future.wait([
@@ -19,6 +22,8 @@ void main() async {
     setupGetIt(),
     ScreenUtil.ensureScreenSize(),
   ]);
+
+  Bloc.observer = SimpleBlocObserver();
 
   final appRouter = AppRouter();
 

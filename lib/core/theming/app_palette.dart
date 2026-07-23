@@ -22,8 +22,8 @@ class AppPalette {
   static const Color black = Color(0xff000000);
 
   // --- Backgrounds & Surfaces (Light Theme) ---
-  static const Color bgLight = Color(0xffF8FAFC); // Slate 50
-  static const Color surfaceLight = Color(0xffFFFFFF); // White
+  static const Color bgLight = Color(0xffF1F5F9); // Slate 100 (خلفية متباينة للأكارت البيضاء)
+  static const Color surfaceLight = Color(0xffFFFFFF); // White Surface
   static const Color borderLight = Color(0xffE2E8F0); // Slate 200
 
   // --- Backgrounds & Surfaces (Dark Theme) ---

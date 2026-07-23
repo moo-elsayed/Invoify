@@ -17,7 +17,15 @@ class UserEntity extends Equatable {
   final DateTime? createdAt;
   final bool isVerified;
 
-  String get name => businessName;
+  String get displayName {
+    if (businessName.trim().isNotEmpty) {
+      return businessName;
+    }
+    if (email.contains('@')) {
+      return email.split('@').first;
+    }
+    return email;
+  }
 
   @override
   List<Object?> get props => [

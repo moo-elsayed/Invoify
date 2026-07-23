@@ -5,6 +5,7 @@ import 'package:invoify/features/auth/data/repo_imp/auth_repo_imp.dart';
 import 'package:invoify/features/auth/domain/repo/auth_repo.dart';
 import 'package:invoify/features/auth/domain/use_cases/create_user_with_email_and_password_use_case.dart';
 import 'package:invoify/features/auth/domain/use_cases/forget_password_use_case.dart';
+import 'package:invoify/features/auth/domain/use_cases/get_user_info_use_case.dart';
 import 'package:invoify/features/auth/domain/use_cases/google_sign_in_use_case.dart';
 import 'package:invoify/features/auth/domain/use_cases/sign_in_with_email_and_password_use_case.dart';
 import 'package:invoify/features/auth/domain/use_cases/sign_out_use_case.dart';
@@ -13,6 +14,12 @@ import 'package:invoify/features/auth/presentation/view_models/signin_cubit/sign
 import 'package:invoify/features/auth/presentation/view_models/signout_cubit/sign_out_cubit.dart';
 import 'package:invoify/features/auth/presentation/view_models/signup_cubit/sign_up_cubit.dart';
 import 'package:invoify/features/auth/presentation/view_models/social_sign_in_cubit/social_sign_in_cubit.dart';
+import 'package:invoify/features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
+import 'package:invoify/features/settings/data/data_sources/remote/settings_remote_data_source.dart';
+import 'package:invoify/features/settings/data/data_sources/remote/settings_remote_data_source_imp.dart';
+import 'package:invoify/features/settings/data/repo_imp/settings_repo_imp.dart';
+import 'package:invoify/features/settings/domain/repo/settings_repo.dart';
+import 'package:invoify/features/settings/domain/use_cases/update_currency_use_case.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/onboarding/presentation/view_models/onboarding_cubit/onboarding_cubit.dart';
 import '../../features/splash/presentation/view_models/splash_cubit/splash_cubit.dart';
@@ -44,6 +51,14 @@ Future<void> setupGetIt() async {
     () => AuthRepoImp(getIt<AuthRemoteDataSource>()),
   );
 
+  // Settings Data Source & Repo
+  getIt.registerLazySingleton<SettingsRemoteDataSource>(
+    () => SettingsRemoteDataSourceImp(),
+  );
+  getIt.registerLazySingleton<SettingsRepo>(
+    () => SettingsRepoImp(getIt<SettingsRemoteDataSource>()),
+  );
+
   // Auth Use Cases
   getIt.registerLazySingleton<CreateUserWithEmailAndPasswordUseCase>(
     () => CreateUserWithEmailAndPasswordUseCase(getIt<AuthRepo>()),
@@ -60,10 +75,26 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<SignOutUseCase>(
     () => SignOutUseCase(getIt<AuthRepo>()),
   );
+  getIt.registerLazySingleton<GetUserInfoUseCase>(
+    () => GetUserInfoUseCase(getIt<AuthRepo>()),
+  );
+
+  // Settings Use Cases
+  getIt.registerLazySingleton<UpdateCurrencyUseCase>(
+    () => UpdateCurrencyUseCase(getIt<SettingsRepo>()),
+  );
 
   // ==========================================
   // 3. Cubits / ViewModels
   // ==========================================
+  getIt.registerFactory<UserInfoCubit>(
+    () => UserInfoCubit(
+      getIt<AppPreferencesService>(),
+      getIt<GetUserInfoUseCase>(),
+      getIt<UpdateCurrencyUseCase>(),
+    ),
+  );
+
   getIt.registerFactory<AppThemeCubit>(
     () => AppThemeCubit(getIt<AppPreferencesService>()),
   );

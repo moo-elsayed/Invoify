@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/core/network/network_response.dart';
+import 'package:invoify/features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/use_cases/sign_in_with_email_and_password_use_case.dart';
 
@@ -22,6 +24,9 @@ class SignInCubit extends Cubit<SignInState> {
     );
     switch (result) {
       case NetworkSuccess<UserEntity>():
+        if (result.data != null) {
+          await getIt<UserInfoCubit>().saveUserLocally(result.data!);
+        }
         emit(SignInSuccess());
       case NetworkFailure<UserEntity>():
         emit(SignInFailure(result.error));

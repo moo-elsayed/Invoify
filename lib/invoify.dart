@@ -7,6 +7,7 @@ import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 import 'core/theming/app_theme.dart';
 import 'core/theming/app_theme_cubit.dart';
+import 'features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
 
 class Invoify extends StatelessWidget {
   const Invoify({super.key, required this.appRouter});
@@ -18,8 +19,11 @@ class Invoify extends StatelessWidget {
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
-        builder: (context, child) => BlocProvider(
-          create: (context) => getIt<AppThemeCubit>(),
+        builder: (context, child) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => getIt<AppThemeCubit>()),
+            BlocProvider(create: (context) => getIt<UserInfoCubit>()),
+          ],
           child: BlocBuilder<AppThemeCubit, ThemeMode>(
             builder: (context, themeMode) => MaterialApp(
               debugShowCheckedModeBanner: false,

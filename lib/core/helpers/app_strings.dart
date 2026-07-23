@@ -114,5 +114,29 @@ abstract class AppStrings {
   static String get ok => 'ok'.tr();
   static String get noUserFoundForThatEmail => 'noUserFoundForThatEmail'.tr();
   static String get pleaseVerifyYourEmail => 'pleaseVerifyYourEmail'.tr();
+
+  // Navigation Bar Strings
+  static String get home => 'home'.tr();
+  static String get invoices => 'invoices'.tr();
+  static String get clients => 'clients'.tr();
+  static String get settings => 'settings'.tr();
+  static String get generalSettings => 'generalSettings'.tr();
+  static String get localSettings => 'localSettings'.tr();
+  static String get profileInformation => 'profileInformation'.tr();
+  static String get securitySettings => 'securitySettings'.tr();
+  static String get theme => 'theme'.tr();
+  static String get language => 'language'.tr();
+  static String get arabic => 'arabic'.tr();
+  static String get english => 'english'.tr();
+  static String get currency => 'currency'.tr();
+  static String get signOut => 'signOut'.tr();
+  static String get signOutConfirmation => 'signOutConfirmation'.tr();
+  static String get passwordResetSent => 'passwordResetSent'.tr();
+  static String get currencyUpdated => 'currencyUpdated'.tr();
+  static String get usd => 'usd'.tr();
+  static String get egp => 'egp'.tr();
+  static String get eur => 'eur'.tr();
+  static String get sar => 'sar'.tr();
+  static String get aed => 'aed'.tr();
 }
 

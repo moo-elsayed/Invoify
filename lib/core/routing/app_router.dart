@@ -3,6 +3,7 @@ import 'package:invoify/features/auth/presentation/args/login_args.dart';
 import 'package:invoify/features/auth/presentation/views/forget_password_view.dart';
 import 'package:invoify/features/auth/presentation/views/login_view.dart';
 import 'package:invoify/features/auth/presentation/views/register_view.dart';
+import 'package:invoify/features/home/presentation/views/main_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
 import 'routes.dart';
@@ -27,7 +28,7 @@ class AppRouter {
       case Routes.forgetPasswordView:
         return _route(const ForgetPasswordView());
       case Routes.homeView:
-        return _route(const Scaffold(body: Center(child: Text('Home View'))));
+        return _route(const MainView());
       default:
         return null;
     }

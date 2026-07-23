@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'app_palette.dart';
 
 class AppTheme {
@@ -16,6 +17,13 @@ class AppTheme {
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+            systemNavigationBarColor: AppPalette.bgLight,
+            systemNavigationBarIconBrightness: Brightness.dark,
+          ),
           iconTheme: IconThemeData(color: AppPalette.textMainLight),
           titleTextStyle: TextStyle(
             color: AppPalette.textMainLight,
@@ -53,6 +61,13 @@ class AppTheme {
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.dark,
+            systemNavigationBarColor: AppPalette.bgDark,
+            systemNavigationBarIconBrightness: Brightness.light,
+          ),
           iconTheme: IconThemeData(color: AppPalette.textMainDark),
           titleTextStyle: TextStyle(
             color: AppPalette.textMainDark,
