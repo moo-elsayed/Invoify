@@ -5,4 +5,9 @@ abstract class SettingsRepo {
     required String uid,
     required String currency,
   });
+
+  Future<NetworkResponse<void>> updateBusinessName({
+    required String uid,
+    required String businessName,
+  });
 }

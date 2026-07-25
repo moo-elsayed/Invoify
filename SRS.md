@@ -1,4 +1,4 @@
-﻿# 📄 System Requirements Specification (SRS)
+# 📄 System Requirements Specification (SRS)
 ## Project: Invoify — Automated Invoicing & Payment Tracker
 
 ---
@@ -179,14 +179,15 @@ draft ──(submit)──► pending ──(email opened)──► opened
 > استخدم هذا القسم لتتبع تقدم التطوير. ✅ = Done | 🔄 = In Progress | ⬜ = Todo
 
 ### Flutter App
-- ⬜ Project Setup & Clean Architecture folder structure
-- ⬜ Firebase configuration
-- ⬜ Authentication (Email + Google Sign-In)
-- ⬜ Client Management screens (CRUD)
-- ⬜ Invoice Creation screen (dynamic items + auto-calculation)
-- ⬜ Invoice List screen (Tabs by status)
-- ⬜ Dashboard & Analytics screen (Charts)
-- ⬜ Deep Linking & Notification Routing
+- [x] Project Setup & Clean Architecture folder structure
+- [x] Firebase configuration
+- [x] Authentication (Email + Google Sign-In + Password Reset)
+- [x] Settings & User Preferences (Profile details, Edit business name, Theme, Language, Currency, Logout)
+- [ ] Client Management screens (CRUD)
+- [ ] Invoice Creation screen (dynamic items + auto-calculation)
+- [ ] Invoice List screen (Tabs by status)
+- [ ] Dashboard & Analytics screen (Charts)
+- [ ] Deep Linking & Notification Routing
 
 ### Cloud Functions (Node.js / TypeScript)
 - ⬜ PDF Generator function (Storage Trigger / Callable)

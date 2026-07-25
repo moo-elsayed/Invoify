@@ -33,6 +33,9 @@ class AppTextStyles {
   static TextStyle get font13SemiBold =>
       GoogleFonts.cairo(fontSize: 13.sp, fontWeight: FontWeight.w600);
 
+  static TextStyle get font13Bold =>
+      GoogleFonts.cairo(fontSize: 13.sp, fontWeight: FontWeight.w700);
+
   static TextStyle get font14Regular =>
       GoogleFonts.cairo(fontSize: 14.sp, fontWeight: FontWeight.w400);
 

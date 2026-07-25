@@ -5,6 +5,7 @@ import 'package:invoify/core/network/network_response.dart';
 import 'package:invoify/core/services/app_preferences/app_preferences_service.dart';
 import 'package:invoify/features/auth/domain/entities/user_entity.dart';
 import 'package:invoify/features/auth/domain/use_cases/get_user_info_use_case.dart';
+import 'package:invoify/features/settings/domain/use_cases/update_business_name_use_case.dart';
 import 'package:invoify/features/settings/domain/use_cases/update_currency_use_case.dart';
 
 part 'user_info_state.dart';
@@ -14,6 +15,7 @@ class UserInfoCubit extends Cubit<UserInfoState> {
     this._appPreferencesService,
     this._getUserInfoUseCase,
     this._updateCurrencyUseCase,
+    this._updateBusinessNameUseCase,
   ) : super(UserInfoInitial()) {
     loadCachedUser();
   }
@@ -21,6 +23,7 @@ class UserInfoCubit extends Cubit<UserInfoState> {
   final AppPreferencesService _appPreferencesService;
   final GetUserInfoUseCase _getUserInfoUseCase;
   final UpdateCurrencyUseCase _updateCurrencyUseCase;
+  final UpdateBusinessNameUseCase _updateBusinessNameUseCase;
 
   UserEntity? get currentUser {
     if (state is UserInfoSuccess) {
@@ -64,12 +67,36 @@ class UserInfoCubit extends Cubit<UserInfoState> {
     }
   }
 
+  Future<void> updateBusinessName(String newBusinessName) async {
+    final user = currentUser;
+    if (user == null) return;
+
+    final updatedUser = user.copyWith(businessName: newBusinessName);
+
+    final response = await _updateBusinessNameUseCase(
+      uid: user.uid,
+      businessName: newBusinessName,
+    );
+
+    switch (response) {
+      case NetworkSuccess<void>():
+        await _appPreferencesService.saveUser(updatedUser);
+        emit(
+          UserUpdateSuccess(
+            user: updatedUser,
+            message: AppStrings.businessNameUpdated,
+          ),
+        );
+      case NetworkFailure<void>():
+        emit(UserUpdateFailure(user: user, error: response.error));
+    }
+  }
+
   Future<void> updateCurrency(String newCurrency) async {
     final user = currentUser;
     if (user == null) return;
 
     final updatedUser = user.copyWith(currency: newCurrency);
-    await saveUserLocally(updatedUser);
 
     final response = await _updateCurrencyUseCase(
       uid: user.uid,
@@ -78,16 +105,15 @@ class UserInfoCubit extends Cubit<UserInfoState> {
 
     switch (response) {
       case NetworkSuccess<void>():
-        emit(UserUpdateSuccess(
-          user: updatedUser,
-          message: AppStrings.currencyUpdated,
-        ));
+        await _appPreferencesService.saveUser(updatedUser);
+        emit(
+          UserUpdateSuccess(
+            user: updatedUser,
+            message: AppStrings.currencyUpdated,
+          ),
+        );
       case NetworkFailure<void>():
-        await saveUserLocally(user);
-        emit(UserUpdateFailure(
-          user: user,
-          error: response.error,
-        ));
+        emit(UserUpdateFailure(user: user, error: response.error));
     }
   }
 

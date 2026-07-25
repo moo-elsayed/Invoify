@@ -15,4 +15,13 @@ class SettingsRepoImp implements SettingsRepo {
     uid: uid,
     currency: currency,
   );
+
+  @override
+  Future<NetworkResponse<void>> updateBusinessName({
+    required String uid,
+    required String businessName,
+  }) async => await _settingsRemoteDataSource.updateBusinessName(
+    uid: uid,
+    businessName: businessName,
+  );
 }

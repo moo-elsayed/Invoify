@@ -5,7 +5,7 @@ import 'settings_remote_data_source.dart';
 
 class SettingsRemoteDataSourceImp implements SettingsRemoteDataSource {
   SettingsRemoteDataSourceImp({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+    : _firestore = firestore ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _firestore;
   static const String _usersCollection = 'users';
@@ -14,10 +14,19 @@ class SettingsRemoteDataSourceImp implements SettingsRemoteDataSource {
   Future<NetworkResponse<void>> updateCurrency({
     required String uid,
     required String currency,
-  }) async =>
-      ApiHelper.executeSafely(() async {
-        await _firestore.collection(_usersCollection).doc(uid).update({
-          'currency': currency,
-        });
-      }, functionName: 'updateCurrency');
+  }) async => ApiHelper.executeSafely(() async {
+    await _firestore.collection(_usersCollection).doc(uid).update({
+      'currency': currency,
+    });
+  }, functionName: 'updateCurrency');
+
+  @override
+  Future<NetworkResponse<void>> updateBusinessName({
+    required String uid,
+    required String businessName,
+  }) async => ApiHelper.executeSafely(() async {
+    await _firestore.collection(_usersCollection).doc(uid).update({
+      'businessName': businessName,
+    });
+  }, functionName: 'updateBusinessName');
 }

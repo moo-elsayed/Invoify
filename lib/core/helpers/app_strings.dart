@@ -103,6 +103,9 @@ abstract class AppStrings {
   static String get passwordReset => 'passwordReset'.tr();
   static String get sendEmailResetLink => 'sendEmailResetLink'.tr();
   static String get sendPasswordResetLink => 'sendPasswordResetLink'.tr();
+  static String get send => 'send'.tr();
+  static String get sendPasswordResetConfirmation =>
+      'sendPasswordResetConfirmation'.tr();
   static String get emailSent => 'emailSent'.tr();
   static String get emailSentToReset => 'emailSentToReset'.tr();
   static String get emailCreated => 'emailCreated'.tr();
@@ -138,5 +141,33 @@ abstract class AppStrings {
   static String get eur => 'eur'.tr();
   static String get sar => 'sar'.tr();
   static String get aed => 'aed'.tr();
+  static String get businessNameUpdated => 'businessNameUpdated'.tr();
+  static String get businessName => 'businessName'.tr();
+  static String get memberSince => 'memberSince'.tr();
+  static String get accountStatus => 'accountStatus'.tr();
+  static String get verified => 'verified'.tr();
+  static String get unverified => 'unverified'.tr();
+  static String get saveChanges => 'saveChanges'.tr();
+  static String get accountDetails => 'accountDetails'.tr();
+
+  // Client Management Strings
+  static String get addClient => 'addClient'.tr();
+  static String get editClient => 'editClient'.tr();
+  static String get deleteClient => 'deleteClient'.tr();
+  static String get deleteClientConfirmation => 'deleteClientConfirmation'.tr();
+  static String get searchClients => 'searchClients'.tr();
+  static String get noClientsFound => 'noClientsFound'.tr();
+  static String get noClientsYet => 'noClientsYet'.tr();
+  static String get clientName => 'clientName'.tr();
+  static String get clientEmail => 'clientEmail'.tr();
+  static String get clientPhone => 'clientPhone'.tr();
+  static String get clientAddress => 'clientAddress'.tr();
+  static String get clientAddedSuccessfully => 'clientAddedSuccessfully'.tr();
+  static String get clientUpdatedSuccessfully =>
+      'clientUpdatedSuccessfully'.tr();
+  static String get clientDeletedSuccessfully =>
+      'clientDeletedSuccessfully'.tr();
+  static String get phone => 'phone'.tr();
+  static String get address => 'address'.tr();
 }
 

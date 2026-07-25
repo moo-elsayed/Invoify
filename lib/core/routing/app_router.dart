@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/features/auth/presentation/args/login_args.dart';
 import 'package:invoify/features/auth/presentation/views/forget_password_view.dart';
 import 'package:invoify/features/auth/presentation/views/login_view.dart';
 import 'package:invoify/features/auth/presentation/views/register_view.dart';
+import 'package:invoify/features/clients/domain/entities/client_entity.dart';
+import 'package:invoify/features/clients/presentation/args/add_edit_client_args.dart';
+import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
+import 'package:invoify/features/clients/presentation/views/add_edit_client_view.dart';
 import 'package:invoify/features/home/presentation/views/main_view.dart';
+import 'package:invoify/features/settings/presentation/views/profile_details_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
 import 'routes.dart';
@@ -29,6 +36,24 @@ class AppRouter {
         return _route(const ForgetPasswordView());
       case Routes.homeView:
         return _route(const MainView());
+      case Routes.profileDetailsView:
+        return _route(const ProfileDetailsView());
+      case Routes.addEditClientView:
+        final args = settings.arguments;
+        if (args is AddEditClientArgs) {
+          return _route(
+            BlocProvider.value(
+              value: args.cubit,
+              child: AddEditClientView(client: args.client),
+            ),
+          );
+        }
+        return _route(
+          BlocProvider(
+            create: (context) => getIt<ClientsCubit>(),
+            child: AddEditClientView(client: args as ClientEntity?),
+          ),
+        );
       default:
         return null;
     }

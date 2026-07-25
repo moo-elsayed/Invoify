@@ -1,39 +1,161 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:invoify/core/helpers/app_strings.dart';
+import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/core/helpers/extensions.dart';
+import 'package:invoify/core/routing/routes.dart';
+import 'package:invoify/core/widgets/app_toasts.dart';
+import 'package:invoify/core/widgets/custom_keyboard_unfocus.dart';
+import 'package:invoify/core/widgets/main_screen_header.dart';
+import 'package:invoify/features/clients/domain/entities/client_entity.dart';
+import 'package:invoify/features/clients/presentation/args/add_edit_client_args.dart';
+import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
+import 'package:invoify/features/clients/presentation/widgets/client_card.dart';
+import 'package:invoify/features/clients/presentation/widgets/client_search_bar.dart';
+import 'package:invoify/features/clients/presentation/widgets/client_skeleton_list.dart';
+import 'package:invoify/features/clients/presentation/widgets/clients_error_widget.dart';
+import 'package:invoify/features/clients/presentation/widgets/empty_clients_widget.dart';
+import 'package:toastification/toastification.dart';
 
-class ClientsView extends StatelessWidget {
+class ClientsView extends StatefulWidget {
   const ClientsView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
+  State<ClientsView> createState() => _ClientsViewState();
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.clients),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.people_alt_rounded,
-              size: 64,
-              color: colors.primary,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              AppStrings.clients,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: colors.mainText,
+class _ClientsViewState extends State<ClientsView> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => BlocProvider(
+    create: (context) => getIt<ClientsCubit>()..getClients(),
+    child: CustomKeyboardUnfocus(
+      child: SafeArea(
+        child: BlocConsumer<ClientsCubit, ClientsState>(
+          listener: (context, state) {
+            if (ModalRoute.of(context)?.isCurrent != true) return;
+            if (state is ClientActionSuccess) {
+              AppToast.show(
+                context: context,
+                title: state.message,
+                type: ToastificationType.success,
+              );
+            } else if (state is ClientActionFailure) {
+              AppToast.show(
+                context: context,
+                title: state.error,
+                type: ToastificationType.error,
+              );
+            }
+          },
+          builder: (context, state) {
+            final cubit = context.read<ClientsCubit>();
+
+            if (state is ClientsLoading) {
+              return const ClientSkeletonList();
+            }
+
+            if (state is ClientsFailure) {
+              return ClientsErrorWidget(
+                error: state.error,
+                onRetry: () => cubit.getClients(),
+              );
+            }
+
+            List<ClientEntity> filteredList = [];
+            final bool isSearching = _searchController.text.trim().isNotEmpty;
+
+            if (state is ClientsSuccess) {
+              filteredList = state.filteredClients;
+            } else {
+              filteredList = cubit.allClients;
+            }
+
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+              child: Column(
+                children: [
+                  // Header Row (Title & Add Button)
+                  MainScreenHeader(
+                    title: AppStrings.clients,
+                    action: HeaderActionButton(
+                      label: AppStrings.addClient,
+                      icon: Icons.person_add_alt_1_rounded,
+                      onTap: () => context
+                          .pushNamed(
+                            Routes.addEditClientView,
+                            arguments: AddEditClientArgs(
+                              client: null,
+                              cubit: cubit,
+                            ),
+                          )
+                          .then((isUpdated) {
+                            if (isUpdated == true) {
+                              cubit.getClients();
+                            }
+                          }),
+                    ),
+                  ),
+                  Gap(16.h),
+                  // Search Bar Widget
+                  ClientSearchBar(
+                    controller: _searchController,
+                    onChanged: (query) => cubit.searchClients(query),
+                  ),
+                  Gap(16.h),
+
+                  // List or Empty State
+                  Expanded(
+                    child: filteredList.isEmpty
+                        ? EmptyClientsWidget(isSearching: isSearching)
+                        : RefreshIndicator(
+                            onRefresh: () => cubit.getClients(),
+                            color: context.colors.primary,
+                            child: ListView.separated(
+                              padding: EdgeInsets.only(bottom: 90.h),
+                              itemCount: filteredList.length,
+                              separatorBuilder: (context, index) => Gap(12.h),
+                              itemBuilder: (context, index) {
+                                final client = filteredList[index];
+                                return ClientCard(
+                                  client: client,
+                                  onEdit: () {
+                                    context
+                                        .pushNamed(
+                                          Routes.addEditClientView,
+                                          arguments: AddEditClientArgs(
+                                            client: client,
+                                            cubit: cubit,
+                                          ),
+                                        )
+                                        .then((isUpdated) {
+                                          if (isUpdated == true) {
+                                            cubit.getClients();
+                                          }
+                                        });
+                                  },
+                                  onDelete: () =>
+                                      cubit.deleteClient(client.clientId),
+                                );
+                              },
+                            ),
+                          ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
-    );
-  }
+    ),
+  );
 }

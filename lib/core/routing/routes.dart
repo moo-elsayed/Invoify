@@ -5,5 +5,7 @@ class Routes {
   static const registerView = 'registerView';
   static const forgetPasswordView = 'forgetPasswordView';
   static const homeView = 'homeView';
+  static const profileDetailsView = 'profileDetailsView';
+  static const addEditClientView = 'addEditClientView';
 }
 
