@@ -6,15 +6,17 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 import 'package:invoify/core/widgets/custom_material_button.dart';
 
-class ClientsErrorWidget extends StatelessWidget {
-  const ClientsErrorWidget({
+class CustomErrorWidget extends StatelessWidget {
+  const CustomErrorWidget({
     super.key,
     required this.error,
     required this.onRetry,
+    this.buttonText,
   });
 
   final String error;
   final VoidCallback onRetry;
+  final String? buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class ClientsErrorWidget extends StatelessWidget {
               Gap(20.h),
               CustomMaterialButton(
                 onPressed: onRetry,
-                text: AppStrings.ok,
+                text: buttonText ?? AppStrings.ok,
                 borderRadius: BorderRadius.circular(12.r),
               ),
             ],

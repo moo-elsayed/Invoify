@@ -24,6 +24,15 @@ import 'package:invoify/features/clients/domain/use_cases/delete_client_use_case
 import 'package:invoify/features/clients/domain/use_cases/get_clients_use_case.dart';
 import 'package:invoify/features/clients/domain/use_cases/update_client_use_case.dart';
 import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
+import 'package:invoify/features/invoices/data/data_sources/remote/invoices_remote_data_source.dart';
+import 'package:invoify/features/invoices/data/data_sources/remote/invoices_remote_data_source_imp.dart';
+import 'package:invoify/features/invoices/data/repo_imp/invoices_repo_imp.dart';
+import 'package:invoify/features/invoices/domain/repo/invoices_repo.dart';
+import 'package:invoify/features/invoices/domain/use_cases/create_invoice_use_case.dart';
+import 'package:invoify/features/invoices/domain/use_cases/delete_invoice_use_case.dart';
+import 'package:invoify/features/invoices/domain/use_cases/get_invoices_use_case.dart';
+import 'package:invoify/features/invoices/domain/use_cases/update_invoice_use_case.dart';
+import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
 import 'package:invoify/features/settings/data/data_sources/remote/settings_remote_data_source.dart';
 import 'package:invoify/features/settings/data/data_sources/remote/settings_remote_data_source_imp.dart';
 import 'package:invoify/features/settings/data/repo_imp/settings_repo_imp.dart';
@@ -77,6 +86,14 @@ Future<void> setupGetIt() async {
     () => ClientsRepoImp(getIt<ClientsRemoteDataSource>()),
   );
 
+  // Invoices Data Source & Repo
+  getIt.registerLazySingleton<InvoicesRemoteDataSource>(
+    () => InvoicesRemoteDataSourceImp(),
+  );
+  getIt.registerLazySingleton<InvoicesRepo>(
+    () => InvoicesRepoImp(getIt<InvoicesRemoteDataSource>()),
+  );
+
   // Auth Use Cases
   getIt.registerLazySingleton<CreateUserWithEmailAndPasswordUseCase>(
     () => CreateUserWithEmailAndPasswordUseCase(getIt<AuthRepo>()),
@@ -119,6 +136,20 @@ Future<void> setupGetIt() async {
     () => DeleteClientUseCase(getIt<ClientsRepo>()),
   );
 
+  // Invoices Use Cases
+  getIt.registerLazySingleton<GetInvoicesUseCase>(
+    () => GetInvoicesUseCase(getIt<InvoicesRepo>()),
+  );
+  getIt.registerLazySingleton<CreateInvoiceUseCase>(
+    () => CreateInvoiceUseCase(getIt<InvoicesRepo>()),
+  );
+  getIt.registerLazySingleton<UpdateInvoiceUseCase>(
+    () => UpdateInvoiceUseCase(getIt<InvoicesRepo>()),
+  );
+  getIt.registerLazySingleton<DeleteInvoiceUseCase>(
+    () => DeleteInvoiceUseCase(getIt<InvoicesRepo>()),
+  );
+
   // ==========================================
   // 3. Cubits / ViewModels
   // ==========================================
@@ -137,6 +168,15 @@ Future<void> setupGetIt() async {
       getIt<AddClientUseCase>(),
       getIt<UpdateClientUseCase>(),
       getIt<DeleteClientUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<InvoicesCubit>(
+    () => InvoicesCubit(
+      getIt<GetInvoicesUseCase>(),
+      getIt<CreateInvoiceUseCase>(),
+      getIt<UpdateInvoiceUseCase>(),
+      getIt<DeleteInvoiceUseCase>(),
     ),
   );
 

@@ -183,9 +183,9 @@ draft ──(submit)──► pending ──(email opened)──► opened
 - [x] Firebase configuration
 - [x] Authentication (Email + Google Sign-In + Password Reset)
 - [x] Settings & User Preferences (Profile details, Edit business name, Theme, Language, Currency, Logout)
-- [ ] Client Management screens (CRUD)
-- [ ] Invoice Creation screen (dynamic items + auto-calculation)
-- [ ] Invoice List screen (Tabs by status)
+- [x] Client Management screens (CRUD)
+- [x] Invoice Creation screen (dynamic items + auto-calculation)
+- [x] Invoice List screen (Tabs by status)
 - [ ] Dashboard & Analytics screen (Charts)
 - [ ] Deep Linking & Notification Routing
 

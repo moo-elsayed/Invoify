@@ -23,7 +23,7 @@ class ClientSkeletonList extends StatelessWidget {
   Widget build(BuildContext context) => Skeletonizer(
         enabled: true,
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          padding: EdgeInsets.only(bottom: 90.h),
           itemCount: _dummyClients.length,
           separatorBuilder: (context, index) => Gap(12.h),
           itemBuilder: (context, index) => ClientCard(

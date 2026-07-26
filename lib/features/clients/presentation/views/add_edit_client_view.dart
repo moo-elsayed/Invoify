@@ -88,15 +88,15 @@ class _AddEditClientViewState extends State<AddEditClientView> {
       body: SafeArea(
         child: BlocListener<ClientsCubit, ClientsState>(
           listener: (context, state) {
-              if (state is ClientActionSuccess) {
-                _isLoadingNotifier.value = false;
-                AppToast.show(
-                  context: context,
-                  title: state.message,
-                  type: ToastificationType.success,
-                );
-                context.pop(true);
-              } else if (state is ClientActionFailure) {
+            if (state is ClientActionSuccess) {
+              _isLoadingNotifier.value = false;
+              AppToast.show(
+                context: context,
+                title: state.message,
+                type: ToastificationType.success,
+              );
+              context.pop(true);
+            } else if (state is ClientActionFailure) {
               _isLoadingNotifier.value = false;
               AppToast.show(
                 context: context,
@@ -172,7 +172,9 @@ class _AddEditClientViewState extends State<AddEditClientView> {
                     builder: (context, isLoading, child) =>
                         CustomMaterialButton(
                           onPressed: () => _onSavePressed(context),
-                          text: AppStrings.saveChanges,
+                          text: _isEditing
+                              ? AppStrings.saveChanges
+                              : AppStrings.addClient,
                           isLoading: isLoading,
                           maxWidth: true,
                           borderRadius: BorderRadius.circular(12.r),

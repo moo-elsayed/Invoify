@@ -169,5 +169,43 @@ abstract class AppStrings {
       'clientDeletedSuccessfully'.tr();
   static String get phone => 'phone'.tr();
   static String get address => 'address'.tr();
+
+  // Invoice Management Strings
+  static String get createInvoice => 'createInvoice'.tr();
+  static String get invoiceNumber => 'invoiceNumber'.tr();
+  static String get selectClient => 'selectClient'.tr();
+  static String get pleaseSelectClient => 'pleaseSelectClient'.tr();
+  static String get issueDate => 'issueDate'.tr();
+  static String get dueDate => 'dueDate'.tr();
+  static String get invoiceItems => 'invoiceItems'.tr();
+  static String get addItem => 'addItem'.tr();
+  static String get itemName => 'itemName'.tr();
+  static String get itemDescriptionHint => 'itemDescriptionHint'.tr();
+  static String get quantity => 'quantity'.tr();
+  static String get unitPrice => 'unitPrice'.tr();
+  static String get subtotal => 'subtotal'.tr();
+  static String get taxRate => 'taxRate'.tr();
+  static String get taxAmount => 'taxAmount'.tr();
+  static String get discount => 'discount'.tr();
+  static String get grandTotal => 'grandTotal'.tr();
+  static String get notes => 'notes'.tr();
+  static String get notesHint => 'notesHint'.tr();
+  static String get saveAsDraft => 'saveAsDraft'.tr();
+  static String get invoiceCreatedSuccessfully =>
+      'invoiceCreatedSuccessfully'.tr();
+  static String get pleaseAddAtLeastOneItem => 'pleaseAddAtLeastOneItem'.tr();
+  static String get statusDraft => 'statusDraft'.tr();
+  static String get statusSent => 'statusSent'.tr();
+  static String get statusPaid => 'statusPaid'.tr();
+  static String get statusOverdue => 'statusOverdue'.tr();
+  static String get statusCancelled => 'statusCancelled'.tr();
+  static String get all => 'all'.tr();
+  static String get noInvoicesYet => 'noInvoicesYet'.tr();
+  static String get noInvoicesFound => 'noInvoicesFound'.tr();
+  static String get deleteInvoiceConfirmation =>
+      'deleteInvoiceConfirmation'.tr();
+  static String get invoiceDeletedSuccessfully =>
+      'invoiceDeletedSuccessfully'.tr();
+  static String get selectDate => 'selectDate'.tr();
 }
 

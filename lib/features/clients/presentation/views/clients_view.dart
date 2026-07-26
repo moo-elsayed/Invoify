@@ -7,6 +7,7 @@ import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/routing/routes.dart';
 import 'package:invoify/core/widgets/app_toasts.dart';
+import 'package:invoify/core/widgets/custom_error_widget.dart';
 import 'package:invoify/core/widgets/custom_keyboard_unfocus.dart';
 import 'package:invoify/core/widgets/main_screen_header.dart';
 import 'package:invoify/features/clients/domain/entities/client_entity.dart';
@@ -15,7 +16,6 @@ import 'package:invoify/features/clients/presentation/view_models/clients_cubit/
 import 'package:invoify/features/clients/presentation/widgets/client_card.dart';
 import 'package:invoify/features/clients/presentation/widgets/client_search_bar.dart';
 import 'package:invoify/features/clients/presentation/widgets/client_skeleton_list.dart';
-import 'package:invoify/features/clients/presentation/widgets/clients_error_widget.dart';
 import 'package:invoify/features/clients/presentation/widgets/empty_clients_widget.dart';
 import 'package:toastification/toastification.dart';
 
@@ -60,17 +60,6 @@ class _ClientsViewState extends State<ClientsView> {
           builder: (context, state) {
             final cubit = context.read<ClientsCubit>();
 
-            if (state is ClientsLoading) {
-              return const ClientSkeletonList();
-            }
-
-            if (state is ClientsFailure) {
-              return ClientsErrorWidget(
-                error: state.error,
-                onRetry: () => cubit.getClients(),
-              );
-            }
-
             List<ClientEntity> filteredList = [];
             final bool isSearching = _searchController.text.trim().isNotEmpty;
 
@@ -113,9 +102,16 @@ class _ClientsViewState extends State<ClientsView> {
                   ),
                   Gap(16.h),
 
-                  // List or Empty State
+                  // Content Body (Skeleton / Error / Empty / List)
                   Expanded(
-                    child: filteredList.isEmpty
+                    child: state is ClientsLoading
+                        ? const ClientSkeletonList()
+                        : state is ClientsFailure
+                        ? CustomErrorWidget(
+                            error: state.error,
+                            onRetry: () => cubit.getClients(),
+                          )
+                        : filteredList.isEmpty
                         ? EmptyClientsWidget(isSearching: isSearching)
                         : RefreshIndicator(
                             onRefresh: () => cubit.getClients(),

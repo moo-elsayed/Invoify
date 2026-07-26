@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 
@@ -63,9 +62,9 @@ class HeaderActionButton extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
+          spacing: 6.w,
           children: [
             Icon(icon, color: Colors.white, size: 18.sp),
-            Gap(6.w),
             Text(
               label,
               style: AppTextStyles.font13Bold.copyWith(color: Colors.white),

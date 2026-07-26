@@ -10,6 +10,7 @@ import 'package:invoify/features/clients/presentation/args/add_edit_client_args.
 import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
 import 'package:invoify/features/clients/presentation/views/add_edit_client_view.dart';
 import 'package:invoify/features/home/presentation/views/main_view.dart';
+import 'package:invoify/features/invoices/presentation/views/create_invoice_view.dart';
 import 'package:invoify/features/settings/presentation/views/profile_details_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
@@ -54,6 +55,8 @@ class AppRouter {
             child: AddEditClientView(client: args as ClientEntity?),
           ),
         );
+      case Routes.createInvoiceView:
+        return _route(const CreateInvoiceView());
       default:
         return null;
     }
