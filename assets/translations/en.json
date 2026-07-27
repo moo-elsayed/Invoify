@@ -132,6 +132,7 @@
   "clientEmail": "Client Email",
   "clientPhone": "Client Phone Number",
   "clientAddress": "Client Address",
+  "clientInformation": "Client Information",
   "clientAddedSuccessfully": "Client added successfully",
   "clientUpdatedSuccessfully": "Client updated successfully",
   "clientDeletedSuccessfully": "Client deleted successfully",
@@ -169,5 +170,10 @@
   "noInvoicesFound": "No invoices found for this status",
   "deleteInvoiceConfirmation": "Are you sure you want to delete this invoice? This action cannot be undone.",
   "invoiceDeletedSuccessfully": "Invoice deleted successfully",
-  "selectDate": "Select Date"
+  "selectDate": "Select Date",
+  "updateStatus": "Update Invoice Status",
+  "editInvoice": "Edit Invoice",
+  "invoiceDetails": "Invoice Details",
+  "invoiceUpdatedSuccessfully": "Invoice updated successfully",
+  "deleteInvoice": "Delete Invoice"
 }

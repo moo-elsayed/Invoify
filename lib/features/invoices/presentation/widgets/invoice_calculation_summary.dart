@@ -5,6 +5,7 @@ import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 import 'package:invoify/core/widgets/text_form_field_helper.dart';
+import 'package:invoify/features/invoices/domain/enums/discount_type.dart';
 
 class InvoiceCalculationSummary extends StatelessWidget {
   const InvoiceCalculationSummary({
@@ -12,12 +13,14 @@ class InvoiceCalculationSummary extends StatelessWidget {
     required this.subtotal,
     required this.taxRateController,
     required this.discountController,
+    required this.discountTypeNotifier,
     this.onCalculationsChanged,
   });
 
   final double subtotal;
   final TextEditingController taxRateController;
   final TextEditingController discountController;
+  final ValueNotifier<DiscountType> discountTypeNotifier;
   final VoidCallback? onCalculationsChanged;
 
   @override
@@ -25,13 +28,23 @@ class InvoiceCalculationSummary extends StatelessWidget {
     final colors = context.colors;
 
     return ListenableBuilder(
-      listenable: Listenable.merge([taxRateController, discountController]),
+      listenable: Listenable.merge([
+        taxRateController,
+        discountController,
+        discountTypeNotifier,
+      ]),
       builder: (context, child) {
         final taxRate = double.tryParse(taxRateController.text.trim()) ?? 0.0;
-        final discount = double.tryParse(discountController.text.trim()) ?? 0.0;
+        final discountInput =
+            double.tryParse(discountController.text.trim()) ?? 0.0;
+        final discountType = discountTypeNotifier.value;
 
         final taxAmount = subtotal * (taxRate / 100);
-        final grandTotal = (subtotal + taxAmount - discount).clamp(
+        final double discountAmount = discountType.isPercentage
+            ? subtotal * (discountInput / 100)
+            : discountInput;
+
+        final grandTotal = (subtotal + taxAmount - discountAmount).clamp(
           0.0,
           double.infinity,
         );
@@ -82,11 +95,38 @@ class InvoiceCalculationSummary extends StatelessWidget {
                   Expanded(
                     child: TextFormFieldHelper(
                       controller: discountController,
-                      hint: AppStrings.discount,
+                      hint: discountType.isPercentage
+                          ? '${AppStrings.discount} (%)'
+                          : '${AppStrings.discount} (\$)',
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                       onChanged: (val) => onCalculationsChanged?.call(),
+                      suffixWidget: GestureDetector(
+                        onTap: () {
+                          discountTypeNotifier.value = discountType.isPercentage
+                              ? DiscountType.fixed
+                              : DiscountType.percentage;
+                          onCalculationsChanged?.call();
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(6.r),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 4.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: colors.primary.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Text(
+                            discountType.isPercentage ? '%' : '\$',
+                            style: AppTextStyles.font14Bold.copyWith(
+                              color: colors.primary,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -108,6 +148,30 @@ class InvoiceCalculationSummary extends StatelessWidget {
                       '+${taxAmount.toStringAsFixed(2)}',
                       style: AppTextStyles.font13Regular.copyWith(
                         color: colors.subText,
+                      ),
+                    ),
+                  ],
+                ),
+                Gap(6.h),
+              ],
+
+              // Discount Amount Display Row
+              if (discountAmount > 0) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      discountType.isPercentage
+                          ? '${AppStrings.discount} (${discountInput.toStringAsFixed(0)}%)'
+                          : AppStrings.discount,
+                      style: AppTextStyles.font13Regular.copyWith(
+                        color: colors.error,
+                      ),
+                    ),
+                    Text(
+                      '-${discountAmount.toStringAsFixed(2)}',
+                      style: AppTextStyles.font13Regular.copyWith(
+                        color: colors.error,
                       ),
                     ),
                   ],

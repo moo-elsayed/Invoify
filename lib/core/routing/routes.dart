@@ -7,6 +7,7 @@ class Routes {
   static const homeView = 'homeView';
   static const profileDetailsView = 'profileDetailsView';
   static const addEditClientView = 'addEditClientView';
-  static const createInvoiceView = 'createInvoiceView';
+  static const addEditInvoiceView = 'addEditInvoiceView';
+  static const invoiceDetailsView = 'invoiceDetailsView';
 }
 

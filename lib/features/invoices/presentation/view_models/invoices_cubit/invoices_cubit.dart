@@ -25,6 +25,10 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   List<InvoiceEntity> _allInvoices = [];
   List<InvoiceEntity> get allInvoices => _allInvoices;
 
+  void refreshLocalInvoices() {
+    emit(InvoicesSuccess(List.from(_allInvoices)));
+  }
+
   Future<void> getInvoices() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (firebaseUser == null) return;
@@ -76,7 +80,7 @@ class InvoicesCubit extends Cubit<InvoicesState> {
         if (index != -1) {
           _allInvoices[index] = invoice;
         }
-        emit(InvoiceActionSuccess(AppStrings.saveChanges));
+        emit(InvoiceActionSuccess(AppStrings.invoiceUpdatedSuccessfully));
       case NetworkFailure<void>():
         emit(InvoicesFailure(response.error));
     }

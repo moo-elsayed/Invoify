@@ -162,6 +162,7 @@ abstract class AppStrings {
   static String get clientEmail => 'clientEmail'.tr();
   static String get clientPhone => 'clientPhone'.tr();
   static String get clientAddress => 'clientAddress'.tr();
+  static String get clientInformation => 'clientInformation'.tr();
   static String get clientAddedSuccessfully => 'clientAddedSuccessfully'.tr();
   static String get clientUpdatedSuccessfully =>
       'clientUpdatedSuccessfully'.tr();
@@ -207,5 +208,11 @@ abstract class AppStrings {
   static String get invoiceDeletedSuccessfully =>
       'invoiceDeletedSuccessfully'.tr();
   static String get selectDate => 'selectDate'.tr();
+  static String get updateStatus => 'updateStatus'.tr();
+  static String get editInvoice => 'editInvoice'.tr();
+  static String get invoiceDetails => 'invoiceDetails'.tr();
+  static String get invoiceUpdatedSuccessfully =>
+      'invoiceUpdatedSuccessfully'.tr();
+  static String get deleteInvoice => 'deleteInvoice'.tr();
 }
 

@@ -130,7 +130,8 @@
   "clientEmail": "البريد الإلكتروني للعميل",
   "clientPhone": "رقم هاتف العميل",
   "clientAddress": "عنوان العميل",
-  "clientAddedSuccessfully": "تمت إضافة العميل بنجاح",
+  "clientInformation": "بيانات العميل",
+  "clientAddedSuccessfully": "تم إضافة العميل بنجاح",
   "clientUpdatedSuccessfully": "تم تحديث بيانات العميل بنجاح",
   "clientDeletedSuccessfully": "تم حذف العميل بنجاح",
   "phone": "الهاتف",
@@ -167,5 +168,10 @@
   "noInvoicesFound": "لا توجد فواتير مطابقة لهذه الحالة",
   "deleteInvoiceConfirmation": "هل أنت تأكد من رغبتك في حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء.",
   "invoiceDeletedSuccessfully": "تم حذف الفاتورة بنجاح",
-  "selectDate": "اختر التاريخ"
+  "selectDate": "اختر التاريخ",
+  "updateStatus": "تغيير حالة الفاتورة",
+  "editInvoice": "تعديل الفاتورة",
+  "invoiceDetails": "تفاصيل الفاتورة",
+  "invoiceUpdatedSuccessfully": "تم تحديث الفاتورة بنجاح",
+  "deleteInvoice": "حذف الفاتورة"
 }

@@ -11,6 +11,7 @@ import 'package:invoify/core/widgets/custom_error_widget.dart';
 import 'package:invoify/core/widgets/main_screen_header.dart';
 import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
+import 'package:invoify/features/invoices/presentation/args/add_edit_invoice_args.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_state.dart';
 import 'package:invoify/features/invoices/presentation/widgets/empty_invoices_widget.dart';
@@ -75,7 +76,10 @@ class _InvoicesViewState extends State<InvoicesView> {
                       label: AppStrings.createInvoice,
                       icon: Icons.add_rounded,
                       onTap: () => context
-                          .pushNamed(Routes.createInvoiceView)
+                          .pushNamed(
+                            Routes.addEditInvoiceView,
+                            arguments: AddEditInvoiceArgs(cubit: cubit),
+                          )
                           .then((isUpdated) {
                             if (isUpdated == true) {
                               cubit.getInvoices();

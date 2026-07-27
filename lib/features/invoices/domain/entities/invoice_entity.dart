@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:invoify/features/clients/domain/entities/client_entity.dart';
 import 'package:invoify/features/invoices/domain/entities/invoice_item_entity.dart';
+import 'package:invoify/features/invoices/domain/enums/discount_type.dart';
 import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 
 class InvoiceEntity extends Equatable {
@@ -14,6 +15,8 @@ class InvoiceEntity extends Equatable {
     this.dueDate,
     this.taxRate = 0.0,
     this.taxAmount = 0.0,
+    this.discountType = DiscountType.percentage,
+    this.discountRate = 0.0,
     this.discountAmount = 0.0,
     this.subtotal = 0.0,
     this.totalAmount = 0.0,
@@ -31,6 +34,8 @@ class InvoiceEntity extends Equatable {
   final DateTime? dueDate;
   final double taxRate;
   final double taxAmount;
+  final DiscountType discountType;
+  final double discountRate;
   final double discountAmount;
   final double subtotal;
   final double totalAmount;
@@ -49,6 +54,8 @@ class InvoiceEntity extends Equatable {
         dueDate,
         taxRate,
         taxAmount,
+        discountType,
+        discountRate,
         discountAmount,
         subtotal,
         totalAmount,
@@ -67,6 +74,8 @@ class InvoiceEntity extends Equatable {
     DateTime? dueDate,
     double? taxRate,
     double? taxAmount,
+    DiscountType? discountType,
+    double? discountRate,
     double? discountAmount,
     double? subtotal,
     double? totalAmount,
@@ -84,6 +93,8 @@ class InvoiceEntity extends Equatable {
         dueDate: dueDate ?? this.dueDate,
         taxRate: taxRate ?? this.taxRate,
         taxAmount: taxAmount ?? this.taxAmount,
+        discountType: discountType ?? this.discountType,
+        discountRate: discountRate ?? this.discountRate,
         discountAmount: discountAmount ?? this.discountAmount,
         subtotal: subtotal ?? this.subtotal,
         totalAmount: totalAmount ?? this.totalAmount,

@@ -10,7 +10,12 @@ import 'package:invoify/features/clients/presentation/args/add_edit_client_args.
 import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
 import 'package:invoify/features/clients/presentation/views/add_edit_client_view.dart';
 import 'package:invoify/features/home/presentation/views/main_view.dart';
-import 'package:invoify/features/invoices/presentation/views/create_invoice_view.dart';
+import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invoify/features/invoices/presentation/args/add_edit_invoice_args.dart';
+import 'package:invoify/features/invoices/presentation/args/invoice_details_args.dart';
+import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
+import 'package:invoify/features/invoices/presentation/views/add_edit_invoice_view.dart';
+import 'package:invoify/features/invoices/presentation/views/invoice_details_view.dart';
 import 'package:invoify/features/settings/presentation/views/profile_details_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
@@ -55,8 +60,48 @@ class AppRouter {
             child: AddEditClientView(client: args as ClientEntity?),
           ),
         );
-      case Routes.createInvoiceView:
-        return _route(const CreateInvoiceView());
+      case Routes.addEditInvoiceView:
+        final args = settings.arguments;
+        if (args is AddEditInvoiceArgs) {
+          if (args.cubit != null) {
+            return _route(
+              BlocProvider.value(
+                value: args.cubit!,
+                child: AddEditInvoiceView(invoice: args.invoice),
+              ),
+            );
+          }
+          return _route(
+            BlocProvider(
+              create: (context) => getIt<InvoicesCubit>(),
+              child: AddEditInvoiceView(invoice: args.invoice),
+            ),
+          );
+        }
+        return _route(
+          BlocProvider(
+            create: (context) => getIt<InvoicesCubit>(),
+            child: AddEditInvoiceView(invoice: args as InvoiceEntity?),
+          ),
+        );
+      case Routes.invoiceDetailsView:
+        final args = settings.arguments;
+        if (args is InvoiceDetailsArgs) {
+          return _route(
+            BlocProvider.value(
+              value: args.cubit,
+              child: InvoiceDetailsView(invoice: args.invoice),
+            ),
+          );
+        } else if (args is InvoiceEntity) {
+          return _route(
+            BlocProvider(
+              create: (context) => getIt<InvoicesCubit>(),
+              child: InvoiceDetailsView(invoice: args),
+            ),
+          );
+        }
+        return null;
       default:
         return null;
     }

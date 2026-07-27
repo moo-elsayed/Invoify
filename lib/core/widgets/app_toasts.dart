@@ -14,6 +14,8 @@ class AppToast {
     IconData? icon,
     VoidCallback? onTap,
   }) {
+    final statusColor = type.getColor(context);
+
     toastification.showCustom(
       context: context,
       alignment: Alignment.topCenter,
@@ -24,10 +26,13 @@ class AppToast {
             child: SlideTransition(
               position:
                   Tween<Offset>(
-                    begin: const Offset(0, -0.5),
+                    begin: const Offset(0, -0.4),
                     end: Offset.zero,
                   ).animate(
-                    CurvedAnimation(parent: animation, curve: Curves.easeOut),
+                    CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeOutBack,
+                    ),
                   ),
               child: child,
             ),
@@ -37,41 +42,50 @@ class AppToast {
         child: GestureDetector(
           onTap: () {
             toastification.dismiss(holder);
-            if (onTap != null) {
-              onTap();
-            }
+            onTap?.call();
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: context.colors.surface,
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(
+                color: statusColor.withValues(alpha: 0.25),
+                width: 1,
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 15,
-                  offset: const Offset(0, 4),
-                  spreadRadius: 2,
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                  spreadRadius: 0,
+                ),
+                BoxShadow(
+                  color: statusColor.withValues(alpha: 0.06),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
                 ),
               ],
-              border: Border(
-                left: !context.isRTL
-                    ? BorderSide(color: type.getColor(context), width: 4.w)
-                    : BorderSide.none,
-                right: context.isRTL
-                    ? BorderSide(color: type.getColor(context), width: 4.w)
-                    : BorderSide.none,
-              ),
             ),
             child: Row(
               children: [
-                Icon(
-                  icon ?? type.stateIcon,
-                  color: type.getColor(context),
-                  size: 28.sp,
+                // Modern Badge Icon Container
+                Container(
+                  padding: EdgeInsets.all(8.w),
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Icon(
+                    icon ?? type.stateIcon,
+                    color: statusColor,
+                    size: 22.sp,
+                  ),
                 ),
                 Gap(12.w),
+
+                // Title & Description
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +93,7 @@ class AppToast {
                     children: [
                       Text(
                         title,
-                        style: AppTextStyles.font16Bold.copyWith(
+                        style: AppTextStyles.font14Bold.copyWith(
                           color: context.colors.mainText,
                           height: 1.2,
                         ),
@@ -88,9 +102,9 @@ class AppToast {
                         Gap(4.h),
                         Text(
                           description,
-                          style: AppTextStyles.font14Regular.copyWith(
+                          style: AppTextStyles.font13Regular.copyWith(
                             color: context.colors.bodyText,
-                            height: 1.4,
+                            height: 1.3,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -100,12 +114,18 @@ class AppToast {
                   ),
                 ),
                 Gap(8.w),
+
+                // Close Button
                 InkWell(
                   onTap: () => toastification.dismiss(holder),
-                  child: Icon(
-                    Icons.close,
-                    color: context.colors.subText,
-                    size: 20.sp,
+                  borderRadius: BorderRadius.circular(20.r),
+                  child: Padding(
+                    padding: EdgeInsets.all(4.w),
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: context.colors.subText,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
               ],
