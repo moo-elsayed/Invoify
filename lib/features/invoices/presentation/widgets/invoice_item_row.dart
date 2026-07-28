@@ -171,7 +171,7 @@ class _InvoiceItemRowState extends State<InvoiceItemRow> {
                     ),
                   ),
                   child: Text(
-                    totalPrice.toStringAsFixed(2),
+                    context.formatCurrency(totalPrice),
                     style: AppTextStyles.font14Bold.copyWith(
                       color: colors.primary,
                     ),

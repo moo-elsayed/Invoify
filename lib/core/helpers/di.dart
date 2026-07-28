@@ -1,4 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:invoify/core/services/app_preferences/app_preferences_service.dart';
+import 'package:invoify/core/services/app_preferences/app_preferences_service_imp.dart';
+import 'package:invoify/core/theming/app_theme_cubit.dart';
 import 'package:invoify/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
 import 'package:invoify/features/auth/data/data_sources/remote/auth_remote_data_source_imp.dart';
 import 'package:invoify/features/auth/data/repo_imp/auth_repo_imp.dart';
@@ -24,6 +27,7 @@ import 'package:invoify/features/clients/domain/use_cases/delete_client_use_case
 import 'package:invoify/features/clients/domain/use_cases/get_clients_use_case.dart';
 import 'package:invoify/features/clients/domain/use_cases/update_client_use_case.dart';
 import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
+import 'package:invoify/features/dashboard/presentation/view_models/dashboard_cubit/dashboard_cubit.dart';
 import 'package:invoify/features/invoices/data/data_sources/remote/invoices_remote_data_source.dart';
 import 'package:invoify/features/invoices/data/data_sources/remote/invoices_remote_data_source_imp.dart';
 import 'package:invoify/features/invoices/data/repo_imp/invoices_repo_imp.dart';
@@ -33,73 +37,62 @@ import 'package:invoify/features/invoices/domain/use_cases/delete_invoice_use_ca
 import 'package:invoify/features/invoices/domain/use_cases/get_invoices_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/update_invoice_use_case.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
+import 'package:invoify/features/onboarding/presentation/view_models/onboarding_cubit/onboarding_cubit.dart';
 import 'package:invoify/features/settings/data/data_sources/remote/settings_remote_data_source.dart';
 import 'package:invoify/features/settings/data/data_sources/remote/settings_remote_data_source_imp.dart';
 import 'package:invoify/features/settings/data/repo_imp/settings_repo_imp.dart';
 import 'package:invoify/features/settings/domain/repo/settings_repo.dart';
 import 'package:invoify/features/settings/domain/use_cases/update_business_name_use_case.dart';
 import 'package:invoify/features/settings/domain/use_cases/update_currency_use_case.dart';
+import 'package:invoify/features/splash/presentation/view_models/splash_cubit/splash_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../features/onboarding/presentation/view_models/onboarding_cubit/onboarding_cubit.dart';
-import '../../features/splash/presentation/view_models/splash_cubit/splash_cubit.dart';
-import '../services/app_preferences/app_preferences_service.dart';
-import '../services/app_preferences/app_preferences_service_imp.dart';
-import '../theming/app_theme_cubit.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
-  // ==========================================
-  // 1. External Dependencies
-  // ==========================================
+  // External Dependencies
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);
 
-  // ==========================================
-  // 2. Core Services & Repositories
-  // ==========================================
+  // Core Services
   getIt.registerLazySingleton<AppPreferencesService>(
     () => AppPreferencesServiceImpl(getIt<SharedPreferences>()),
   );
 
-  // Auth Data Source & Repo
+  // Data Sources
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImp(),
   );
+  getIt.registerLazySingleton<ClientsRemoteDataSource>(
+    () => ClientsRemoteDataSourceImp(),
+  );
+  getIt.registerLazySingleton<InvoicesRemoteDataSource>(
+    () => InvoicesRemoteDataSourceImp(),
+  );
+  getIt.registerLazySingleton<SettingsRemoteDataSource>(
+    () => SettingsRemoteDataSourceImp(),
+  );
+
+  // Repositories
   getIt.registerLazySingleton<AuthRepo>(
     () => AuthRepoImp(getIt<AuthRemoteDataSource>()),
   );
-
-  // Settings Data Source & Repo
-  getIt.registerLazySingleton<SettingsRemoteDataSource>(
-    () => SettingsRemoteDataSourceImp(),
+  getIt.registerLazySingleton<ClientsRepo>(
+    () => ClientsRepoImp(getIt<ClientsRemoteDataSource>()),
+  );
+  getIt.registerLazySingleton<InvoicesRepo>(
+    () => InvoicesRepoImp(getIt<InvoicesRemoteDataSource>()),
   );
   getIt.registerLazySingleton<SettingsRepo>(
     () => SettingsRepoImp(getIt<SettingsRemoteDataSource>()),
   );
 
-  // Clients Data Source & Repo
-  getIt.registerLazySingleton<ClientsRemoteDataSource>(
-    () => ClientsRemoteDataSourceImp(),
-  );
-  getIt.registerLazySingleton<ClientsRepo>(
-    () => ClientsRepoImp(getIt<ClientsRemoteDataSource>()),
-  );
-
-  // Invoices Data Source & Repo
-  getIt.registerLazySingleton<InvoicesRemoteDataSource>(
-    () => InvoicesRemoteDataSourceImp(),
-  );
-  getIt.registerLazySingleton<InvoicesRepo>(
-    () => InvoicesRepoImp(getIt<InvoicesRemoteDataSource>()),
-  );
-
-  // Auth Use Cases
-  getIt.registerLazySingleton<CreateUserWithEmailAndPasswordUseCase>(
-    () => CreateUserWithEmailAndPasswordUseCase(getIt<AuthRepo>()),
-  );
+  // Use Cases - Auth
   getIt.registerLazySingleton<SignInWithEmailAndPasswordUseCase>(
     () => SignInWithEmailAndPasswordUseCase(getIt<AuthRepo>()),
+  );
+  getIt.registerLazySingleton<CreateUserWithEmailAndPasswordUseCase>(
+    () => CreateUserWithEmailAndPasswordUseCase(getIt<AuthRepo>()),
   );
   getIt.registerLazySingleton<GoogleSignInUseCase>(
     () => GoogleSignInUseCase(getIt<AuthRepo>()),
@@ -114,7 +107,7 @@ Future<void> setupGetIt() async {
     () => GetUserInfoUseCase(getIt<AuthRepo>()),
   );
 
-  // Settings Use Cases
+  // Use Cases - Settings
   getIt.registerLazySingleton<UpdateCurrencyUseCase>(
     () => UpdateCurrencyUseCase(getIt<SettingsRepo>()),
   );
@@ -122,7 +115,7 @@ Future<void> setupGetIt() async {
     () => UpdateBusinessNameUseCase(getIt<SettingsRepo>()),
   );
 
-  // Clients Use Cases
+  // Use Cases - Clients
   getIt.registerLazySingleton<GetClientsUseCase>(
     () => GetClientsUseCase(getIt<ClientsRepo>()),
   );
@@ -136,7 +129,7 @@ Future<void> setupGetIt() async {
     () => DeleteClientUseCase(getIt<ClientsRepo>()),
   );
 
-  // Invoices Use Cases
+  // Use Cases - Invoices
   getIt.registerLazySingleton<GetInvoicesUseCase>(
     () => GetInvoicesUseCase(getIt<InvoicesRepo>()),
   );
@@ -150,9 +143,7 @@ Future<void> setupGetIt() async {
     () => DeleteInvoiceUseCase(getIt<InvoicesRepo>()),
   );
 
-  // ==========================================
-  // 3. Cubits / ViewModels
-  // ==========================================
+  // Cubits / ViewModels
   getIt.registerFactory<UserInfoCubit>(
     () => UserInfoCubit(
       getIt<AppPreferencesService>(),
@@ -177,6 +168,13 @@ Future<void> setupGetIt() async {
       getIt<CreateInvoiceUseCase>(),
       getIt<UpdateInvoiceUseCase>(),
       getIt<DeleteInvoiceUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<DashboardCubit>(
+    () => DashboardCubit(
+      getIt<GetInvoicesUseCase>(),
+      getIt<GetClientsUseCase>(),
     ),
   );
 

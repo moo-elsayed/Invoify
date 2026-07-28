@@ -186,7 +186,7 @@ draft ──(submit)──► pending ──(email opened)──► opened
 - [x] Client Management screens (CRUD)
 - [x] Invoice Creation screen (dynamic items + auto-calculation)
 - [x] Invoice List screen (Tabs by status)
-- [ ] Dashboard & Analytics screen (Charts)
+- [x] Dashboard & Analytics screen (Charts)
 - [ ] Deep Linking & Notification Routing
 
 ### Cloud Functions (Node.js / TypeScript)

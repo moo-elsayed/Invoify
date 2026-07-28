@@ -31,13 +31,13 @@ class InvoiceDetailsSummaryCard extends StatelessWidget {
         children: [
           InvoiceSummaryRowTile(
             label: AppStrings.subtotal,
-            value: '\$${invoice.subtotal.toStringAsFixed(2)}',
+            value: context.formatCurrency(invoice.subtotal),
           ),
           if (invoice.taxRate > 0) ...[
             Gap(8.h),
             InvoiceSummaryRowTile(
               label: '${AppStrings.taxAmount} (${invoice.taxRate}%)',
-              value: '+\$${invoice.taxAmount.toStringAsFixed(2)}',
+              value: '+${context.formatCurrency(invoice.taxAmount)}',
             ),
           ],
           if (invoice.discountAmount > 0) ...[
@@ -46,7 +46,7 @@ class InvoiceDetailsSummaryCard extends StatelessWidget {
               label: invoice.discountType.isPercentage
                   ? '${AppStrings.discount} (${invoice.discountRate.toStringAsFixed(0)}%)'
                   : AppStrings.discount,
-              value: '-\$${invoice.discountAmount.toStringAsFixed(2)}',
+              value: '-${context.formatCurrency(invoice.discountAmount)}',
               valueColor: colors.error,
             ),
           ],
@@ -63,8 +63,10 @@ class InvoiceDetailsSummaryCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$${invoice.totalAmount.toStringAsFixed(2)}',
-                style: AppTextStyles.font18Bold.copyWith(color: colors.primary),
+                context.formatCurrency(invoice.totalAmount),
+                style: AppTextStyles.font18Bold.copyWith(
+                  color: colors.primary,
+                ),
               ),
             ],
           ),

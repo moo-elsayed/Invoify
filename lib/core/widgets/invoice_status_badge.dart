@@ -18,34 +18,15 @@ class InvoiceStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
+    final fgColor = status.getColor(context);
+    final bgColor = status.getBackgroundColor(context);
 
-    final (bgColor, fgColor, text) = switch (status) {
-      InvoiceStatus.draft => (
-        colors.subText.withValues(alpha: 0.12),
-        colors.subText,
-        AppStrings.statusDraft,
-      ),
-      InvoiceStatus.sent => (
-        colors.primary.withValues(alpha: 0.12),
-        colors.primary,
-        AppStrings.statusSent,
-      ),
-      InvoiceStatus.paid => (
-        const Color(0xFF10B981).withValues(alpha: 0.12),
-        const Color(0xFF10B981),
-        AppStrings.statusPaid,
-      ),
-      InvoiceStatus.overdue => (
-        colors.error.withValues(alpha: 0.12),
-        colors.error,
-        AppStrings.statusOverdue,
-      ),
-      InvoiceStatus.cancelled => (
-        Colors.orange.withValues(alpha: 0.12),
-        Colors.orange,
-        AppStrings.statusCancelled,
-      ),
+    final text = switch (status) {
+      InvoiceStatus.draft => AppStrings.statusDraft,
+      InvoiceStatus.sent => AppStrings.statusSent,
+      InvoiceStatus.paid => AppStrings.statusPaid,
+      InvoiceStatus.overdue => AppStrings.statusOverdue,
+      InvoiceStatus.cancelled => AppStrings.statusCancelled,
     };
 
     return Container(

@@ -7,10 +7,10 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 import 'package:invoify/core/utils/custom_bottom_sheet_selection_item.dart';
 import 'package:invoify/core/widgets/custom_bottom_sheet.dart';
+import 'package:invoify/core/widgets/invoice_status_badge.dart';
 import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
-import 'package:invoify/features/invoices/presentation/widgets/invoice_status_badge.dart';
 
 class InvoiceDetailsHeaderCard extends StatefulWidget {
   const InvoiceDetailsHeaderCard({

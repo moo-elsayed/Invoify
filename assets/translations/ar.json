@@ -173,5 +173,16 @@
   "editInvoice": "تعديل الفاتورة",
   "invoiceDetails": "تفاصيل الفاتورة",
   "invoiceUpdatedSuccessfully": "تم تحديث الفاتورة بنجاح",
-  "deleteInvoice": "حذف الفاتورة"
+  "deleteInvoice": "حذف الفاتورة",
+  "dashboard": "لوحة التحكم",
+  "monthlyEarnings": "الأرباح الشهرية",
+  "totalOverdue": "المبالغ المتأخرة",
+  "pendingAmount": "مدفوعات قيد الانتظار",
+  "activeClients": "العملاء النشطون",
+  "revenueOverview": "نظرة عامة على الإيرادات",
+  "invoiceBreakdown": "توزيع حالات الفواتير",
+  "recentInvoices": "أحدث الفواتير",
+  "viewAll": "عرض الكل",
+  "totalRevenue": "إجمالي الإيرادات",
+  "noAnalyticsData": "لا توجد بيانات تحليلات متاحة بعد"
 }

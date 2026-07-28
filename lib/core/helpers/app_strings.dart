@@ -214,5 +214,18 @@ abstract class AppStrings {
   static String get invoiceUpdatedSuccessfully =>
       'invoiceUpdatedSuccessfully'.tr();
   static String get deleteInvoice => 'deleteInvoice'.tr();
+
+  // Dashboard & Analytics Strings
+  static String get dashboard => 'dashboard'.tr();
+  static String get monthlyEarnings => 'monthlyEarnings'.tr();
+  static String get totalOverdue => 'totalOverdue'.tr();
+  static String get pendingAmount => 'pendingAmount'.tr();
+  static String get activeClients => 'activeClients'.tr();
+  static String get revenueOverview => 'revenueOverview'.tr();
+  static String get invoiceBreakdown => 'invoiceBreakdown'.tr();
+  static String get recentInvoices => 'recentInvoices'.tr();
+  static String get viewAll => 'viewAll'.tr();
+  static String get totalRevenue => 'totalRevenue'.tr();
+  static String get noAnalyticsData => 'noAnalyticsData'.tr();
 }
 

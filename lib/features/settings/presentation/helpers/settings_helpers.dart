@@ -81,17 +81,16 @@ List<CustomBottomSheetSelectionItem<String>> getCurrencyItems({
   required BuildContext context,
   required String currentCurrency,
   required ValueChanged<String> onCurrencySelected,
-}) => getSupportedCurrencies()
-    .map(
-      (curr) => CustomBottomSheetSelectionItem<String>(
-        title: '${curr.name} (${curr.code})',
-        icon: Icons.monetization_on_outlined,
-        value: curr.code,
-        isSelected: currentCurrency == curr.code,
-        onTap: () => onCurrencySelected(curr.code),
-      ),
-    )
-    .toList();
+}) => getSupportedCurrencies().map((curr) {
+  final symbol = context.getCurrencySymbolByCode(curr.code);
+  return CustomBottomSheetSelectionItem<String>(
+    title: '${curr.name} ($symbol)',
+    icon: Icons.monetization_on_outlined,
+    value: curr.code,
+    isSelected: currentCurrency == curr.code,
+    onTap: () => onCurrencySelected(curr.code),
+  );
+}).toList();
 
 List<SettingsCardItem> getGeneralSettingsItems({
   required BuildContext context,

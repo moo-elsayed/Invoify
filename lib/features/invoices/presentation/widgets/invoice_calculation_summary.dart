@@ -26,6 +26,7 @@ class InvoiceCalculationSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final currencySymbol = context.currencySymbol;
 
     return ListenableBuilder(
       listenable: Listenable.merge([
@@ -69,7 +70,7 @@ class InvoiceCalculationSummary extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    subtotal.toStringAsFixed(2),
+                    context.formatCurrency(subtotal),
                     style: AppTextStyles.font14Bold.copyWith(
                       color: colors.mainText,
                     ),
@@ -97,16 +98,17 @@ class InvoiceCalculationSummary extends StatelessWidget {
                       controller: discountController,
                       hint: discountType.isPercentage
                           ? '${AppStrings.discount} (%)'
-                          : '${AppStrings.discount} (\$)',
+                          : '${AppStrings.discount} ($currencySymbol)',
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                       onChanged: (val) => onCalculationsChanged?.call(),
                       suffixWidget: GestureDetector(
                         onTap: () {
-                          discountTypeNotifier.value = discountType.isPercentage
-                              ? DiscountType.fixed
-                              : DiscountType.percentage;
+                          discountTypeNotifier.value =
+                              discountType.isPercentage
+                                  ? DiscountType.fixed
+                                  : DiscountType.percentage;
                           onCalculationsChanged?.call();
                         },
                         child: Container(
@@ -120,7 +122,7 @@ class InvoiceCalculationSummary extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Text(
-                            discountType.isPercentage ? '%' : '\$',
+                            discountType.isPercentage ? '%' : currencySymbol,
                             style: AppTextStyles.font14Bold.copyWith(
                               color: colors.primary,
                             ),
@@ -145,7 +147,7 @@ class InvoiceCalculationSummary extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '+${taxAmount.toStringAsFixed(2)}',
+                      '+${context.formatCurrency(taxAmount)}',
                       style: AppTextStyles.font13Regular.copyWith(
                         color: colors.subText,
                       ),
@@ -169,7 +171,7 @@ class InvoiceCalculationSummary extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '-${discountAmount.toStringAsFixed(2)}',
+                      '-${context.formatCurrency(discountAmount)}',
                       style: AppTextStyles.font13Regular.copyWith(
                         color: colors.error,
                       ),
@@ -184,7 +186,10 @@ class InvoiceCalculationSummary extends StatelessWidget {
 
               // Grand Total Highlight Card
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.w,
+                  vertical: 12.h,
+                ),
                 decoration: BoxDecoration(
                   color: colors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12.r),
@@ -199,7 +204,7 @@ class InvoiceCalculationSummary extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      grandTotal.toStringAsFixed(2),
+                      context.formatCurrency(grandTotal),
                       style: AppTextStyles.font18Bold.copyWith(
                         color: colors.primary,
                       ),

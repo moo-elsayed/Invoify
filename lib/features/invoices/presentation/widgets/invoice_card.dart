@@ -12,11 +12,11 @@ import 'package:invoify/core/utils/custom_bottom_sheet_selection_item.dart';
 import 'package:invoify/core/widgets/custom_bottom_sheet.dart';
 import 'package:invoify/core/widgets/custom_confirmation_dialog.dart';
 import 'package:invoify/core/widgets/custom_icon_action_button.dart';
+import 'package:invoify/core/widgets/invoice_status_badge.dart';
 import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 import 'package:invoify/features/invoices/presentation/args/invoice_details_args.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
-import 'package:invoify/features/invoices/presentation/widgets/invoice_status_badge.dart';
 
 class InvoiceCard extends StatelessWidget {
   const InvoiceCard({
@@ -46,12 +46,12 @@ class InvoiceCard extends StatelessWidget {
   }
 
   String _getStatusText(InvoiceStatus status) => switch (status) {
-        InvoiceStatus.draft => AppStrings.statusDraft,
-        InvoiceStatus.sent => AppStrings.statusSent,
-        InvoiceStatus.paid => AppStrings.statusPaid,
-        InvoiceStatus.overdue => AppStrings.statusOverdue,
-        InvoiceStatus.cancelled => AppStrings.statusCancelled,
-      };
+    InvoiceStatus.draft => AppStrings.statusDraft,
+    InvoiceStatus.sent => AppStrings.statusSent,
+    InvoiceStatus.paid => AppStrings.statusPaid,
+    InvoiceStatus.overdue => AppStrings.statusOverdue,
+    InvoiceStatus.cancelled => AppStrings.statusCancelled,
+  };
 
   void _showStatusBottomSheet(BuildContext context) {
     CustomBottomSheet.show(
@@ -207,7 +207,7 @@ class InvoiceCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          invoice.totalAmount.toStringAsFixed(2),
+                          context.formatCurrency(invoice.totalAmount),
                           style: AppTextStyles.font16Bold.copyWith(
                             color: colors.primary,
                           ),

@@ -1,7 +1,10 @@
 import 'dart:ui' as ui;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoify/core/helpers/app_strings.dart';
+import 'package:invoify/features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
+import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 import 'package:toastification/toastification.dart';
 import '../theming/colors_manager.dart';
 
@@ -43,6 +46,52 @@ extension AppToastIconExtension on ToastificationType {
     .info => Icons.info_outline_rounded,
     _ => Icons.info_outline_rounded,
   };
+}
+
+extension InvoiceStatusColorExtension on InvoiceStatus {
+  Color getColor(BuildContext context) => switch (this) {
+    InvoiceStatus.paid => const Color(0xFF10B981),
+    InvoiceStatus.sent => context.colors.primary,
+    InvoiceStatus.overdue => context.colors.error,
+    InvoiceStatus.draft => context.colors.subText,
+    InvoiceStatus.cancelled => Colors.orange,
+  };
+
+  Color getBackgroundColor(BuildContext context) =>
+      getColor(context).withValues(alpha: 0.12);
+}
+
+extension CurrencyExtension on BuildContext {
+  String get userCurrency {
+    try {
+      final user = watch<UserInfoCubit>().currentUser;
+      return user?.currency ?? 'USD';
+    } catch (_) {
+      return 'USD';
+    }
+  }
+
+  String getCurrencySymbolByCode(String code) => switch (code.toUpperCase()) {
+    'USD' => '\$',
+    'EUR' => '€',
+    'EGP' => isArabic ? 'ج.م' : 'EGP',
+    'SAR' => isArabic ? 'ر.س' : 'SAR',
+    'AED' => isArabic ? 'د.إ' : 'AED',
+    _ => '\$',
+  };
+
+  String get currencySymbol => getCurrencySymbolByCode(userCurrency);
+
+  String formatCurrency(num amount) {
+    final formatted = amount.toStringAsFixed(2);
+    final symbol = currencySymbol;
+
+    if (symbol == '\$' || symbol == '€') {
+      return '$symbol$formatted';
+    } else {
+      return '$formatted $symbol';
+    }
+  }
 }
 
 extension AppTheme on BuildContext {

@@ -59,7 +59,7 @@ class InvoiceDetailsItemsCard extends StatelessWidget {
                             Directionality(
                               textDirection: TextDirection.ltr,
                               child: Text(
-                                '${item.quantity} × \$${item.unitPrice.toStringAsFixed(2)}',
+                                '${item.quantity} × ${context.formatCurrency(item.unitPrice)}',
                                 style: AppTextStyles.font12Regular.copyWith(
                                   color: colors.subText,
                                 ),
@@ -69,7 +69,7 @@ class InvoiceDetailsItemsCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '\$${item.totalPrice.toStringAsFixed(2)}',
+                        context.formatCurrency(item.totalPrice),
                         style: AppTextStyles.font14Bold.copyWith(
                           color: colors.mainText,
                         ),

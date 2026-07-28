@@ -25,6 +25,7 @@ class SettingsView extends StatelessWidget {
     final _ = context.locale;
 
     return SafeArea(
+      bottom: false,
       child: BlocConsumer<UserInfoCubit, UserInfoState>(
         listener: (context, state) {
           if (ModalRoute.of(context)?.isCurrent != true) return;
@@ -47,7 +48,7 @@ class SettingsView extends StatelessWidget {
           final currentCurrency = user?.currency ?? 'USD';
 
           return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            padding: EdgeInsets.only(right: 16.w, left: 16.w, top: 12.h),
             child: Column(
               children: [
                 // Header Title
@@ -74,14 +75,18 @@ class SettingsView extends StatelessWidget {
                 SettingsCard(
                   items: getLocalSettingsItems(
                     context: context,
-                    currentCurrency: currentCurrency,
+                    currentCurrency: getSupportedCurrencies()
+                        .firstWhere(
+                          (element) => element.code == currentCurrency,
+                        )
+                        .name,
                     onCurrencyChanged: (newCurrency) {
                       context.read<UserInfoCubit>().updateCurrency(newCurrency);
                     },
                   ),
                 ),
                 Gap(32.h),
-
+                
                 // Logout Button
                 const LogoutButton(),
                 Gap(80.h),

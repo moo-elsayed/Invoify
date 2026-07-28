@@ -175,5 +175,16 @@
   "editInvoice": "Edit Invoice",
   "invoiceDetails": "Invoice Details",
   "invoiceUpdatedSuccessfully": "Invoice updated successfully",
-  "deleteInvoice": "Delete Invoice"
+  "deleteInvoice": "Delete Invoice",
+  "dashboard": "Dashboard",
+  "monthlyEarnings": "Monthly Earnings",
+  "totalOverdue": "Total Overdue",
+  "pendingAmount": "Pending Payments",
+  "activeClients": "Active Clients",
+  "revenueOverview": "Revenue Overview",
+  "invoiceBreakdown": "Invoice Breakdown",
+  "recentInvoices": "Recent Invoices",
+  "viewAll": "View All",
+  "totalRevenue": "Total Revenue",
+  "noAnalyticsData": "No analytics data available yet"
 }
