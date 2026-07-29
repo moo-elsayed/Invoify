@@ -187,16 +187,16 @@ draft ──(submit)──► pending ──(email opened)──► opened
 - [x] Invoice Creation screen (dynamic items + auto-calculation)
 - [x] Invoice List screen (Tabs by status)
 - [x] Dashboard & Analytics screen (Charts)
-- [ ] Deep Linking & Notification Routing
+- [x] Deep Linking & Notification Routing
 
 ### Cloud Functions (Node.js / TypeScript)
-- ⬜ PDF Generator function (Storage Trigger / Callable)
-- ⬜ Stripe Checkout Link generator
-- ⬜ Stripe Webhook handler (payment confirmation)
-- ⬜ FCM Push Notification trigger
-- ⬜ Invoice Email sender (PDF + payment link)
-- ⬜ Email Tracking Pixel function
-- ⬜ Daily Reminder Cron Job (9:00 AM)
+- [x] PDF Generator function (Storage Trigger / Callable)
+- [x] Stripe Checkout Link generator
+- [x] Stripe Webhook handler (payment confirmation)
+- [x] FCM Push Notification trigger
+- [x] Invoice Email sender (PDF + payment link)
+- [x] Email Tracking Pixel function
+- [x] Daily Reminder Cron Job (9:00 AM)
 
 ### Testing & DevOps
 - ⬜ Unit Tests (invoice calculations, email validation, data mapping)

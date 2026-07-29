@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/helpers/di.dart';
+import 'package:invoify/core/helpers/notification_router.dart';
 import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
 import 'package:invoify/features/clients/presentation/views/clients_view.dart';
 import 'package:invoify/features/dashboard/presentation/view_models/dashboard_cubit/dashboard_cubit.dart';
@@ -24,6 +25,14 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationRouter.markAppAsReady();
+    });
+  }
 
   final List<Widget> _screens = const [
     DashboardView(),

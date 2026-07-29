@@ -1,1 +1,37 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"invoify-7757d","appId":"1:982039013208:android:bb9f897815052b3443e72d","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"invoify-7757d","configurations":{"android":"1:982039013208:android:bb9f897815052b3443e72d","ios":"1:982039013208:ios:d284dd5245d224ad43e72d"}}}}}}
+{
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ],
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "invoify-7757d",
+          "appId": "1:982039013208:android:bb9f897815052b3443e72d",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "invoify-7757d",
+          "configurations": {
+            "android": "1:982039013208:android:bb9f897815052b3443e72d",
+            "ios": "1:982039013208:ios:d284dd5245d224ad43e72d"
+          }
+        }
+      }
+    }
+  }
+}
