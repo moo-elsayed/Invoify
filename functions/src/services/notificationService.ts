@@ -9,36 +9,55 @@ export interface SendPushNotificationParams {
 
 export async function sendPushNotificationToUser(params: SendPushNotificationParams): Promise<boolean> {
   try {
+    console.log(`[sendPushNotificationToUser] Target userId: ${params.userId}`);
     const userDoc = await db.collection('users').doc(params.userId).get();
     if (!userDoc.exists) {
-      console.warn(`User ${params.userId} not found for sending FCM notification.`);
+      console.warn(`[sendPushNotificationToUser] User doc ${params.userId} does not exist in Firestore.`);
       return false;
     }
 
     const userData = userDoc.data();
-    const fcmToken = userData?.fcmToken || userData?.fcmTokens?.[0];
+    const fcmToken = userData?.fcmToken || (Array.isArray(userData?.fcmTokens) ? userData.fcmTokens[0] : undefined);
 
     if (!fcmToken) {
-      console.warn(`No FCM token found for user ${params.userId}.`);
+      console.warn(`[sendPushNotificationToUser] No fcmToken field found in users/${params.userId}`);
       return false;
     }
 
-    await messaging.send({
+    console.log(`[sendPushNotificationToUser] Sending FCM payload to token (${fcmToken.substring(0, 20)}...)...`);
+
+    const response = await messaging.send({
       token: fcmToken,
       notification: {
         title: params.title,
         body: params.body,
       },
-      data: {
-        click_action: 'FLUTTER_NOTIFICATION_CLICK',
-        ...params.data,
+      android: {
+        priority: 'high',
+        notification: {
+          channelId: 'high_importance_channel',
+          priority: 'high',
+          defaultSound: true,
+        },
       },
+      apns: {
+        payload: {
+          aps: {
+            alert: {
+              title: params.title,
+              body: params.body,
+            },
+            sound: 'default',
+          },
+        },
+      },
+      data: params.data || {},
     });
 
-    console.log(`Push notification sent successfully to user ${params.userId}`);
+    console.log(`[sendPushNotificationToUser] FCM Notification sent successfully! Response ID: ${response}`);
     return true;
-  } catch (error) {
-    console.error(`Error sending push notification to user ${params.userId}:`, error);
+  } catch (error: any) {
+    console.error(`[sendPushNotificationToUser] Error sending FCM notification to user ${params.userId}:`, error?.message || error, error?.stack || '');
     return false;
   }
 }

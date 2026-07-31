@@ -7,7 +7,7 @@ class UserModel {
     required this.uid,
     required this.businessName,
     required this.email,
-    this.currency = 'USD',
+    this.currency = 'EGP',
     DateTime? createdAt,
     this.isVerified = false,
   }) : createdAt = createdAt ?? DateTime.now();
@@ -21,7 +21,7 @@ class UserModel {
         uid: user.uid,
         businessName: businessName ?? user.displayName ?? '',
         email: user.email ?? '',
-        currency: currency ?? 'USD',
+        currency: currency ?? 'EGP',
         createdAt: DateTime.now(),
         isVerified: user.emailVerified,
       );
@@ -30,7 +30,7 @@ class UserModel {
         uid: map['userId'] ?? map['uid'] ?? '',
         businessName: map['businessName'] ?? map['name'] ?? '',
         email: map['email'] ?? '',
-        currency: map['currency'] ?? 'USD',
+        currency: map['currency'] ?? 'EGP',
         createdAt: map['createdAt'] != null
             ? (map['createdAt'] is Timestamp
                 ? (map['createdAt'] as Timestamp).toDate()

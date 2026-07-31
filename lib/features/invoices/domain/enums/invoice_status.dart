@@ -10,6 +10,7 @@ enum InvoiceStatus {
   static InvoiceStatus fromString(String? value) {
     switch (value?.toLowerCase().trim()) {
       case 'sent':
+      case 'pending':
         return InvoiceStatus.sent;
       case 'paid':
         return InvoiceStatus.paid;

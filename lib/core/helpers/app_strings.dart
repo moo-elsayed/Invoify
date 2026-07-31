@@ -158,6 +158,7 @@ abstract class AppStrings {
   static String get searchClients => 'searchClients'.tr();
   static String get noClientsFound => 'noClientsFound'.tr();
   static String get noClientsYet => 'noClientsYet'.tr();
+  static String get noClientsAvailable => 'noClientsAvailable'.tr();
   static String get clientName => 'clientName'.tr();
   static String get clientEmail => 'clientEmail'.tr();
   static String get clientPhone => 'clientPhone'.tr();
@@ -192,6 +193,8 @@ abstract class AppStrings {
   static String get notes => 'notes'.tr();
   static String get notesHint => 'notesHint'.tr();
   static String get saveAsDraft => 'saveAsDraft'.tr();
+  static String get sendInvoice => 'sendInvoice'.tr();
+  static String get invoiceSentSuccessfully => 'invoiceSentSuccessfully'.tr();
   static String get invoiceCreatedSuccessfully =>
       'invoiceCreatedSuccessfully'.tr();
   static String get pleaseAddAtLeastOneItem => 'pleaseAddAtLeastOneItem'.tr();

@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/network/network_response.dart';
 import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 import 'package:invoify/features/invoices/domain/use_cases/create_invoice_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/delete_invoice_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/get_invoices_use_case.dart';
@@ -25,6 +27,8 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   List<InvoiceEntity> _allInvoices = [];
   List<InvoiceEntity> get allInvoices => _allInvoices;
 
+  StreamSubscription<List<InvoiceEntity>>? _invoicesSubscription;
+
   void refreshLocalInvoices() {
     emit(InvoicesSuccess(List.from(_allInvoices)));
   }
@@ -35,21 +39,21 @@ class InvoicesCubit extends Cubit<InvoicesState> {
 
     emit(const InvoicesLoading());
 
-    final response = await _getInvoicesUseCase(firebaseUser.uid);
-    switch (response) {
-      case NetworkSuccess<List<InvoiceEntity>>():
-        _allInvoices = response.data ?? [];
-        emit(InvoicesSuccess(_allInvoices));
-      case NetworkFailure<List<InvoiceEntity>>():
-        emit(InvoicesFailure(response.error));
-    }
+    await _invoicesSubscription?.cancel();
+    _invoicesSubscription = _getInvoicesUseCase.stream(firebaseUser.uid).listen(
+      (invoices) {
+        _allInvoices = invoices;
+        emit(InvoicesSuccess(List.from(_allInvoices)));
+      },
+      onError: (error) {
+        emit(InvoicesFailure(error.toString()));
+      },
+    );
   }
 
   Future<void> createInvoice(InvoiceEntity invoice) async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (firebaseUser == null) return;
-
-    emit(const InvoicesLoading());
 
     final invoiceToCreate = invoice.copyWith(
       userId: firebaseUser.uid,
@@ -59,9 +63,6 @@ class InvoicesCubit extends Cubit<InvoicesState> {
     final response = await _createInvoiceUseCase(invoiceToCreate);
     switch (response) {
       case NetworkSuccess<InvoiceEntity>():
-        if (response.data != null) {
-          _allInvoices.insert(0, response.data!);
-        }
         emit(InvoiceActionSuccess(AppStrings.invoiceCreatedSuccessfully));
       case NetworkFailure<InvoiceEntity>():
         emit(InvoicesFailure(response.error));
@@ -69,33 +70,31 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   }
 
   Future<void> updateInvoice(InvoiceEntity invoice) async {
-    emit(const InvoicesLoading());
-
     final response = await _updateInvoiceUseCase(invoice);
     switch (response) {
       case NetworkSuccess<void>():
-        final index = _allInvoices.indexWhere(
-          (inv) => inv.invoiceId == invoice.invoiceId,
-        );
-        if (index != -1) {
-          _allInvoices[index] = invoice;
-        }
-        emit(InvoiceActionSuccess(AppStrings.invoiceUpdatedSuccessfully));
+        final message = invoice.status == InvoiceStatus.sent
+            ? AppStrings.invoiceSentSuccessfully
+            : AppStrings.invoiceUpdatedSuccessfully;
+        emit(InvoiceActionSuccess(message));
       case NetworkFailure<void>():
         emit(InvoicesFailure(response.error));
     }
   }
 
   Future<void> deleteInvoice(String invoiceId) async {
-    emit(const InvoicesLoading());
-
     final response = await _deleteInvoiceUseCase(invoiceId);
     switch (response) {
       case NetworkSuccess<void>():
-        _allInvoices.removeWhere((inv) => inv.invoiceId == invoiceId);
         emit(InvoicesSuccess(List.from(_allInvoices)));
       case NetworkFailure<void>():
         emit(InvoicesFailure(response.error));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _invoicesSubscription?.cancel();
+    return super.close();
   }
 }

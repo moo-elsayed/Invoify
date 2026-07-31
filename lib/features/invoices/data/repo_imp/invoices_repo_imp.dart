@@ -16,13 +16,20 @@ class InvoicesRepoImp implements InvoicesRepo {
     final response = await _remoteDataSource.getInvoices(userId: userId);
     switch (response) {
       case NetworkSuccess<List<InvoiceModel>>():
-        final entities =
-            (response.data ?? []).map((model) => model.toEntity()).toList();
+        final entities = (response.data ?? [])
+            .map((model) => model.toEntity())
+            .toList();
         return NetworkSuccess(entities);
       case NetworkFailure<List<InvoiceModel>>():
         return NetworkFailure(response.failure);
     }
   }
+
+  @override
+  Stream<List<InvoiceEntity>> getInvoicesStream({required String userId}) =>
+      _remoteDataSource
+          .getInvoicesStream(userId: userId)
+          .map((models) => models.map((m) => m.toEntity()).toList());
 
   @override
   Future<NetworkResponse<InvoiceEntity>> createInvoice({
@@ -41,14 +48,12 @@ class InvoicesRepoImp implements InvoicesRepo {
   @override
   Future<NetworkResponse<void>> updateInvoice({
     required InvoiceEntity invoice,
-  }) async =>
-      await _remoteDataSource.updateInvoice(
-        invoice: InvoiceModel.fromEntity(invoice),
-      );
+  }) async => await _remoteDataSource.updateInvoice(
+    invoice: InvoiceModel.fromEntity(invoice),
+  );
 
   @override
   Future<NetworkResponse<void>> deleteInvoice({
     required String invoiceId,
-  }) async =>
-      await _remoteDataSource.deleteInvoice(invoiceId: invoiceId);
+  }) async => await _remoteDataSource.deleteInvoice(invoiceId: invoiceId);
 }

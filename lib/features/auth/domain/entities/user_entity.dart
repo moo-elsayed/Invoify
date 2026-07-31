@@ -5,7 +5,7 @@ class UserEntity extends Equatable {
     this.uid = '',
     this.businessName = '',
     this.email = '',
-    this.currency = 'USD',
+    this.currency = 'EGP',
     this.createdAt,
     this.isVerified = false,
   });

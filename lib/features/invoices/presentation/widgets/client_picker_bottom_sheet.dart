@@ -77,7 +77,7 @@ class ClientPickerBottomSheet extends StatelessWidget {
                 if (clients.isEmpty) {
                   return Center(
                     child: Text(
-                      AppStrings.noClientsYet,
+                      AppStrings.noClientsAvailable,
                       style: AppTextStyles.font14Medium.copyWith(
                         color: colors.subText,
                       ),

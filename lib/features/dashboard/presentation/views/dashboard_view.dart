@@ -19,70 +19,68 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: EdgeInsets.only(right: 16.w, left: 16.w, top: 12.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MainScreenHeader(title: AppStrings.home),
-              Gap(16.h),
-              Expanded(
-                child: BlocBuilder<DashboardCubit, DashboardState>(
-                  builder: (context, state) {
-                    final cubit = context.read<DashboardCubit>();
+    bottom: false,
+    child: Padding(
+      padding: EdgeInsets.only(right: 16.w, left: 16.w, top: 12.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MainScreenHeader(title: AppStrings.home),
+          Gap(16.h),
+          Expanded(
+            child: BlocBuilder<DashboardCubit, DashboardState>(
+              builder: (context, state) {
+                final cubit = context.read<DashboardCubit>();
 
-                    if (state is DashboardLoading ||
-                        state is DashboardInitial) {
-                      return const DashboardSkeletonLoading();
-                    }
+                if (state is DashboardLoading || state is DashboardInitial) {
+                  return const DashboardSkeletonLoading();
+                }
 
-                    if (state is DashboardFailure) {
-                      return CustomErrorWidget(
-                        error: state.error,
-                        onRetry: () =>
-                            cubit.loadDashboardData(forceRefresh: true),
-                      );
-                    }
+                if (state is DashboardFailure) {
+                  return CustomErrorWidget(
+                    error: state.error,
+                    onRetry: () => cubit.loadDashboardData(forceRefresh: true),
+                  );
+                }
 
-                    if (state is DashboardSuccess) {
-                      return RefreshIndicator(
-                        onRefresh: () =>
-                            cubit.loadDashboardData(forceRefresh: true),
-                        color: context.colors.primary,
-                        child: SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          padding: EdgeInsets.only(bottom: 15.h),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 16.h,
-                            children: [
-                              DashboardMetricsCards(
-                                monthlyEarnings: state.monthlyEarnings,
-                                totalOverdue: state.totalOverdue,
-                                pendingAmount: state.pendingAmount,
-                                activeClientsCount: state.totalClientsCount,
-                              ),
-                              DashboardRevenueChart(
-                                monthlyRevenueMap: state.monthlyRevenueMap,
-                              ),
-                              DashboardStatusChart(
-                                statusDistribution: state.statusDistribution,
-                              ),
-                              DashboardRecentInvoices(
-                                recentInvoices: state.recentInvoices,
-                              ),
-                            ],
+                if (state is DashboardSuccess) {
+                  return RefreshIndicator(
+                    onRefresh: () =>
+                        cubit.loadDashboardData(forceRefresh: true),
+                    color: context.colors.primary,
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: 15.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 16.h,
+                        children: [
+                          DashboardMetricsCards(
+                            monthlyEarnings: state.monthlyEarnings,
+                            totalOverdue: state.totalOverdue,
+                            pendingAmount: state.pendingAmount,
+                            activeClientsCount: state.totalClientsCount,
                           ),
-                        ),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
-              ),
-            ],
+                          DashboardRevenueChart(
+                            monthlyRevenueMap: state.monthlyRevenueMap,
+                          ),
+                          DashboardStatusChart(
+                            statusDistribution: state.statusDistribution,
+                          ),
+                          DashboardRecentInvoices(
+                            recentInvoices: state.recentInvoices,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }

@@ -1,8 +1,14 @@
 import * as admin from 'firebase-admin';
 
+const PROJECT_ID = process.env.GCLOUD_PROJECT || 'invoify-7757d';
+const BUCKET_NAME = process.env.STORAGE_BUCKET || 'invoify-7757d.firebasestorage.app';
+
 export function getAdminApp(): typeof admin {
   if (!admin.apps.length) {
-    admin.initializeApp();
+    admin.initializeApp({
+      projectId: PROJECT_ID,
+      storageBucket: BUCKET_NAME,
+    });
   }
   return admin;
 }

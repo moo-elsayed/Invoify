@@ -35,11 +35,14 @@ export const dailyOverdueChecker = functions
           overdueAt: now,
         });
 
+        const clientEmail = data.client?.email || data.clientEmail;
+        const clientName = data.client?.name || data.clientName || 'Customer';
+
         // Send follow-up reminder email if client email is present
-        if (data.clientEmail) {
+        if (clientEmail) {
           await sendInvoiceEmail({
-            toEmail: data.clientEmail,
-            clientName: data.clientName || 'Customer',
+            toEmail: clientEmail,
+            clientName: clientName,
             invoiceId: doc.id,
             totalAmount: data.totalAmount,
             currency: data.currency || 'USD',

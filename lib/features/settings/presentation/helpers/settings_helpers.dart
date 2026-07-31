@@ -172,7 +172,9 @@ List<SettingsCardItem> getLocalSettingsItems({
   SettingsCardItem(
     icon: Icons.attach_money_rounded,
     title: AppStrings.currency,
-    trailingText: currentCurrency,
+    trailingText: getSupportedCurrencies()
+        .firstWhere((element) => element.code == currentCurrency)
+        .name,
     onTap: () {
       CustomBottomSheet.show(
         context: context,

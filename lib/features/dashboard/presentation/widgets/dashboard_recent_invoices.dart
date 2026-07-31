@@ -28,6 +28,7 @@ class DashboardRecentInvoices extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(20.w),
+            margin: EdgeInsets.only(bottom: 75.h),
             decoration: BoxDecoration(
               color: colors.surface,
               borderRadius: BorderRadius.circular(16.r),

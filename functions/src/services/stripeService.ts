@@ -17,16 +17,29 @@ export async function createStripeCheckoutSession(invoice: InvoiceData): Promise
   if (!stripe) return null;
 
   try {
-    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = invoice.items.map((item) => ({
-      price_data: {
-        currency: (invoice.currency || 'USD').toLowerCase(),
-        product_data: {
-          name: item.description,
+    const currency = (invoice.currency || 'EGP').toLowerCase();
+    const totalInCents = Math.round(invoice.totalAmount * 100);
+
+    // Format item summary for product description
+    const itemSummary = Array.isArray(invoice.items) && invoice.items.length > 0
+      ? invoice.items.map((i) => `${i.name || i.description || 'Item'} (x${i.quantity ?? 1})`).join(', ')
+      : `Invoice #${invoice.invoiceId}`;
+
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+      {
+        price_data: {
+          currency: currency,
+          product_data: {
+            name: `Invoice #${invoice.invoiceId}`,
+            description: itemSummary,
+          },
+          unit_amount: totalInCents,
         },
-        unit_amount: Math.round(item.price * 100), // Stripe expects amounts in cents
+        quantity: 1,
       },
-      quantity: item.quantity,
-    }));
+    ];
+
+    console.log(`[createStripeCheckoutSession] Creating session for invoice #${invoice.invoiceId}: Amount = ${invoice.totalAmount} ${currency.toUpperCase()}`);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -38,8 +51,8 @@ export async function createStripeCheckoutSession(invoice: InvoiceData): Promise
         invoiceId: invoice.invoiceId,
         userId: invoice.userId,
       },
-      success_url: `${process.env.APP_BASE_URL || 'https://invoify.app'}/payment-success?invoiceId=${invoice.invoiceId}`,
-      cancel_url: `${process.env.APP_BASE_URL || 'https://invoify.app'}/payment-cancel?invoiceId=${invoice.invoiceId}`,
+      success_url: `${process.env.APP_BASE_URL || 'https://europe-west3-invoify-7757d.cloudfunctions.net'}/payment-success?invoiceId=${invoice.invoiceId}`,
+      cancel_url: `${process.env.APP_BASE_URL || 'https://europe-west3-invoify-7757d.cloudfunctions.net'}/payment-cancel?invoiceId=${invoice.invoiceId}`,
     });
 
     return session.url;

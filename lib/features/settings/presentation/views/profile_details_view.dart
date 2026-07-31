@@ -28,6 +28,7 @@ class _ProfileDetailsViewState extends State<ProfileDetailsView> {
   @override
   void initState() {
     super.initState();
+    context.read<UserInfoCubit>().getUserInfo();
     final user = context.read<UserInfoCubit>().currentUser;
     _businessNameController = TextEditingController(
       text: user?.businessName ?? '',
@@ -80,7 +81,6 @@ class _ProfileDetailsViewState extends State<ProfileDetailsView> {
         },
         builder: (context, state) {
           final user = context.read<UserInfoCubit>().currentUser;
-
           // Format member since date
           String formattedDate = '';
           if (user?.createdAt != null) {
@@ -90,7 +90,7 @@ class _ProfileDetailsViewState extends State<ProfileDetailsView> {
           }
 
           return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
             child: Form(
               key: _formKey,
               child: Column(

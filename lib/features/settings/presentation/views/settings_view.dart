@@ -75,18 +75,14 @@ class SettingsView extends StatelessWidget {
                 SettingsCard(
                   items: getLocalSettingsItems(
                     context: context,
-                    currentCurrency: getSupportedCurrencies()
-                        .firstWhere(
-                          (element) => element.code == currentCurrency,
-                        )
-                        .name,
+                    currentCurrency: currentCurrency,
                     onCurrencyChanged: (newCurrency) {
                       context.read<UserInfoCubit>().updateCurrency(newCurrency);
                     },
                   ),
                 ),
                 Gap(32.h),
-                
+
                 // Logout Button
                 const LogoutButton(),
                 Gap(80.h),

@@ -125,7 +125,6 @@
   "deleteClientConfirmation": "هل أنت تأكد من رغبتك في حذف هذا العميل؟ لا يمكن التراجع عن هذا الإجراء.",
   "searchClients": "ابحث عن عميل بالاسم، البريد، أو الهاتف...",
   "noClientsFound": "لم يتم العثور على عملاء يطابقون البحث",
-  "noClientsYet": "لا يوجد عملاء مضافون بعد. اضغط (+) لإضافة أول عميل!",
   "clientName": "اسم العميل / الشركة",
   "clientEmail": "البريد الإلكتروني للعميل",
   "clientPhone": "رقم هاتف العميل",
@@ -156,7 +155,7 @@
   "notes": "الملاحظات والشروط",
   "notesHint": "ملاحظات إضافية أو شروط الدفع للعميل...",
   "saveAsDraft": "حفظ كمسودة",
-  "invoiceCreatedSuccessfully": "تم تم إنشاء الفاتورة بنجاح",
+  "invoiceCreatedSuccessfully": "تم إنشاء الفاتورة بنجاح",
   "pleaseAddAtLeastOneItem": "يرجى إضافة بند واحد على الأقل للفاتورة",
   "statusDraft": "مسودة",
   "statusSent": "مرسلة",
@@ -164,6 +163,8 @@
   "statusOverdue": "متأخرة",
   "statusCancelled": "ملغاة",
   "all": "الكل",
+  "noClientsYet": "لم يتم إضافة عملاء بعد، اضغط (+) لإضافة أول عميل!",
+  "noClientsAvailable": "لا يوجد عملاء متاحين حالياً",
   "noInvoicesYet": "لا توجد فواتير منشأة بعد. اضغط (+) لإصدار أول فاتورة!",
   "noInvoicesFound": "لا توجد فواتير مطابقة لهذه الحالة",
   "deleteInvoiceConfirmation": "هل أنت تأكد من رغبتك في حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء.",
@@ -184,5 +185,7 @@
   "recentInvoices": "أحدث الفواتير",
   "viewAll": "عرض الكل",
   "totalRevenue": "إجمالي الإيرادات",
-  "noAnalyticsData": "لا توجد بيانات تحليلات متاحة بعد"
+  "noAnalyticsData": "لا توجد بيانات تحليلات متاحة بعد",
+  "sendInvoice": "إرسال الفاتورة للعميل",
+  "invoiceSentSuccessfully": "تم إرسال الفاتورة بنجاح وجاري تجهيز الـ PDF ورابط الدفع"
 }

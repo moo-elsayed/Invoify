@@ -65,9 +65,22 @@ extension CurrencyExtension on BuildContext {
   String get userCurrency {
     try {
       final user = watch<UserInfoCubit>().currentUser;
-      return user?.currency ?? 'USD';
+      final cur = user?.currency;
+      if (cur != null && cur.trim().isNotEmpty) {
+        return cur;
+      }
+      return 'EGP';
     } catch (_) {
-      return 'USD';
+      try {
+        final user = read<UserInfoCubit>().currentUser;
+        final cur = user?.currency;
+        if (cur != null && cur.trim().isNotEmpty) {
+          return cur;
+        }
+        return 'EGP';
+      } catch (_) {
+        return 'EGP';
+      }
     }
   }
 
@@ -77,7 +90,7 @@ extension CurrencyExtension on BuildContext {
     'EGP' => isArabic ? 'ج.م' : 'EGP',
     'SAR' => isArabic ? 'ر.س' : 'SAR',
     'AED' => isArabic ? 'د.إ' : 'AED',
-    _ => '\$',
+    _ => isArabic ? 'ج.م' : 'EGP',
   };
 
   String get currencySymbol => getCurrencySymbolByCode(userCurrency);

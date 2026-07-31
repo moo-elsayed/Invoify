@@ -130,7 +130,12 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
         if (!docSnapshot.exists || docSnapshot.data() == null) {
           throw Exception('user-not-found');
         }
-        return UserModel.fromJson(docSnapshot.data()!);
+        final data = Map<String, dynamic>.from(docSnapshot.data()!);
+        final firebaseUser = _firebaseAuth.currentUser;
+        final bool firestoreVerified = data['isVerified'] == true;
+        final bool authVerified = firebaseUser?.emailVerified ?? false;
+        data['isVerified'] = firestoreVerified || authVerified;
+        return UserModel.fromJson(data);
       }, functionName: 'getUserInfo');
 
   @override
@@ -150,9 +155,12 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
         .get();
 
     if (docSnapshot.exists && docSnapshot.data() != null) {
-      final storedUserData = docSnapshot.data()!;
+      final storedUserData = Map<String, dynamic>.from(docSnapshot.data()!);
+      final bool firestoreVerified = storedUserData['isVerified'] == true;
+      final bool isVerifiedNow = firestoreVerified || userModel.isVerified;
+      storedUserData['isVerified'] = isVerifiedNow;
       await _firestore.collection(_usersCollection).doc(userModel.uid).update({
-        'isVerified': userModel.isVerified,
+        'isVerified': isVerifiedNow,
       });
       return UserModel.fromJson(storedUserData);
     } else {

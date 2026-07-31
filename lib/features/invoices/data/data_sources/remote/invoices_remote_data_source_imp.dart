@@ -29,6 +29,21 @@ class InvoicesRemoteDataSourceImp implements InvoicesRemoteDataSource {
   }, functionName: 'getInvoices');
 
   @override
+  Stream<List<InvoiceModel>> getInvoicesStream({
+    required String userId,
+  }) =>
+      _firestore
+          .collection(_invoicesCollection)
+          .where('userId', isEqualTo: userId)
+          .orderBy('createdAt', descending: true)
+          .snapshots()
+          .map(
+            (snapshot) => snapshot.docs
+                .map((doc) => InvoiceModel.fromJson(doc.data(), docId: doc.id))
+                .toList(),
+          );
+
+  @override
   Future<NetworkResponse<InvoiceModel>> createInvoice({
     required InvoiceModel invoice,
   }) async => ApiHelper.executeSafely(() async {

@@ -100,6 +100,9 @@ class DashboardRevenueChart extends StatelessWidget {
                           AppTextStyles.font12Bold.copyWith(
                             color: colors.mainText,
                           ),
+                          textDirection: context.isArabic
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
                         ),
                   ),
                 ),

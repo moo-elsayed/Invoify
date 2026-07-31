@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -8,6 +9,7 @@ import 'package:invoify/core/routing/routes.dart';
 import 'package:invoify/core/widgets/custom_confirmation_dialog.dart';
 import 'package:invoify/core/widgets/custom_material_button.dart';
 import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 import 'package:invoify/features/invoices/presentation/args/add_edit_invoice_args.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
 
@@ -15,6 +17,12 @@ class InvoiceDetailsActionsRow extends StatelessWidget {
   const InvoiceDetailsActionsRow({super.key, required this.invoice});
 
   final InvoiceEntity invoice;
+
+  void _onSendInvoice(BuildContext context) {
+    final cubit = context.read<InvoicesCubit>();
+    final updatedInvoice = invoice.copyWith(status: InvoiceStatus.sent);
+    cubit.updateInvoice(updatedInvoice);
+  }
 
   void _showDeleteConfirmation(BuildContext context) {
     final cubit = context.read<InvoicesCubit>();
@@ -45,24 +53,40 @@ class InvoiceDetailsActionsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final isDraft = invoice.status == InvoiceStatus.draft;
 
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: CustomMaterialButton(
-            onPressed: () => _navigateToEdit(context),
-            text: AppStrings.editInvoice,
+        if (isDraft) ...[
+          CustomMaterialButton(
+            onPressed: () => _onSendInvoice(context),
+            text: AppStrings.sendInvoice,
+            icon: const Icon(Icons.send_rounded, color: Colors.white),
             borderRadius: BorderRadius.circular(12.r),
+            maxWidth: true,
           ),
-        ),
-        Gap(12.w),
-        Expanded(
-          child: CustomMaterialButton(
-            onPressed: () => _showDeleteConfirmation(context),
-            text: AppStrings.deleteInvoice,
-            borderRadius: BorderRadius.circular(12.r),
-            backgroundColor: colors.error,
-          ),
+          Gap(12.h),
+        ],
+        Row(
+          children: [
+            Expanded(
+              child: CustomMaterialButton(
+                onPressed: () => _navigateToEdit(context),
+                text: AppStrings.editInvoice,
+                borderRadius: BorderRadius.circular(12.r),
+                backgroundColor: isDraft ? colors.surface : colors.primary,
+              ),
+            ),
+            Gap(12.w),
+            Expanded(
+              child: CustomMaterialButton(
+                onPressed: () => _showDeleteConfirmation(context),
+                text: AppStrings.deleteInvoice,
+                borderRadius: BorderRadius.circular(12.r),
+                backgroundColor: colors.error,
+              ),
+            ),
+          ],
         ),
       ],
     );

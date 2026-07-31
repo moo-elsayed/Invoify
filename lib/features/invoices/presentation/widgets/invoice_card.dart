@@ -34,9 +34,9 @@ class InvoiceCard extends StatelessWidget {
     showCupertinoDialog(
       context: context,
       builder: (dialogContext) => CustomConfirmationDialog(
-        title: AppStrings.deleteClient,
+        title: AppStrings.deleteInvoice,
         subtitle: AppStrings.deleteInvoiceConfirmation,
-        textConfirmButton: AppStrings.deleteClient,
+        textConfirmButton: AppStrings.deleteInvoice,
         onConfirm: () {
           dialogContext.pop();
           onDelete();
