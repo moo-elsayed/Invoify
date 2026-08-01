@@ -42,31 +42,47 @@ export async function sendInvoiceEmail(params: SendInvoiceEmailParams): Promise<
 
   const baseUrl = process.env.APP_BASE_URL || 'https://europe-west3-invoify-7757d.cloudfunctions.net';
   const trackingPixelUrl = `${baseUrl}/trackEmailOpen?invoiceId=${params.invoiceId}`;
-  const senderName = params.businessName || 'Invoify';
+  const appSenderName = 'Invoify';
+  const merchantName = params.businessName || 'Merchant';
   const currencyStr = params.currency || 'EGP';
 
   const payButtonHtml = params.stripePaymentLink
-    ? `<div style="margin: 25px 0 10px 0;">
-        <a href="${params.stripePaymentLink}" style="background-color: #4F46E5; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; font-size: 16px;">Pay Invoice Online (${params.totalAmount} ${currencyStr})</a>
+    ? `<div style="margin: 20px 0 10px 0;">
+        <a href="${params.stripePaymentLink}" style="background-color: #4F46E5; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);">Pay Invoice Online (${params.totalAmount} ${currencyStr})</a>
        </div>`
     : '';
 
   const pdfButtonHtml = params.pdfUrl
-    ? `<div style="margin: 10px 0 25px 0;">
-        <a href="${params.pdfUrl}" style="background-color: #374151; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; font-size: 14px;">Download PDF Invoice</a>
+    ? `<div style="margin: 10px 0 20px 0;">
+        <a href="${params.pdfUrl}" style="background-color: #1F2937; color: #ffffff; padding: 11px 22px; text-decoration: none; border-radius: 8px; font-weight: 500; display: inline-block; font-size: 14px;">Download PDF Invoice</a>
        </div>`
     : '';
 
   const htmlContent = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333333; padding: 25px; border: 1px solid #e0e0e0; border-radius: 12px;">
-      <h2 style="color: #4F46E5; margin-top: 0;">Invoice #${params.invoiceId} from ${senderName}</h2>
-      <p style="font-size: 15px;">Dear ${params.clientName},</p>
-      <p style="font-size: 15px;">Please find attached your invoice for <strong>${params.totalAmount} ${currencyStr}</strong>.</p>
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; color: #1F2937; padding: 32px; border: 1px solid #E5E7EB; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);">
+      <!-- App Header -->
+      <div style="border-bottom: 2px solid #F3F4F6; padding-bottom: 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <span style="font-size: 24px; font-weight: 800; color: #4F46E5; letter-spacing: -0.5px;">Invoify</span>
+        </div>
+      </div>
+
+      <!-- Main Body -->
+      <h2 style="color: #111827; font-size: 20px; font-weight: 700; margin-top: 0;">New Invoice from ${merchantName}</h2>
+      <p style="font-size: 15px; color: #4B5563; line-height: 1.6;">Dear <strong>${params.clientName}</strong>,</p>
+      <p style="font-size: 15px; color: #4B5563; line-height: 1.6;">
+        You have received a new invoice <strong>#${params.invoiceId}</strong> for the total amount of <strong style="color: #4F46E5;">${params.totalAmount} ${currencyStr}</strong>.
+      </p>
+
       ${payButtonHtml}
       ${pdfButtonHtml}
-      <p style="font-size: 13px; color: #777;">If you have any questions, feel free to reply to this email.</p>
-      <hr style="border: none; border-top: 1px solid #eeeeee; margin: 20px 0;" />
-      <p style="font-size: 11px; color: #aaa;">Sent via Invoify Automated Invoicing Platform</p>
+
+      <p style="font-size: 13px; color: #6B7280; margin-top: 24px;">If you have any questions regarding this invoice, please reach out to ${merchantName}.</p>
+      
+      <!-- Footer -->
+      <hr style="border: none; border-top: 1px solid #F3F4F6; margin: 28px 0 16px 0;" />
+      <p style="font-size: 12px; color: #9CA3AF; text-align: center; margin: 0;">Sent automatically via <strong>Invoify</strong> Automated Invoicing System</p>
+
       <!-- Hidden Tracking Pixel -->
       <img src="${trackingPixelUrl}" width="1" height="1" alt="" style="display:none;" />
     </div>
@@ -82,11 +98,11 @@ export async function sendInvoiceEmail(params: SendInvoiceEmailParams): Promise<
   }
 
   try {
-    console.log(`[sendInvoiceEmail] Sending email from "${senderName}" <${process.env.SMTP_USER}> to ${params.toEmail}...`);
+    console.log(`[sendInvoiceEmail] Sending email from "${appSenderName}" <${process.env.SMTP_USER}> to ${params.toEmail}...`);
     const info = await transporter.sendMail({
-      from: `"${senderName}" <${process.env.SMTP_USER}>`,
+      from: `"${appSenderName}" <${process.env.SMTP_USER}>`,
       to: params.toEmail,
-      subject: `New Invoice #${params.invoiceId} from ${senderName}`,
+      subject: `Invoice #${params.invoiceId} from ${merchantName} - Invoify`,
       html: htmlContent,
       attachments,
     });

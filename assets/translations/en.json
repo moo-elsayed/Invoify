@@ -144,6 +144,7 @@
   "pleaseSelectClient": "Please select a client for this invoice",
   "issueDate": "Issue Date",
   "dueDate": "Due Date",
+  "paidDate": "Payment Date",
   "invoiceItems": "Invoice Items",
   "addItem": "Add Item",
   "itemName": "Item Description",
@@ -162,6 +163,7 @@
   "pleaseAddAtLeastOneItem": "Please add at least one item to the invoice",
   "statusDraft": "Draft",
   "statusSent": "Sent",
+  "statusOpened": "Opened",
   "statusPaid": "Paid",
   "statusOverdue": "Overdue",
   "statusCancelled": "Cancelled",
@@ -188,6 +190,14 @@
   "viewAll": "View All",
   "totalRevenue": "Total Revenue",
   "noAnalyticsData": "No analytics data available yet",
-  "sendInvoice": "Send Invoice to Client",
-  "invoiceSentSuccessfully": "Invoice sent successfully! Generating PDF & payment link..."
+  "sendInvoice": "Send Invoice",
+  "invoiceSentSuccessfully": "Invoice sent successfully! Generating PDF & payment link...",
+  "confirmPaymentTitle": "Confirm Payment Received",
+  "confirmPaymentSubtitle": "Are you sure you have received full payment for this invoice? It will be marked as Paid and sealed.",
+  "confirmPaymentButton": "Confirm Payment",
+  "markAsPaid": "Mark as Paid",
+  "cannotEditPaidOrCancelled": "Paid or cancelled invoices cannot be edited.",
+  "confirmSendInvoiceSubtitle": "Are you sure you want to send this invoice to the client? A PDF invoice and payment link will be generated and sent to their email.",
+  "cancelInvoice": "Cancel Invoice",
+  "confirmCancelInvoiceSubtitle": "Are you sure you want to cancel this invoice? It will be marked as cancelled and sealed."
 }

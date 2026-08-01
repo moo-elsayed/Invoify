@@ -80,7 +80,6 @@ class DashboardRevenueChart extends StatelessWidget {
                 barTouchData: BarTouchData(
                   touchTooltipData: BarTouchTooltipData(
                     getTooltipColor: (_) => colors.surface,
-                    tooltipMargin: 5,
                     tooltipPadding: EdgeInsets.only(
                       top: 5.h,
                       right: 5.w,

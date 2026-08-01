@@ -24,6 +24,7 @@ class InvoiceModel {
     required this.status,
     required this.notes,
     DateTime? createdAt,
+    this.paidAt,
   })  : issueDate = issueDate ?? DateTime.now(),
         dueDate = dueDate ?? DateTime.now().add(const Duration(days: 14)),
         createdAt = createdAt ?? DateTime.now();
@@ -64,6 +65,7 @@ class InvoiceModel {
         status: InvoiceStatus.fromString(json['status']),
         notes: json['notes'] ?? '',
         createdAt: _parseTimestamp(json['createdAt']),
+        paidAt: json['paidAt'] != null ? _parseTimestampNullable(json['paidAt']) : null,
       );
 
   factory InvoiceModel.fromEntity(InvoiceEntity entity) => InvoiceModel(
@@ -84,6 +86,7 @@ class InvoiceModel {
         status: entity.status,
         notes: entity.notes,
         createdAt: entity.createdAt,
+        paidAt: entity.paidAt,
       );
 
   final String invoiceId;
@@ -103,11 +106,19 @@ class InvoiceModel {
   final InvoiceStatus status;
   final String notes;
   final DateTime createdAt;
+  final DateTime? paidAt;
 
   static DateTime _parseTimestamp(dynamic value) {
     if (value is Timestamp) return value.toDate();
     if (value is String) return DateTime.tryParse(value) ?? DateTime.now();
     return DateTime.now();
+  }
+
+  static DateTime? _parseTimestampNullable(dynamic value) {
+    if (value == null) return null;
+    if (value is Timestamp) return value.toDate();
+    if (value is String) return DateTime.tryParse(value);
+    return null;
   }
 
   InvoiceModel copyWith({
@@ -128,6 +139,7 @@ class InvoiceModel {
     InvoiceStatus? status,
     String? notes,
     DateTime? createdAt,
+    DateTime? paidAt,
   }) =>
       InvoiceModel(
         invoiceId: invoiceId ?? this.invoiceId,
@@ -147,6 +159,7 @@ class InvoiceModel {
         status: status ?? this.status,
         notes: notes ?? this.notes,
         createdAt: createdAt ?? this.createdAt,
+        paidAt: paidAt ?? this.paidAt,
       );
 
   Map<String, dynamic> toJson() => {
@@ -167,6 +180,7 @@ class InvoiceModel {
         'status': status.name,
         'notes': notes,
         'createdAt': Timestamp.fromDate(createdAt),
+        if (paidAt != null) 'paidAt': Timestamp.fromDate(paidAt!),
       };
 
   InvoiceEntity toEntity() => InvoiceEntity(
@@ -187,5 +201,6 @@ class InvoiceModel {
         status: status,
         notes: notes,
         createdAt: createdAt,
+        paidAt: paidAt,
       );
 }

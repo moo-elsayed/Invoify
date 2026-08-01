@@ -1,6 +1,7 @@
 enum InvoiceStatus {
   draft,
   sent,
+  opened,
   paid,
   overdue,
   cancelled;
@@ -9,6 +10,8 @@ enum InvoiceStatus {
 
   static InvoiceStatus fromString(String? value) {
     switch (value?.toLowerCase().trim()) {
+      case 'opened':
+        return InvoiceStatus.opened;
       case 'sent':
       case 'pending':
         return InvoiceStatus.sent;

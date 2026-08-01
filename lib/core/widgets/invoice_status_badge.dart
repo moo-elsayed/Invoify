@@ -24,6 +24,7 @@ class InvoiceStatusBadge extends StatelessWidget {
     final text = switch (status) {
       InvoiceStatus.draft => AppStrings.statusDraft,
       InvoiceStatus.sent => AppStrings.statusSent,
+      InvoiceStatus.opened => AppStrings.statusOpened,
       InvoiceStatus.paid => AppStrings.statusPaid,
       InvoiceStatus.overdue => AppStrings.statusOverdue,
       InvoiceStatus.cancelled => AppStrings.statusCancelled,

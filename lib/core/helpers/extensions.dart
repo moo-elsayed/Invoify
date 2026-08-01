@@ -52,6 +52,7 @@ extension InvoiceStatusColorExtension on InvoiceStatus {
   Color getColor(BuildContext context) => switch (this) {
     InvoiceStatus.paid => const Color(0xFF10B981),
     InvoiceStatus.sent => context.colors.primary,
+    InvoiceStatus.opened => const Color(0xFF0284C7),
     InvoiceStatus.overdue => context.colors.error,
     InvoiceStatus.draft => context.colors.subText,
     InvoiceStatus.cancelled => Colors.orange,

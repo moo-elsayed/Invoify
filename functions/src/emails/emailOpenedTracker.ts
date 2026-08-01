@@ -19,18 +19,29 @@ export const trackEmailOpen = functions
 
       if (doc.exists) {
         const currentStatus = doc.data()?.status;
-        // Only update if status is currently 'pending'
-        if (currentStatus === 'pending') {
+        console.log(`[trackEmailOpen] Email opened for invoice #${invoiceId}. Current status: ${currentStatus}`);
+
+        // Update if status is 'sent' or 'pending'
+        if (currentStatus === 'sent' || currentStatus === 'pending') {
           await invoiceRef.update({
             status: 'opened',
             openedAt: new Date(),
           });
-          console.log(`Invoice #${invoiceId} status updated to 'opened' via tracking pixel.`);
+          console.log(`[trackEmailOpen] Invoice #${invoiceId} status updated to 'opened' and openedAt set.`);
+        } else {
+          await invoiceRef.update({
+            lastOpenedAt: new Date(),
+          });
+          console.log(`[trackEmailOpen] Invoice #${invoiceId} lastOpenedAt updated.`);
         }
+      } else {
+        console.warn(`[trackEmailOpen] Invoice #${invoiceId} not found in Firestore.`);
       }
     } catch (error) {
-      console.error(`Error tracking email open for invoice #${invoiceId}:`, error);
+      console.error(`[trackEmailOpen] Error tracking email open for invoice #${invoiceId}:`, error);
     }
+  } else {
+    console.warn('[trackEmailOpen] No invoiceId query parameter passed.');
   }
 
   res.writeHead(200, {

@@ -8,8 +8,6 @@ import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/routing/routes.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
-import 'package:invoify/core/utils/custom_bottom_sheet_selection_item.dart';
-import 'package:invoify/core/widgets/custom_bottom_sheet.dart';
 import 'package:invoify/core/widgets/custom_confirmation_dialog.dart';
 import 'package:invoify/core/widgets/custom_icon_action_button.dart';
 import 'package:invoify/core/widgets/invoice_status_badge.dart';
@@ -42,31 +40,6 @@ class InvoiceCard extends StatelessWidget {
           onDelete();
         },
       ),
-    );
-  }
-
-  String _getStatusText(InvoiceStatus status) => switch (status) {
-    InvoiceStatus.draft => AppStrings.statusDraft,
-    InvoiceStatus.sent => AppStrings.statusSent,
-    InvoiceStatus.paid => AppStrings.statusPaid,
-    InvoiceStatus.overdue => AppStrings.statusOverdue,
-    InvoiceStatus.cancelled => AppStrings.statusCancelled,
-  };
-
-  void _showStatusBottomSheet(BuildContext context) {
-    CustomBottomSheet.show(
-      context: context,
-      title: AppStrings.updateStatus,
-      items: InvoiceStatus.values
-          .map(
-            (status) => CustomBottomSheetSelectionItem<InvoiceStatus>(
-              title: _getStatusText(status),
-              value: status,
-              isSelected: invoice.status == status,
-              onTap: () => onStatusChanged(status),
-            ),
-          )
-          .toList(),
     );
   }
 
@@ -156,14 +129,7 @@ class InvoiceCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () => _showStatusBottomSheet(context),
-                  borderRadius: BorderRadius.circular(20.r),
-                  child: InvoiceStatusBadge(
-                    status: invoice.status,
-                    showDropdownIcon: true,
-                  ),
-                ),
+                InvoiceStatusBadge(status: invoice.status),
               ],
             ),
             Gap(12.h),

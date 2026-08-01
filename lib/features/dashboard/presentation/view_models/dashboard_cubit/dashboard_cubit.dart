@@ -78,6 +78,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     final Map<InvoiceStatus, int> statusDist = {
       InvoiceStatus.paid: 0,
       InvoiceStatus.sent: 0,
+      InvoiceStatus.opened: 0,
       InvoiceStatus.overdue: 0,
       InvoiceStatus.draft: 0,
       InvoiceStatus.cancelled: 0,
@@ -87,20 +88,21 @@ class DashboardCubit extends Cubit<DashboardState> {
 
     for (final inv in invoices) {
       statusDist[inv.status] = (statusDist[inv.status] ?? 0) + 1;
-      final createdAt = inv.createdAt ?? DateTime.now();
 
       if (inv.status == InvoiceStatus.overdue) {
         totalOverdue += inv.totalAmount;
-      } else if (inv.status == InvoiceStatus.sent) {
+      } else if (inv.status == InvoiceStatus.sent ||
+          inv.status == InvoiceStatus.opened) {
         pendingAmount += inv.totalAmount;
       } else if (inv.status == InvoiceStatus.paid) {
-        if (createdAt.year == now.year && createdAt.month == now.month) {
+        final paymentDate = inv.paidAt ?? inv.createdAt ?? DateTime.now();
+        if (paymentDate.year == now.year && paymentDate.month == now.month) {
           monthlyEarnings += inv.totalAmount;
         }
 
-        // Calculate revenue trends for past 6 months (0 to 5) only for paid invoices
+        // Calculate revenue trends for past 6 months (0 to 5) based on actual payment date (paidAt)
         final monthDiff =
-            (now.year - createdAt.year) * 12 + (now.month - createdAt.month);
+            (now.year - paymentDate.year) * 12 + (now.month - paymentDate.month);
         if (monthDiff >= 0 && monthDiff < 6) {
           final barIndex = 5 - monthDiff;
           monthlyRev[barIndex] = (monthlyRev[barIndex] ?? 0) + inv.totalAmount;

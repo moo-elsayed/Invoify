@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,16 +8,14 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 import 'package:invoify/core/utils/custom_bottom_sheet_selection_item.dart';
 import 'package:invoify/core/widgets/custom_bottom_sheet.dart';
+import 'package:invoify/core/widgets/custom_confirmation_dialog.dart';
 import 'package:invoify/core/widgets/invoice_status_badge.dart';
 import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
 
 class InvoiceDetailsHeaderCard extends StatefulWidget {
-  const InvoiceDetailsHeaderCard({
-    super.key,
-    required this.invoice,
-  });
+  const InvoiceDetailsHeaderCard({super.key, required this.invoice});
 
   final InvoiceEntity invoice;
 
@@ -49,28 +48,99 @@ class _InvoiceDetailsHeaderCardState extends State<InvoiceDetailsHeaderCard> {
   }
 
   String _getStatusText(InvoiceStatus status) => switch (status) {
-        InvoiceStatus.draft => AppStrings.statusDraft,
-        InvoiceStatus.sent => AppStrings.statusSent,
-        InvoiceStatus.paid => AppStrings.statusPaid,
-        InvoiceStatus.overdue => AppStrings.statusOverdue,
-        InvoiceStatus.cancelled => AppStrings.statusCancelled,
+    InvoiceStatus.draft => AppStrings.statusDraft,
+    InvoiceStatus.sent => AppStrings.statusSent,
+    InvoiceStatus.opened => AppStrings.statusOpened,
+    InvoiceStatus.paid => AppStrings.statusPaid,
+    InvoiceStatus.overdue => AppStrings.statusOverdue,
+    InvoiceStatus.cancelled => AppStrings.statusCancelled,
+  };
+
+  List<InvoiceStatus> _getAllowedNextStatuses(InvoiceStatus current) =>
+      switch (current) {
+        InvoiceStatus.draft => [InvoiceStatus.sent, InvoiceStatus.cancelled],
+        InvoiceStatus.sent ||
+        InvoiceStatus.opened ||
+        InvoiceStatus.overdue => [InvoiceStatus.paid, InvoiceStatus.cancelled],
+        InvoiceStatus.paid || InvoiceStatus.cancelled => [],
       };
 
+  void _confirmAndApplyStatus(
+    BuildContext context,
+    InvoicesCubit cubit,
+    InvoiceStatus newStatus,
+  ) {
+    if (newStatus == InvoiceStatus.sent) {
+      showCupertinoDialog(
+        context: context,
+        builder: (dialogContext) => CustomConfirmationDialog(
+          title: AppStrings.sendInvoice,
+          subtitle: AppStrings.confirmSendInvoiceSubtitle,
+          textConfirmButton: AppStrings.sendInvoice,
+          onConfirm: () {
+            dialogContext.pop();
+            _statusNotifier.value = newStatus;
+            final updated = widget.invoice.copyWith(status: newStatus);
+            cubit.updateInvoice(updated);
+          },
+        ),
+      );
+    } else if (newStatus == InvoiceStatus.paid) {
+      showCupertinoDialog(
+        context: context,
+        builder: (dialogContext) => CustomConfirmationDialog(
+          title: AppStrings.confirmPaymentTitle,
+          subtitle: AppStrings.confirmPaymentSubtitle,
+          textConfirmButton: AppStrings.confirmPaymentButton,
+          onConfirm: () {
+            dialogContext.pop();
+            _statusNotifier.value = newStatus;
+            final updated = widget.invoice.copyWith(
+              status: newStatus,
+              paidAt: DateTime.now(),
+            );
+            cubit.updateInvoice(updated);
+          },
+        ),
+      );
+    } else if (newStatus == InvoiceStatus.cancelled) {
+      showCupertinoDialog(
+        context: context,
+        builder: (dialogContext) => CustomConfirmationDialog(
+          title: AppStrings.cancelInvoice,
+          subtitle: AppStrings.confirmCancelInvoiceSubtitle,
+          textConfirmButton: AppStrings.cancelInvoice,
+          onConfirm: () {
+            dialogContext.pop();
+            _statusNotifier.value = newStatus;
+            final updated = widget.invoice.copyWith(status: newStatus);
+            cubit.updateInvoice(updated);
+          },
+        ),
+      );
+    } else {
+      _statusNotifier.value = newStatus;
+      final updated = widget.invoice.copyWith(status: newStatus);
+      cubit.updateInvoice(updated);
+    }
+  }
+
   void _showStatusBottomSheet(BuildContext context) {
+    final allowedStatuses = _getAllowedNextStatuses(_statusNotifier.value);
+    if (allowedStatuses.isEmpty) return;
+
     final cubit = context.read<InvoicesCubit>();
     CustomBottomSheet.show(
       context: context,
       title: AppStrings.updateStatus,
-      items: InvoiceStatus.values
+      items: allowedStatuses
           .map(
             (status) => CustomBottomSheetSelectionItem<InvoiceStatus>(
               title: _getStatusText(status),
               value: status,
               isSelected: _statusNotifier.value == status,
               onTap: () {
-                _statusNotifier.value = status;
-                final updated = widget.invoice.copyWith(status: status);
-                cubit.updateInvoice(updated);
+                _confirmAndApplyStatus(context, cubit, status);
               },
             ),
           )
@@ -130,14 +200,25 @@ class _InvoiceDetailsHeaderCardState extends State<InvoiceDetailsHeaderCard> {
           ),
           ValueListenableBuilder<InvoiceStatus>(
             valueListenable: _statusNotifier,
-            builder: (context, status, child) => InkWell(
-              onTap: () => _showStatusBottomSheet(context),
-              borderRadius: BorderRadius.circular(20.r),
-              child: InvoiceStatusBadge(
-                status: status,
-                showDropdownIcon: true,
-              ),
-            ),
+            builder: (context, status, child) {
+              final isTerminal =
+                  status == InvoiceStatus.paid ||
+                  status == InvoiceStatus.cancelled;
+              if (isTerminal) {
+                return InvoiceStatusBadge(
+                  status: status,
+                  showDropdownIcon: false,
+                );
+              }
+              return InkWell(
+                onTap: () => _showStatusBottomSheet(context),
+                borderRadius: BorderRadius.circular(20.r),
+                child: InvoiceStatusBadge(
+                  status: status,
+                  showDropdownIcon: true,
+                ),
+              );
+            },
           ),
         ],
       ),

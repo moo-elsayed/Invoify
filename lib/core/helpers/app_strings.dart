@@ -179,6 +179,7 @@ abstract class AppStrings {
   static String get pleaseSelectClient => 'pleaseSelectClient'.tr();
   static String get issueDate => 'issueDate'.tr();
   static String get dueDate => 'dueDate'.tr();
+  static String get paidDate => 'paidDate'.tr();
   static String get invoiceItems => 'invoiceItems'.tr();
   static String get addItem => 'addItem'.tr();
   static String get itemName => 'itemName'.tr();
@@ -200,6 +201,7 @@ abstract class AppStrings {
   static String get pleaseAddAtLeastOneItem => 'pleaseAddAtLeastOneItem'.tr();
   static String get statusDraft => 'statusDraft'.tr();
   static String get statusSent => 'statusSent'.tr();
+  static String get statusOpened => 'statusOpened'.tr();
   static String get statusPaid => 'statusPaid'.tr();
   static String get statusOverdue => 'statusOverdue'.tr();
   static String get statusCancelled => 'statusCancelled'.tr();
@@ -230,5 +232,16 @@ abstract class AppStrings {
   static String get viewAll => 'viewAll'.tr();
   static String get totalRevenue => 'totalRevenue'.tr();
   static String get noAnalyticsData => 'noAnalyticsData'.tr();
+  static String get confirmPaymentTitle => 'confirmPaymentTitle'.tr();
+  static String get confirmPaymentSubtitle => 'confirmPaymentSubtitle'.tr();
+  static String get confirmPaymentButton => 'confirmPaymentButton'.tr();
+  static String get markAsPaid => 'markAsPaid'.tr();
+  static String get cannotEditPaidOrCancelled =>
+      'cannotEditPaidOrCancelled'.tr();
+  static String get confirmSendInvoiceSubtitle =>
+      'confirmSendInvoiceSubtitle'.tr();
+  static String get cancelInvoice => 'cancelInvoice'.tr();
+  static String get confirmCancelInvoiceSubtitle =>
+      'confirmCancelInvoiceSubtitle'.tr();
 }
 

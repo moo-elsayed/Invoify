@@ -1,11 +1,12 @@
 import * as functions from 'firebase-functions/v1';
 import { db } from '../config/firebase';
 import { sendInvoiceEmail } from '../services/emailService';
+import { sendPushNotificationToUser } from '../services/notificationService';
 
 export const dailyOverdueChecker = functions
   .region('europe-west3')
   .pubsub
-  .schedule('0 9 * * *') // Runs daily at 9:00 AM
+  .schedule('0 9 * * *') // Runs daily at 9:00 AM UTC
   .timeZone('UTC')
   .onRun(async (context) => {
     console.log('Running daily overdue invoice checker...');
@@ -35,20 +36,59 @@ export const dailyOverdueChecker = functions
           overdueAt: now,
         });
 
-        const clientEmail = data.client?.email || data.clientEmail;
-        const clientName = data.client?.name || data.clientName || 'Customer';
+        const targetUserId = data.userId;
+        let lang = 'ar';
+        if (targetUserId) {
+          try {
+            const userDoc = await db.collection('users').doc(targetUserId).get();
+            if (userDoc.exists) {
+              lang = userDoc.data()?.languageCode || 'ar';
+            }
+          } catch (e) {
+            lang = 'ar';
+          }
+        }
 
-        // Send follow-up reminder email if client email is present
+        const clientEmail = data.client?.email || data.clientEmail;
+        const fallbackClientName = lang === 'ar' ? 'العميل' : 'Customer';
+        const clientName = data.client?.name || data.clientName || fallbackClientName;
+        const amount = data.totalAmount || 0;
+        const currency = data.currency || 'EGP';
+
+        // 1. Send follow-up reminder email if client email is present
         if (clientEmail) {
           await sendInvoiceEmail({
             toEmail: clientEmail,
             clientName: clientName,
             invoiceId: doc.id,
-            totalAmount: data.totalAmount,
-            currency: data.currency || 'USD',
+            totalAmount: amount,
+            currency: currency,
             pdfUrl: data.pdfUrl,
             stripePaymentLink: data.stripePaymentLink,
           });
+        }
+
+        // 2. Send FCM Push Notification to Merchant
+        if (targetUserId) {
+          try {
+            const title = lang === 'ar' ? 'تنبيه فاتورة متأخرة ⚠️' : 'Invoice Overdue Alert ⚠️';
+            const body = lang === 'ar'
+              ? `الفاتورة #${doc.id} الخاصة بـ ${clientName} بمبلغ ${amount} ${currency} أصبحت متأخرة عن موعد الاستحقاق.`
+              : `Invoice #${doc.id} for ${clientName} (${amount} ${currency}) is now past due date.`;
+
+            await sendPushNotificationToUser({
+              userId: targetUserId,
+              title,
+              body,
+              data: {
+                invoiceId: doc.id,
+                screen: 'invoice_details',
+                type: 'invoice_overdue',
+              },
+            });
+          } catch (pushErr) {
+            console.error(`Error sending overdue push notification for invoice #${doc.id}:`, pushErr);
+          }
         }
       }
 

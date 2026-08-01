@@ -23,6 +23,7 @@ class InvoiceEntity extends Equatable {
     this.status = InvoiceStatus.draft,
     this.notes = '',
     this.createdAt,
+    this.paidAt,
   });
 
   final String invoiceId;
@@ -42,6 +43,7 @@ class InvoiceEntity extends Equatable {
   final InvoiceStatus status;
   final String notes;
   final DateTime? createdAt;
+  final DateTime? paidAt;
 
   @override
   List<Object?> get props => [
@@ -62,6 +64,7 @@ class InvoiceEntity extends Equatable {
         status,
         notes,
         createdAt,
+        paidAt,
       ];
 
   InvoiceEntity copyWith({
@@ -82,6 +85,7 @@ class InvoiceEntity extends Equatable {
     InvoiceStatus? status,
     String? notes,
     DateTime? createdAt,
+    DateTime? paidAt,
   }) =>
       InvoiceEntity(
         invoiceId: invoiceId ?? this.invoiceId,
@@ -101,5 +105,6 @@ class InvoiceEntity extends Equatable {
         status: status ?? this.status,
         notes: notes ?? this.notes,
         createdAt: createdAt ?? this.createdAt,
+        paidAt: paidAt ?? this.paidAt,
       );
 }

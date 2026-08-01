@@ -187,7 +187,7 @@ draft ──(submit)──► pending ──(email opened)──► opened
 - [x] Invoice Creation screen (dynamic items + auto-calculation)
 - [x] Invoice List screen (Tabs by status)
 - [x] Dashboard & Analytics screen (Charts)
-- [x] Deep Linking & Notification Routing
+- [x] FCM Push Notification Routing
 
 ### Cloud Functions (Node.js / TypeScript)
 - [x] PDF Generator function (Storage Trigger / Callable)

@@ -10,14 +10,17 @@ class InvoiceDatesSectionCard extends StatelessWidget {
     super.key,
     required this.issueDateStr,
     required this.dueDateStr,
+    this.paidDateStr,
   });
 
   final String issueDateStr;
   final String dueDateStr;
+  final String? paidDateStr;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final hasPaidDate = paidDateStr != null && paidDateStr!.isNotEmpty;
 
     return Container(
       padding: EdgeInsets.all(16.w),
@@ -30,45 +33,81 @@ class InvoiceDatesSectionCard extends StatelessWidget {
               : colors.border,
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                AppStrings.issueDate,
-                style: AppTextStyles.font12Regular.copyWith(
-                  color: colors.subText,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.issueDate,
+                    style: AppTextStyles.font12Regular.copyWith(
+                      color: colors.subText,
+                    ),
+                  ),
+                  Gap(4.h),
+                  Text(
+                    issueDateStr,
+                    style: AppTextStyles.font14Medium.copyWith(
+                      color: colors.mainText,
+                    ),
+                  ),
+                ],
               ),
-              Gap(4.h),
-              Text(
-                issueDateStr,
-                style: AppTextStyles.font14Medium.copyWith(
-                  color: colors.mainText,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    AppStrings.dueDate,
+                    style: AppTextStyles.font12Regular.copyWith(
+                      color: colors.subText,
+                    ),
+                  ),
+                  Gap(4.h),
+                  Text(
+                    dueDateStr,
+                    style: AppTextStyles.font14Medium.copyWith(
+                      color: colors.mainText,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                AppStrings.dueDate,
-                style: AppTextStyles.font12Regular.copyWith(
-                  color: colors.subText,
+          if (hasPaidDate) ...[
+            Gap(12.h),
+            Divider(color: colors.border.withValues(alpha: 0.5), height: 1),
+            Gap(12.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.check_circle_rounded,
+                      color: const Color(0xFF10B981),
+                      size: 18.sp,
+                    ),
+                    Gap(6.w),
+                    Text(
+                      AppStrings.paidDate,
+                      style: AppTextStyles.font12Medium.copyWith(
+                        color: const Color(0xFF10B981),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Gap(4.h),
-              Text(
-                dueDateStr,
-                style: AppTextStyles.font14Medium.copyWith(
-                  color: colors.mainText,
+                Text(
+                  paidDateStr!,
+                  style: AppTextStyles.font14Bold.copyWith(
+                    color: const Color(0xFF10B981),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ],
       ),
     );

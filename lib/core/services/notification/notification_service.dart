@@ -153,14 +153,29 @@ class NotificationService {
   Future<void> _saveTokenToFirestore(String token) async {
     final user = _auth.currentUser;
     if (user != null) {
+      final language = PlatformDispatcher.instance.locale.languageCode;
       await _firestore.collection('users').doc(user.uid).set(
         {
           'fcmToken': token,
+          'languageCode': language,
           'lastTokenUpdate': FieldValue.serverTimestamp(),
         },
         SetOptions(merge: true),
       );
-      debugPrint('FCM Token saved to Firestore for user: ${user.uid}');
+      debugPrint('FCM Token & langCode ($language) saved to Firestore for user: ${user.uid}');
+    }
+  }
+
+  Future<void> updateLanguageCode(String languageCode) async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('users').doc(user.uid).set(
+        {
+          'languageCode': languageCode,
+        },
+        SetOptions(merge: true),
+      );
+      debugPrint('Language code ($languageCode) updated in Firestore for user: ${user.uid}');
     }
   }
 

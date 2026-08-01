@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:invoify/core/services/app_preferences/app_preferences_service.dart';
 import 'package:invoify/core/services/app_preferences/app_preferences_service_imp.dart';
-import 'package:invoify/core/services/deep_link/deep_link_service.dart';
 import 'package:invoify/core/services/notification/notification_service.dart';
 import 'package:invoify/core/theming/app_theme_cubit.dart';
 import 'package:invoify/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
@@ -62,9 +61,6 @@ Future<void> setupGetIt() async {
   );
   getIt.registerLazySingleton<NotificationService>(
     () => NotificationService(),
-  );
-  getIt.registerLazySingleton<DeepLinkService>(
-    () => DeepLinkService(),
   );
 
   // Data Sources

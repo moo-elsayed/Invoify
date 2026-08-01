@@ -141,6 +141,7 @@
   "pleaseSelectClient": "يرجى اختيار عميل لهذه الفاتورة",
   "issueDate": "تاريخ الإصدار",
   "dueDate": "تاريخ الاستحقاق",
+  "paidDate": "تاريخ الدفع",
   "invoiceItems": "بنود الفاتورة",
   "addItem": "إضافة بند",
   "itemName": "وصف البند / الخدمة",
@@ -159,6 +160,7 @@
   "pleaseAddAtLeastOneItem": "يرجى إضافة بند واحد على الأقل للفاتورة",
   "statusDraft": "مسودة",
   "statusSent": "مرسلة",
+  "statusOpened": "تم الفتح",
   "statusPaid": "مدفوعة",
   "statusOverdue": "متأخرة",
   "statusCancelled": "ملغاة",
@@ -186,6 +188,14 @@
   "viewAll": "عرض الكل",
   "totalRevenue": "إجمالي الإيرادات",
   "noAnalyticsData": "لا توجد بيانات تحليلات متاحة بعد",
-  "sendInvoice": "إرسال الفاتورة للعميل",
-  "invoiceSentSuccessfully": "تم إرسال الفاتورة بنجاح وجاري تجهيز الـ PDF ورابط الدفع"
+  "sendInvoice": "إرسال الفاتورة",
+  "invoiceSentSuccessfully": "تم إرسال الفاتورة بنجاح وجاري تجهيز الـ PDF ورابط الدفع",
+  "confirmPaymentTitle": "تأكيد استلام الدفع",
+  "confirmPaymentSubtitle": "هل أنت تأكد من استلام مبلغ الفاتورة كاملاً؟ سيتم تحويل حالة الفاتورة إلى مدفوعة وقفل التعديل عليها.",
+  "confirmPaymentButton": "تأكيد الدفع",
+  "markAsPaid": "تسجيل كـ مدفوعة كاش",
+  "cannotEditPaidOrCancelled": "لا يمكن تعديل الفاتورة بعد دفعها أو إلغائها",
+  "confirmSendInvoiceSubtitle": "هل أنت تأكد من رغبتك في إرسال الفاتورة للعميل؟ سيتم إنشاء ملف الـ PDF ورابط الدفع وإرسالهما فوراً إلى البريد الإلكتروني للعميل.",
+  "cancelInvoice": "إلغاء الفاتورة",
+  "confirmCancelInvoiceSubtitle": "هل أنت تأكد من رغبتك في إلغاء هذه الفاتورة؟ سيتم حفظ حالتها كـ ملغاة ولن يمكن تعديلها أو تحصيل مبالغها لاحقاً."
 }

@@ -7,6 +7,7 @@ import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/network/network_response.dart';
+import 'package:invoify/core/services/notification/notification_service.dart';
 import 'package:invoify/core/theming/app_theme_cubit.dart';
 import 'package:invoify/core/utils/custom_bottom_sheet_selection_item.dart';
 import 'package:invoify/core/widgets/app_toasts.dart';
@@ -35,6 +36,7 @@ List<CustomBottomSheetSelectionItem<String>> getLanguageItems({
     isSelected: context.isArabic,
     onTap: () async {
       await context.setLocale(const Locale('ar'));
+      await getIt<NotificationService>().updateLanguageCode('ar');
     },
   ),
   CustomBottomSheetSelectionItem<String>(
@@ -44,6 +46,7 @@ List<CustomBottomSheetSelectionItem<String>> getLanguageItems({
     isSelected: !context.isArabic,
     onTap: () async {
       await context.setLocale(const Locale('en'));
+      await getIt<NotificationService>().updateLanguageCode('en');
     },
   ),
 ];

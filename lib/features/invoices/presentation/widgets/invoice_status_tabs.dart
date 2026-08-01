@@ -30,10 +30,12 @@ class InvoiceStatusTabs extends StatelessWidget {
 
     final tabs = [
       (null, AppStrings.all),
-      (InvoiceStatus.draft, AppStrings.statusDraft),
-      (InvoiceStatus.sent, AppStrings.statusSent),
       (InvoiceStatus.paid, AppStrings.statusPaid),
+      (InvoiceStatus.sent, AppStrings.statusSent),
+      (InvoiceStatus.opened, AppStrings.statusOpened),
       (InvoiceStatus.overdue, AppStrings.statusOverdue),
+      (InvoiceStatus.draft, AppStrings.statusDraft),
+      (InvoiceStatus.cancelled, AppStrings.statusCancelled),
     ];
 
     return SizedBox(

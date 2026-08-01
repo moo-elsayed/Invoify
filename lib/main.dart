@@ -9,7 +9,6 @@ import 'core/helpers/app_logger.dart';
 import 'core/helpers/di.dart';
 import 'core/helpers/simple_bloc_observer.dart';
 import 'core/routing/app_router.dart';
-import 'core/services/deep_link/deep_link_service.dart';
 import 'core/services/notification/notification_service.dart';
 import 'firebase_options.dart';
 import 'invoify.dart';
@@ -28,7 +27,6 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await getIt<NotificationService>().init();
-  await getIt<DeepLinkService>().init();
 
   Bloc.observer = SimpleBlocObserver();
 

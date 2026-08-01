@@ -75,6 +75,9 @@ class InvoiceDetailsView extends StatelessWidget {
           final dueDateStr = currentInvoice.dueDate != null
               ? DateFormat('yyyy-MM-dd').format(currentInvoice.dueDate!)
               : '';
+          final paidDateStr = currentInvoice.paidAt != null
+              ? DateFormat('yyyy-MM-dd HH:mm').format(currentInvoice.paidAt!)
+              : null;
 
           return SingleChildScrollView(
             padding: EdgeInsets.all(16.w),
@@ -93,6 +96,7 @@ class InvoiceDetailsView extends StatelessWidget {
                 InvoiceDatesSectionCard(
                   issueDateStr: issueDateStr,
                   dueDateStr: dueDateStr,
+                  paidDateStr: paidDateStr,
                 ),
                 Gap(16.h),
 

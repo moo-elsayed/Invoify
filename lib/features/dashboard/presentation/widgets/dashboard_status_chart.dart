@@ -18,7 +18,8 @@ class DashboardStatusChart extends StatelessWidget {
     final colors = context.colors;
     final totalCount = statusDistribution.values.fold<int>(0, (a, b) => a + b);
     final paidCount = statusDistribution[InvoiceStatus.paid] ?? 0;
-    final pendingCount = statusDistribution[InvoiceStatus.sent] ?? 0;
+    final sentCount = statusDistribution[InvoiceStatus.sent] ?? 0;
+    final openedCount = statusDistribution[InvoiceStatus.opened] ?? 0;
     final overdueCount = statusDistribution[InvoiceStatus.overdue] ?? 0;
     final draftCount = statusDistribution[InvoiceStatus.draft] ?? 0;
     final cancelledCount = statusDistribution[InvoiceStatus.cancelled] ?? 0;
@@ -76,11 +77,21 @@ class DashboardStatusChart extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             ),
-                          if (pendingCount > 0)
+                          if (sentCount > 0)
                             PieChartSectionData(
                               color: InvoiceStatus.sent.getColor(context),
-                              value: pendingCount.toDouble(),
-                              title: '$pendingCount',
+                              value: sentCount.toDouble(),
+                              title: '$sentCount',
+                              radius: 28.r,
+                              titleStyle: AppTextStyles.font12Bold.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          if (openedCount > 0)
+                            PieChartSectionData(
+                              color: InvoiceStatus.opened.getColor(context),
+                              value: openedCount.toDouble(),
+                              title: '$openedCount',
                               radius: 28.r,
                               titleStyle: AppTextStyles.font12Bold.copyWith(
                                 color: Colors.white,
@@ -130,25 +141,31 @@ class DashboardStatusChart extends StatelessWidget {
                       label: AppStrings.statusPaid,
                       count: paidCount,
                     ),
-                    Gap(8.h),
+                    Gap(6.h),
                     StatusChartLegendItem(
                       color: InvoiceStatus.sent.getColor(context),
                       label: AppStrings.statusSent,
-                      count: pendingCount,
+                      count: sentCount,
                     ),
-                    Gap(8.h),
+                    Gap(6.h),
+                    StatusChartLegendItem(
+                      color: InvoiceStatus.opened.getColor(context),
+                      label: AppStrings.statusOpened,
+                      count: openedCount,
+                    ),
+                    Gap(6.h),
                     StatusChartLegendItem(
                       color: InvoiceStatus.overdue.getColor(context),
                       label: AppStrings.statusOverdue,
                       count: overdueCount,
                     ),
-                    Gap(8.h),
+                    Gap(6.h),
                     StatusChartLegendItem(
                       color: InvoiceStatus.draft.getColor(context),
                       label: AppStrings.statusDraft,
                       count: draftCount,
                     ),
-                    Gap(8.h),
+                    Gap(6.h),
                     StatusChartLegendItem(
                       color: InvoiceStatus.cancelled.getColor(context),
                       label: AppStrings.statusCancelled,

@@ -31,22 +31,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
-            <!-- Deep Link Intent Filter for Scheme (invoify://) -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="invoify" />
-            </intent-filter>
-
-            <!-- App Links Intent Filter for Web (https://invoify-7757d.web.app) -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="invoify-7757d.web.app" />
-            </intent-filter>
         </activity>
 
         <!-- FCM Default Notification Channel -->

@@ -58,15 +58,28 @@ export const stripeWebhook = functions
             // 2. Send Push Notification to Merchant
             const targetUserId = userId || invoiceData?.userId;
             if (targetUserId) {
+              const userDoc = await db.collection('users').doc(targetUserId).get();
+              const lang = userDoc.data()?.languageCode || 'ar';
+
               const amount = invoiceData?.totalAmount || (session.amount_total ? session.amount_total / 100 : 0);
               const currency = invoiceData?.currency || session.currency?.toUpperCase() || 'EGP';
-              const clientName = invoiceData?.clientName || 'Customer';
+              const fallbackClientName = lang === 'ar' ? 'العميل' : 'Customer';
+              const clientName =
+                invoiceData?.client?.name ||
+                invoiceData?.clientName ||
+                session?.customer_details?.name ||
+                fallbackClientName;
 
-              console.log(`[stripeWebhook] Sending push notification to merchant (${targetUserId})...`);
+              const title = lang === 'ar' ? 'تم دفع الفاتورة! 💰' : 'Invoice Paid! 💰';
+              const body = lang === 'ar'
+                ? `تم استلام ${amount} ${currency} مقابل الفاتورة #${invoiceId} من ${clientName}.`
+                : `Received ${amount} ${currency} for Invoice #${invoiceId} from ${clientName}.`;
+
+              console.log(`[stripeWebhook] Sending push notification (lang: ${lang}) to merchant (${targetUserId})...`);
               await sendPushNotificationToUser({
                 userId: targetUserId,
-                title: 'Invoice Paid! 💰',
-                body: `Received ${amount} ${currency} for Invoice #${invoiceId} from ${clientName}.`,
+                title,
+                body,
                 data: {
                   invoiceId,
                   screen: 'invoice_details',

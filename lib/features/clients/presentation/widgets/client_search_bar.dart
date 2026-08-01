@@ -27,16 +27,17 @@ class ClientSearchBar extends StatelessWidget {
         size: 22.sp,
       ),
       suffixWidget: controller.text.isNotEmpty
-          ? IconButton(
-              icon: Icon(
+          ? GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                controller.clear();
+                onChanged('');
+              },
+              child: Icon(
                 Icons.clear_rounded,
                 color: colors.subText,
                 size: 18.sp,
               ),
-              onPressed: () {
-                controller.clear();
-                onChanged('');
-              },
             )
           : null,
       onChanged: (value) => onChanged(value ?? ''),
