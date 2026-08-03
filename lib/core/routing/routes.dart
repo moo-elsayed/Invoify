@@ -10,4 +10,3 @@ class Routes {
   static const addEditInvoiceView = 'addEditInvoiceView';
   static const invoiceDetailsView = 'invoiceDetailsView';
 }
-

@@ -21,6 +21,7 @@
   "userDisabled": "تم تعطيل هذا الحساب",
   "operationNotAllowed": "العملية غير مسموح بها حالياً",
   "cacheError": "حدث خطأ في حفظ أو جلب البيانات المحلية",
+  "googleSignInCancelled": "تم إلغاء عملية تسجيل الدخول بجوجل",
   "emailCannotBeEmpty": "البريد الإلكتروني لا يمكن أن يكون فارغاً",
   "enterAValidEmailAddress": "يرجى إدخال بريد إلكتروني صحيح",
   "requiredField": "هذا الحقل مطلوب",

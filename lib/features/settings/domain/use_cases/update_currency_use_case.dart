@@ -9,6 +9,5 @@ class UpdateCurrencyUseCase {
   Future<NetworkResponse<void>> call({
     required String uid,
     required String currency,
-  }) async =>
-      await _settingsRepo.updateCurrency(uid: uid, currency: currency);
+  }) async => await _settingsRepo.updateCurrency(uid: uid, currency: currency);
 }

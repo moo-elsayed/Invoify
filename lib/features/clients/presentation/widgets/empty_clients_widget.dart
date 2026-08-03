@@ -6,10 +6,7 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 
 class EmptyClientsWidget extends StatelessWidget {
-  const EmptyClientsWidget({
-    super.key,
-    required this.isSearching,
-  });
+  const EmptyClientsWidget({super.key, required this.isSearching});
 
   final bool isSearching;
 
@@ -39,13 +36,9 @@ class EmptyClientsWidget extends StatelessWidget {
             ),
             Gap(16.h),
             Text(
-              isSearching
-                  ? AppStrings.noClientsFound
-                  : AppStrings.noClientsYet,
+              isSearching ? AppStrings.noClientsFound : AppStrings.noClientsYet,
               textAlign: TextAlign.center,
-              style: AppTextStyles.font16Bold.copyWith(
-                color: colors.mainText,
-              ),
+              style: AppTextStyles.font16Bold.copyWith(color: colors.mainText),
             ),
           ],
         ),

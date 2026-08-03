@@ -6,10 +6,7 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 
 class InvoiceDetailsNotesCard extends StatelessWidget {
-  const InvoiceDetailsNotesCard({
-    super.key,
-    required this.notes,
-  });
+  const InvoiceDetailsNotesCard({super.key, required this.notes});
 
   final String notes;
 
@@ -36,16 +33,12 @@ class InvoiceDetailsNotesCard extends StatelessWidget {
         children: [
           Text(
             AppStrings.notes,
-            style: AppTextStyles.font14Bold.copyWith(
-              color: colors.mainText,
-            ),
+            style: AppTextStyles.font14Bold.copyWith(color: colors.mainText),
           ),
           Gap(6.h),
           Text(
             notes,
-            style: AppTextStyles.font13Regular.copyWith(
-              color: colors.subText,
-            ),
+            style: AppTextStyles.font13Regular.copyWith(color: colors.subText),
           ),
         ],
       ),

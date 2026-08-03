@@ -77,9 +77,7 @@ class ProfileHeaderCard extends StatelessWidget {
           Gap(4.h),
           Text(
             userEmail,
-            style: AppTextStyles.font14Regular.copyWith(
-              color: colors.subText,
-            ),
+            style: AppTextStyles.font14Regular.copyWith(color: colors.subText),
             textAlign: TextAlign.center,
           ),
         ],

@@ -22,21 +22,21 @@ class ClientModel {
         address: map['address'] ?? '',
         createdAt: map['createdAt'] != null
             ? (map['createdAt'] is Timestamp
-                ? (map['createdAt'] as Timestamp).toDate()
-                : DateTime.tryParse(map['createdAt'].toString()) ??
-                    DateTime.now())
+                  ? (map['createdAt'] as Timestamp).toDate()
+                  : DateTime.tryParse(map['createdAt'].toString()) ??
+                        DateTime.now())
             : DateTime.now(),
       );
 
   factory ClientModel.fromEntity(ClientEntity entity) => ClientModel(
-        clientId: entity.clientId,
-        userId: entity.userId,
-        name: entity.name,
-        email: entity.email,
-        phone: entity.phone,
-        address: entity.address,
-        createdAt: entity.createdAt,
-      );
+    clientId: entity.clientId,
+    userId: entity.userId,
+    name: entity.name,
+    email: entity.email,
+    phone: entity.phone,
+    address: entity.address,
+    createdAt: entity.createdAt,
+  );
 
   final String clientId;
   final String userId;
@@ -47,22 +47,22 @@ class ClientModel {
   final DateTime createdAt;
 
   Map<String, dynamic> toJson() => {
-        'clientId': clientId,
-        'userId': userId,
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'address': address,
-        'createdAt': Timestamp.fromDate(createdAt),
-      };
+    'clientId': clientId,
+    'userId': userId,
+    'name': name,
+    'email': email,
+    'phone': phone,
+    'address': address,
+    'createdAt': Timestamp.fromDate(createdAt),
+  };
 
   ClientEntity toEntity() => ClientEntity(
-        clientId: clientId,
-        userId: userId,
-        name: name,
-        email: email,
-        phone: phone,
-        address: address,
-        createdAt: createdAt,
-      );
+    clientId: clientId,
+    userId: userId,
+    name: name,
+    email: email,
+    phone: phone,
+    address: address,
+    createdAt: createdAt,
+  );
 }

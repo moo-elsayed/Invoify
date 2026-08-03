@@ -21,14 +21,14 @@ class ClientEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        clientId,
-        userId,
-        name,
-        email,
-        phone,
-        address,
-        createdAt,
-      ];
+    clientId,
+    userId,
+    name,
+    email,
+    phone,
+    address,
+    createdAt,
+  ];
 
   ClientEntity copyWith({
     String? clientId,
@@ -38,14 +38,13 @@ class ClientEntity extends Equatable {
     String? phone,
     String? address,
     DateTime? createdAt,
-  }) =>
-      ClientEntity(
-        clientId: clientId ?? this.clientId,
-        userId: userId ?? this.userId,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        phone: phone ?? this.phone,
-        address: address ?? this.address,
-        createdAt: createdAt ?? this.createdAt,
-      );
+  }) => ClientEntity(
+    clientId: clientId ?? this.clientId,
+    userId: userId ?? this.userId,
+    name: name ?? this.name,
+    email: email ?? this.email,
+    phone: phone ?? this.phone,
+    address: address ?? this.address,
+    createdAt: createdAt ?? this.createdAt,
+  );
 }

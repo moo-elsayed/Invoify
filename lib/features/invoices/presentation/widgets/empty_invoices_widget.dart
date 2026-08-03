@@ -6,10 +6,7 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 
 class EmptyInvoicesWidget extends StatelessWidget {
-  const EmptyInvoicesWidget({
-    super.key,
-    required this.isFiltered,
-  });
+  const EmptyInvoicesWidget({super.key, required this.isFiltered});
 
   final bool isFiltered;
 
@@ -40,9 +37,7 @@ class EmptyInvoicesWidget extends StatelessWidget {
               isFiltered
                   ? AppStrings.noInvoicesFound
                   : AppStrings.noInvoicesYet,
-              style: AppTextStyles.font16Bold.copyWith(
-                color: colors.mainText,
-              ),
+              style: AppTextStyles.font16Bold.copyWith(color: colors.mainText),
               textAlign: TextAlign.center,
             ),
           ],

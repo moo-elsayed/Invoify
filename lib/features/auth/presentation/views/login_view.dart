@@ -106,12 +106,16 @@ class _LoginViewState extends State<LoginView> {
                           shape: BoxShape.circle,
                           color: context.colors.surface,
                           border: Border.all(
-                            color: context.colors.primary.withValues(alpha: 0.3),
+                            color: context.colors.primary.withValues(
+                              alpha: 0.3,
+                            ),
                             width: 2.w,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: context.colors.primary.withValues(alpha: 0.1),
+                              color: context.colors.primary.withValues(
+                                alpha: 0.1,
+                              ),
                               blurRadius: 16.r,
                               offset: const Offset(0, 4),
                             ),
@@ -193,10 +197,12 @@ class _LoginViewState extends State<LoginView> {
                         builder: (context, state) => CustomMaterialButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              context.read<SignInCubit>().signInWithEmailAndPassword(
-                                email: _emailController.text.trim(),
-                                password: _passwordController.text.trim(),
-                              );
+                              context
+                                  .read<SignInCubit>()
+                                  .signInWithEmailAndPassword(
+                                    email: _emailController.text.trim(),
+                                    password: _passwordController.text.trim(),
+                                  );
                             }
                           },
                           maxWidth: true,

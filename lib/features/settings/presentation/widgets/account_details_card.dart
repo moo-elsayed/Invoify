@@ -8,11 +8,7 @@ import 'package:invoify/features/auth/domain/entities/user_entity.dart';
 import 'package:invoify/features/settings/presentation/widgets/account_detail_row.dart';
 
 class AccountDetailsCard extends StatelessWidget {
-  const AccountDetailsCard({
-    super.key,
-    this.user,
-    required this.formattedDate,
-  });
+  const AccountDetailsCard({super.key, this.user, required this.formattedDate});
 
   final UserEntity? user;
   final String formattedDate;
@@ -87,7 +83,9 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    isVerified ? Icons.check_circle_rounded : Icons.info_outline_rounded,
+                    isVerified
+                        ? Icons.check_circle_rounded
+                        : Icons.info_outline_rounded,
                     size: 14.sp,
                     color: isVerified ? colors.primary : colors.subText,
                   ),

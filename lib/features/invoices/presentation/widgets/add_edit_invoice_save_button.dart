@@ -75,8 +75,7 @@ class AddEditInvoiceSaveButton extends StatelessWidget {
         double.tryParse(discountController.text.trim()) ?? 0.0;
     final discountType = discountTypeNotifier.value;
 
-    final double discountRate =
-        discountType.isPercentage ? discountInput : 0.0;
+    final double discountRate = discountType.isPercentage ? discountInput : 0.0;
     final double discountAmount = discountType.isPercentage
         ? subtotal * (discountInput / 100)
         : discountInput;
@@ -117,13 +116,13 @@ class AddEditInvoiceSaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<bool>(
-        valueListenable: isLoadingNotifier,
-        builder: (context, isLoading, child) => CustomMaterialButton(
-          onPressed: () => _onSaveInvoice(context),
-          text: isEditing ? AppStrings.saveChanges : AppStrings.createInvoice,
-          isLoading: isLoading,
-          maxWidth: true,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-      );
+    valueListenable: isLoadingNotifier,
+    builder: (context, isLoading, child) => CustomMaterialButton(
+      onPressed: () => _onSaveInvoice(context),
+      text: isEditing ? AppStrings.saveChanges : AppStrings.createInvoice,
+      isLoading: isLoading,
+      maxWidth: true,
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+  );
 }

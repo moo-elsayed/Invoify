@@ -7,7 +7,7 @@ part 'forget_password_state.dart';
 
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   ForgetPasswordCubit(this._forgetPasswordUseCase)
-      : super(ForgetPasswordInitial());
+    : super(ForgetPasswordInitial());
 
   final ForgetPasswordUseCase _forgetPasswordUseCase;
 

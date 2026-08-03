@@ -29,11 +29,8 @@ class CustomBottomSheet extends StatelessWidget {
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black.withValues(alpha: 0.5),
       isScrollControlled: true,
-      builder: (context) => CustomBottomSheet(
-        title: title,
-        subtitle: subtitle,
-        items: items,
-      ),
+      builder: (context) =>
+          CustomBottomSheet(title: title, subtitle: subtitle, items: items),
     );
   }
 
@@ -114,8 +111,8 @@ class CustomBottomSheet extends StatelessWidget {
                           color: item.isSelected
                               ? colors.primary.withValues(alpha: 0.12)
                               : (context.isDarkMode
-                                  ? colors.border.withValues(alpha: 0.2)
-                                  : colors.border.withValues(alpha: 0.12)),
+                                    ? colors.border.withValues(alpha: 0.2)
+                                    : colors.border.withValues(alpha: 0.12)),
                           borderRadius: BorderRadius.circular(14.r),
                           border: Border.all(
                             color: item.isSelected

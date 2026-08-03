@@ -9,7 +9,4 @@ class GetInvoicesUseCase {
 
   Future<NetworkResponse<List<InvoiceEntity>>> call(String userId) async =>
       await _invoicesRepo.getInvoices(userId: userId);
-
-  Stream<List<InvoiceEntity>> stream(String userId) =>
-      _invoicesRepo.getInvoicesStream(userId: userId);
 }

@@ -32,7 +32,9 @@ class _MainViewState extends State<MainView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       NotificationRouter.markAppAsReady();
-      getIt<NotificationService>().updateLanguageCode(context.locale.languageCode);
+      getIt<NotificationService>().updateLanguageCode(
+        context.locale.languageCode,
+      );
     });
   }
 
@@ -44,27 +46,27 @@ class _MainViewState extends State<MainView> {
   ];
 
   List<NavBarItem> get _navItems => [
-        NavBarItem(
-          icon: CupertinoIcons.square_grid_2x2,
-          activeIcon: CupertinoIcons.square_grid_2x2_fill,
-          label: AppStrings.home,
-        ),
-        NavBarItem(
-          icon: CupertinoIcons.doc_text,
-          activeIcon: CupertinoIcons.doc_text_fill,
-          label: AppStrings.invoices,
-        ),
-        NavBarItem(
-          icon: CupertinoIcons.person_2,
-          activeIcon: CupertinoIcons.person_2_fill,
-          label: AppStrings.clients,
-        ),
-        NavBarItem(
-          icon: CupertinoIcons.gear_alt,
-          activeIcon: CupertinoIcons.gear_alt_fill,
-          label: AppStrings.settings,
-        ),
-      ];
+    NavBarItem(
+      icon: CupertinoIcons.square_grid_2x2,
+      activeIcon: CupertinoIcons.square_grid_2x2_fill,
+      label: AppStrings.home,
+    ),
+    NavBarItem(
+      icon: CupertinoIcons.doc_text,
+      activeIcon: CupertinoIcons.doc_text_fill,
+      label: AppStrings.invoices,
+    ),
+    NavBarItem(
+      icon: CupertinoIcons.person_2,
+      activeIcon: CupertinoIcons.person_2_fill,
+      label: AppStrings.clients,
+    ),
+    NavBarItem(
+      icon: CupertinoIcons.gear_alt,
+      activeIcon: CupertinoIcons.gear_alt_fill,
+      label: AppStrings.settings,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +81,7 @@ class _MainViewState extends State<MainView> {
         BlocProvider(
           create: (context) => getIt<InvoicesCubit>()..getInvoices(),
         ),
-        BlocProvider(
-          create: (context) => getIt<ClientsCubit>()..getClients(),
-        ),
+        BlocProvider(create: (context) => getIt<ClientsCubit>()..getClients()),
       ],
       child: MultiBlocListener(
         listeners: [

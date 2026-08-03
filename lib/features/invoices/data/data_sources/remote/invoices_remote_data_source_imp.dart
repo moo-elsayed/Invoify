@@ -29,9 +29,7 @@ class InvoicesRemoteDataSourceImp implements InvoicesRemoteDataSource {
   }, functionName: 'getInvoices');
 
   @override
-  Stream<List<InvoiceModel>> getInvoicesStream({
-    required String userId,
-  }) =>
+  Stream<List<InvoiceModel>> getInvoicesStream({required String userId}) =>
       _firestore
           .collection(_invoicesCollection)
           .where('userId', isEqualTo: userId)

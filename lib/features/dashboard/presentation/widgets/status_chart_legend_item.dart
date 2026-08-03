@@ -25,10 +25,7 @@ class StatusChartLegendItem extends StatelessWidget {
         Container(
           width: 10.w,
           height: 10.w,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         Gap(8.w),
         Text(

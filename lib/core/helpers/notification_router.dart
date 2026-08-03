@@ -32,7 +32,8 @@ class NotificationRouter {
       if (payload.trim().startsWith('{')) {
         try {
           final Map<String, dynamic> data = jsonDecode(payload);
-          invoiceId = (data['invoiceId'] ?? data['InvoiceId'] ?? data['id'])?.toString();
+          invoiceId = (data['invoiceId'] ?? data['InvoiceId'] ?? data['id'])
+              ?.toString();
         } catch (_) {
           invoiceId = payload;
         }
@@ -40,13 +41,17 @@ class NotificationRouter {
         invoiceId = payload;
       }
     } else if (payload is Map) {
-      invoiceId = (payload['invoiceId'] ?? payload['InvoiceId'] ?? payload['id'])?.toString();
+      invoiceId =
+          (payload['invoiceId'] ?? payload['InvoiceId'] ?? payload['id'])
+              ?.toString();
     }
 
     if (invoiceId == null || invoiceId.isEmpty) return;
 
     if (!isAppReady) {
-      debugPrint('App layout not ready yet. Storing pending invoiceId: $invoiceId');
+      debugPrint(
+        'App layout not ready yet. Storing pending invoiceId: $invoiceId',
+      );
       _pendingInvoiceId = invoiceId;
       return;
     }

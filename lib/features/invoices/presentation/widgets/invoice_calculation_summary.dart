@@ -105,10 +105,9 @@ class InvoiceCalculationSummary extends StatelessWidget {
                       onChanged: (val) => onCalculationsChanged?.call(),
                       suffixWidget: GestureDetector(
                         onTap: () {
-                          discountTypeNotifier.value =
-                              discountType.isPercentage
-                                  ? DiscountType.fixed
-                                  : DiscountType.percentage;
+                          discountTypeNotifier.value = discountType.isPercentage
+                              ? DiscountType.fixed
+                              : DiscountType.percentage;
                           onCalculationsChanged?.call();
                         },
                         child: Container(
@@ -186,10 +185,7 @@ class InvoiceCalculationSummary extends StatelessWidget {
 
               // Grand Total Highlight Card
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 12.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 decoration: BoxDecoration(
                   color: colors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12.r),

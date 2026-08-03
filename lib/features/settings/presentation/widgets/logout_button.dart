@@ -56,9 +56,7 @@ class LogoutButton extends StatelessWidget {
           loadingIndicatorColor: colors.error,
           backgroundColor: colors.error.withValues(alpha: 0.1),
           textColor: colors.error,
-          side: BorderSide(
-            color: colors.error.withValues(alpha: 0.3),
-          ),
+          side: BorderSide(color: colors.error.withValues(alpha: 0.3)),
         ),
       ),
     );

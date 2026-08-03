@@ -9,17 +9,22 @@ import 'package:invoify/features/invoices/domain/use_cases/get_invoices_use_case
 import 'dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit(this._getInvoicesUseCase, this._getClientsUseCase)
-      : super(const DashboardInitial());
+  DashboardCubit(
+    this._getInvoicesUseCase,
+    this._getClientsUseCase, {
+    FirebaseAuth? firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+       super(const DashboardInitial());
 
   final GetInvoicesUseCase _getInvoicesUseCase;
   final GetClientsUseCase _getClientsUseCase;
+  final FirebaseAuth _firebaseAuth;
 
   List<InvoiceEntity> _cachedInvoices = [];
   int _cachedClientsCount = 0;
 
   Future<void> loadDashboardData({bool forceRefresh = false}) async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
+    final firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser == null) return;
 
     if (!forceRefresh && state is DashboardSuccess) {
@@ -65,6 +70,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     _processAndEmitDashboardData(_cachedInvoices, _cachedClientsCount);
   }
 
+  // private method to process and emit dashboard data
   void _processAndEmitDashboardData(
     List<InvoiceEntity> invoices,
     int clientsCount,
@@ -102,7 +108,8 @@ class DashboardCubit extends Cubit<DashboardState> {
 
         // Calculate revenue trends for past 6 months (0 to 5) based on actual payment date (paidAt)
         final monthDiff =
-            (now.year - paymentDate.year) * 12 + (now.month - paymentDate.month);
+            (now.year - paymentDate.year) * 12 +
+            (now.month - paymentDate.month);
         if (monthDiff >= 0 && monthDiff < 6) {
           final barIndex = 5 - monthDiff;
           monthlyRev[barIndex] = (monthlyRev[barIndex] ?? 0) + inv.totalAmount;

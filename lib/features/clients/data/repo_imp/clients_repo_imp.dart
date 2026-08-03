@@ -16,8 +16,9 @@ class ClientsRepoImp implements ClientsRepo {
     final response = await _remoteDataSource.getClients(userId: userId);
     switch (response) {
       case NetworkSuccess<List<ClientModel>>():
-        final entities =
-            (response.data ?? []).map((model) => model.toEntity()).toList();
+        final entities = (response.data ?? [])
+            .map((model) => model.toEntity())
+            .toList();
         return NetworkSuccess(entities);
       case NetworkFailure<List<ClientModel>>():
         return NetworkFailure(response.failure);
@@ -41,12 +42,12 @@ class ClientsRepoImp implements ClientsRepo {
   @override
   Future<NetworkResponse<void>> updateClient({
     required ClientEntity client,
-  }) async =>
-      await _remoteDataSource.updateClient(client: ClientModel.fromEntity(client));
+  }) async => await _remoteDataSource.updateClient(
+    client: ClientModel.fromEntity(client),
+  );
 
   @override
   Future<NetworkResponse<void>> deleteClient({
     required String clientId,
-  }) async =>
-      await _remoteDataSource.deleteClient(clientId: clientId);
+  }) async => await _remoteDataSource.deleteClient(clientId: clientId);
 }

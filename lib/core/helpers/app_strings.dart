@@ -27,6 +27,7 @@ abstract class AppStrings {
   static String get userDisabled => 'userDisabled'.tr();
   static String get operationNotAllowed => 'operationNotAllowed'.tr();
   static String get cacheError => 'cacheError'.tr();
+  static String get googleSignInCancelled => 'googleSignInCancelled'.tr();
 
   // Validation Strings
   static String get emailCannotBeEmpty => 'emailCannotBeEmpty'.tr();
@@ -46,8 +47,7 @@ abstract class AppStrings {
   static String get confirmPasswordMustMatchThePassword =>
       'confirmPasswordMustMatchThePassword'.tr();
   static String get nameCannotBeEmpty => 'nameCannotBeEmpty'.tr();
-  static String get profilePictureIsRequired =>
-      'profilePictureIsRequired'.tr();
+  static String get profilePictureIsRequired => 'profilePictureIsRequired'.tr();
   static String get idCardImageIsRequired => 'idCardImageIsRequired'.tr();
   static String get usernameCannotBeEmpty => 'usernameCannotBeEmpty'.tr();
   static String get streetNameCannotBeEmpty => 'streetNameCannotBeEmpty'.tr();
@@ -61,15 +61,13 @@ abstract class AppStrings {
   static String get pleaseSelectTime => 'pleaseSelectTime'.tr();
   static String get yearsOfExperienceCannotBeEmpty =>
       'yearsOfExperienceCannotBeEmpty'.tr();
-  static String get phoneNumberCannotBeEmpty =>
-      'phoneNumberCannotBeEmpty'.tr();
+  static String get phoneNumberCannotBeEmpty => 'phoneNumberCannotBeEmpty'.tr();
   static String get enterAValidPhoneNumber => 'enterAValidPhoneNumber'.tr();
   static String get codeCannotBeEmpty => 'codeCannotBeEmpty'.tr();
   static String get codeShouldBeAtLeast6Digits =>
       'codeShouldBeAtLeast6Digits'.tr();
   static String get nationalIdCannotBeEmpty => 'nationalIdCannotBeEmpty'.tr();
-  static String get nationalIdMustBe14Digits =>
-      'nationalIdMustBe14Digits'.tr();
+  static String get nationalIdMustBe14Digits => 'nationalIdMustBe14Digits'.tr();
 
   // Onboarding & Action Navigation
   static String get skip => 'skip'.tr();
@@ -244,4 +242,3 @@ abstract class AppStrings {
   static String get confirmCancelInvoiceSubtitle =>
       'confirmCancelInvoiceSubtitle'.tr();
 }
-

@@ -25,9 +25,9 @@ class InvoiceModel {
     required this.notes,
     DateTime? createdAt,
     this.paidAt,
-  })  : issueDate = issueDate ?? DateTime.now(),
-        dueDate = dueDate ?? DateTime.now().add(const Duration(days: 14)),
-        createdAt = createdAt ?? DateTime.now();
+  }) : issueDate = issueDate ?? DateTime.now(),
+       dueDate = dueDate ?? DateTime.now().add(const Duration(days: 14)),
+       createdAt = createdAt ?? DateTime.now();
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json, {String? docId}) =>
       InvoiceModel(
@@ -46,12 +46,12 @@ class InvoiceModel {
               ),
         items: json['items'] != null
             ? (json['items'] as List)
-                .map(
-                  (e) => InvoiceItemModel.fromJson(
-                    Map<String, dynamic>.from(e as Map),
-                  ),
-                )
-                .toList()
+                  .map(
+                    (e) => InvoiceItemModel.fromJson(
+                      Map<String, dynamic>.from(e as Map),
+                    ),
+                  )
+                  .toList()
             : [],
         issueDate: _parseTimestamp(json['issueDate']),
         dueDate: _parseTimestamp(json['dueDate']),
@@ -65,29 +65,31 @@ class InvoiceModel {
         status: InvoiceStatus.fromString(json['status']),
         notes: json['notes'] ?? '',
         createdAt: _parseTimestamp(json['createdAt']),
-        paidAt: json['paidAt'] != null ? _parseTimestampNullable(json['paidAt']) : null,
+        paidAt: json['paidAt'] != null
+            ? _parseTimestampNullable(json['paidAt'])
+            : null,
       );
 
   factory InvoiceModel.fromEntity(InvoiceEntity entity) => InvoiceModel(
-        invoiceId: entity.invoiceId,
-        invoiceNumber: entity.invoiceNumber,
-        userId: entity.userId,
-        client: ClientModel.fromEntity(entity.client),
-        items: entity.items.map((e) => InvoiceItemModel.fromEntity(e)).toList(),
-        issueDate: entity.issueDate,
-        dueDate: entity.dueDate,
-        taxRate: entity.taxRate,
-        taxAmount: entity.taxAmount,
-        discountType: entity.discountType,
-        discountRate: entity.discountRate,
-        discountAmount: entity.discountAmount,
-        subtotal: entity.subtotal,
-        totalAmount: entity.totalAmount,
-        status: entity.status,
-        notes: entity.notes,
-        createdAt: entity.createdAt,
-        paidAt: entity.paidAt,
-      );
+    invoiceId: entity.invoiceId,
+    invoiceNumber: entity.invoiceNumber,
+    userId: entity.userId,
+    client: ClientModel.fromEntity(entity.client),
+    items: entity.items.map((e) => InvoiceItemModel.fromEntity(e)).toList(),
+    issueDate: entity.issueDate,
+    dueDate: entity.dueDate,
+    taxRate: entity.taxRate,
+    taxAmount: entity.taxAmount,
+    discountType: entity.discountType,
+    discountRate: entity.discountRate,
+    discountAmount: entity.discountAmount,
+    subtotal: entity.subtotal,
+    totalAmount: entity.totalAmount,
+    status: entity.status,
+    notes: entity.notes,
+    createdAt: entity.createdAt,
+    paidAt: entity.paidAt,
+  );
 
   final String invoiceId;
   final String invoiceNumber;
@@ -140,67 +142,66 @@ class InvoiceModel {
     String? notes,
     DateTime? createdAt,
     DateTime? paidAt,
-  }) =>
-      InvoiceModel(
-        invoiceId: invoiceId ?? this.invoiceId,
-        invoiceNumber: invoiceNumber ?? this.invoiceNumber,
-        userId: userId ?? this.userId,
-        client: client ?? this.client,
-        items: items ?? this.items,
-        issueDate: issueDate ?? this.issueDate,
-        dueDate: dueDate ?? this.dueDate,
-        taxRate: taxRate ?? this.taxRate,
-        taxAmount: taxAmount ?? this.taxAmount,
-        discountType: discountType ?? this.discountType,
-        discountRate: discountRate ?? this.discountRate,
-        discountAmount: discountAmount ?? this.discountAmount,
-        subtotal: subtotal ?? this.subtotal,
-        totalAmount: totalAmount ?? this.totalAmount,
-        status: status ?? this.status,
-        notes: notes ?? this.notes,
-        createdAt: createdAt ?? this.createdAt,
-        paidAt: paidAt ?? this.paidAt,
-      );
+  }) => InvoiceModel(
+    invoiceId: invoiceId ?? this.invoiceId,
+    invoiceNumber: invoiceNumber ?? this.invoiceNumber,
+    userId: userId ?? this.userId,
+    client: client ?? this.client,
+    items: items ?? this.items,
+    issueDate: issueDate ?? this.issueDate,
+    dueDate: dueDate ?? this.dueDate,
+    taxRate: taxRate ?? this.taxRate,
+    taxAmount: taxAmount ?? this.taxAmount,
+    discountType: discountType ?? this.discountType,
+    discountRate: discountRate ?? this.discountRate,
+    discountAmount: discountAmount ?? this.discountAmount,
+    subtotal: subtotal ?? this.subtotal,
+    totalAmount: totalAmount ?? this.totalAmount,
+    status: status ?? this.status,
+    notes: notes ?? this.notes,
+    createdAt: createdAt ?? this.createdAt,
+    paidAt: paidAt ?? this.paidAt,
+  );
 
   Map<String, dynamic> toJson() => {
-        'invoiceId': invoiceId,
-        'invoiceNumber': invoiceNumber,
-        'userId': userId,
-        'client': client.toJson(),
-        'items': items.map((e) => e.toJson()).toList(),
-        'issueDate': Timestamp.fromDate(issueDate),
-        'dueDate': Timestamp.fromDate(dueDate),
-        'taxRate': taxRate,
-        'taxAmount': taxAmount,
-        'discountType': discountType.name,
-        'discountRate': discountRate,
-        'discountAmount': discountAmount,
-        'subtotal': subtotal,
-        'totalAmount': totalAmount,
-        'status': status.name,
-        'notes': notes,
-        'createdAt': Timestamp.fromDate(createdAt),
-        if (paidAt != null) 'paidAt': Timestamp.fromDate(paidAt!),
-      };
+    'invoiceId': invoiceId,
+    'invoiceNumber': invoiceNumber,
+    'userId': userId,
+    'client': client.toJson(),
+    'items': items.map((e) => e.toJson()).toList(),
+    'issueDate': Timestamp.fromDate(issueDate),
+    'dueDate': Timestamp.fromDate(dueDate),
+    'taxRate': taxRate,
+    'taxAmount': taxAmount,
+    'discountType': discountType.name,
+    'discountRate': discountRate,
+    'discountAmount': discountAmount,
+    'subtotal': subtotal,
+    'totalAmount': totalAmount,
+    'status': status.name,
+    'notes': notes,
+    'createdAt': Timestamp.fromDate(createdAt),
+    if (paidAt != null) 'paidAt': Timestamp.fromDate(paidAt!),
+  };
 
   InvoiceEntity toEntity() => InvoiceEntity(
-        invoiceId: invoiceId,
-        invoiceNumber: invoiceNumber,
-        userId: userId,
-        client: client.toEntity(),
-        items: items.map((e) => e.toEntity()).toList(),
-        issueDate: issueDate,
-        dueDate: dueDate,
-        taxRate: taxRate,
-        taxAmount: taxAmount,
-        discountType: discountType,
-        discountRate: discountRate,
-        discountAmount: discountAmount,
-        subtotal: subtotal,
-        totalAmount: totalAmount,
-        status: status,
-        notes: notes,
-        createdAt: createdAt,
-        paidAt: paidAt,
-      );
+    invoiceId: invoiceId,
+    invoiceNumber: invoiceNumber,
+    userId: userId,
+    client: client.toEntity(),
+    items: items.map((e) => e.toEntity()).toList(),
+    issueDate: issueDate,
+    dueDate: dueDate,
+    taxRate: taxRate,
+    taxAmount: taxAmount,
+    discountType: discountType,
+    discountRate: discountRate,
+    discountAmount: discountAmount,
+    subtotal: subtotal,
+    totalAmount: totalAmount,
+    status: status,
+    notes: notes,
+    createdAt: createdAt,
+    paidAt: paidAt,
+  );
 }

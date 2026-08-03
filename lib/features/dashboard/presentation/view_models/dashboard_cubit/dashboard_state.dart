@@ -38,14 +38,14 @@ final class DashboardSuccess extends DashboardState {
 
   @override
   List<Object?> get props => [
-        monthlyEarnings,
-        totalOverdue,
-        pendingAmount,
-        totalClientsCount,
-        monthlyRevenueMap,
-        statusDistribution,
-        recentInvoices,
-      ];
+    monthlyEarnings,
+    totalOverdue,
+    pendingAmount,
+    totalClientsCount,
+    monthlyRevenueMap,
+    statusDistribution,
+    recentInvoices,
+  ];
 }
 
 final class DashboardFailure extends DashboardState {

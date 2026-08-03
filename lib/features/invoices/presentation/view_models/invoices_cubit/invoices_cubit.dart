@@ -7,22 +7,25 @@ import 'package:invoify/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invoify/features/invoices/domain/enums/invoice_status.dart';
 import 'package:invoify/features/invoices/domain/use_cases/create_invoice_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/delete_invoice_use_case.dart';
-import 'package:invoify/features/invoices/domain/use_cases/get_invoices_use_case.dart';
+import 'package:invoify/features/invoices/domain/use_cases/get_invoices_stream_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/update_invoice_use_case.dart';
 import 'invoices_state.dart';
 
 class InvoicesCubit extends Cubit<InvoicesState> {
   InvoicesCubit(
-    this._getInvoicesUseCase,
+    this._getInvoicesStreamUseCase,
     this._createInvoiceUseCase,
     this._updateInvoiceUseCase,
-    this._deleteInvoiceUseCase,
-  ) : super(const InvoicesInitial());
+    this._deleteInvoiceUseCase, {
+    FirebaseAuth? firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+       super(const InvoicesInitial());
 
-  final GetInvoicesUseCase _getInvoicesUseCase;
+  final GetInvoicesStreamUseCase _getInvoicesStreamUseCase;
   final CreateInvoiceUseCase _createInvoiceUseCase;
   final UpdateInvoiceUseCase _updateInvoiceUseCase;
   final DeleteInvoiceUseCase _deleteInvoiceUseCase;
+  final FirebaseAuth _firebaseAuth;
 
   List<InvoiceEntity> _allInvoices = [];
   List<InvoiceEntity> get allInvoices => _allInvoices;
@@ -34,13 +37,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   }
 
   Future<void> getInvoices() async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
+    final firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser == null) return;
 
     emit(const InvoicesLoading());
 
     await _invoicesSubscription?.cancel();
-    _invoicesSubscription = _getInvoicesUseCase.stream(firebaseUser.uid).listen(
+    _invoicesSubscription = _getInvoicesStreamUseCase(firebaseUser.uid).listen(
       (invoices) {
         _allInvoices = invoices;
         emit(InvoicesSuccess(List.from(_allInvoices)));
@@ -52,7 +55,7 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   }
 
   Future<void> createInvoice(InvoiceEntity invoice) async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
+    final firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser == null) return;
 
     final invoiceToCreate = invoice.copyWith(

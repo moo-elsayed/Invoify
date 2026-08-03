@@ -19,11 +19,11 @@ class NotificationService {
     FirebaseFirestore? firestore,
     FirebaseAuth? auth,
     FlutterLocalNotificationsPlugin? localNotifications,
-  })  : _messaging = messaging ?? FirebaseMessaging.instance,
-        _firestore = firestore ?? FirebaseFirestore.instance,
-        _auth = auth ?? FirebaseAuth.instance,
-        _localNotifications =
-            localNotifications ?? FlutterLocalNotificationsPlugin();
+  }) : _messaging = messaging ?? FirebaseMessaging.instance,
+       _firestore = firestore ?? FirebaseFirestore.instance,
+       _auth = auth ?? FirebaseAuth.instance,
+       _localNotifications =
+           localNotifications ?? FlutterLocalNotificationsPlugin();
 
   final FirebaseMessaging _messaging;
   final FirebaseFirestore _firestore;
@@ -32,12 +32,12 @@ class NotificationService {
 
   static const AndroidNotificationChannel _androidChannel =
       AndroidNotificationChannel(
-    'high_importance_channel',
-    'High Importance Notifications',
-    description:
-        'This channel is used for important invoice payment notifications.',
-    importance: Importance.high,
-  );
+        'high_importance_channel',
+        'High Importance Notifications',
+        description:
+            'This channel is used for important invoice payment notifications.',
+        importance: Importance.high,
+      );
 
   Future<void> init() async {
     // 1. Setup Local Notification Channel for Android
@@ -154,28 +154,26 @@ class NotificationService {
     final user = _auth.currentUser;
     if (user != null) {
       final language = PlatformDispatcher.instance.locale.languageCode;
-      await _firestore.collection('users').doc(user.uid).set(
-        {
-          'fcmToken': token,
-          'languageCode': language,
-          'lastTokenUpdate': FieldValue.serverTimestamp(),
-        },
-        SetOptions(merge: true),
+      await _firestore.collection('users').doc(user.uid).set({
+        'fcmToken': token,
+        'languageCode': language,
+        'lastTokenUpdate': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+      debugPrint(
+        'FCM Token & langCode ($language) saved to Firestore for user: ${user.uid}',
       );
-      debugPrint('FCM Token & langCode ($language) saved to Firestore for user: ${user.uid}');
     }
   }
 
   Future<void> updateLanguageCode(String languageCode) async {
     final user = _auth.currentUser;
     if (user != null) {
-      await _firestore.collection('users').doc(user.uid).set(
-        {
-          'languageCode': languageCode,
-        },
-        SetOptions(merge: true),
+      await _firestore.collection('users').doc(user.uid).set({
+        'languageCode': languageCode,
+      }, SetOptions(merge: true));
+      debugPrint(
+        'Language code ($languageCode) updated in Firestore for user: ${user.uid}',
       );
-      debugPrint('Language code ($languageCode) updated in Firestore for user: ${user.uid}');
     }
   }
 

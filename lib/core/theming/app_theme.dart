@@ -8,74 +8,75 @@ class AppTheme {
 
   // ☀️ Light Theme
   static ThemeData get lightTheme => ThemeData(
-        brightness: Brightness.light,
-        primaryColor: AppPalette.primaryBlueLight,
-        scaffoldBackgroundColor: AppPalette.bgLight,
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppPalette.bgLight,
-          surfaceTintColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness: Brightness.light,
-            systemNavigationBarColor: AppPalette.bgLight,
-            systemNavigationBarIconBrightness: Brightness.dark,
-          ),
-          iconTheme: IconThemeData(color: AppPalette.textMainLight),
-          titleTextStyle: TextStyle(
-            color: AppPalette.textMainLight,
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppPalette.primaryBlueLight,
-          brightness: Brightness.light,
-          primary: AppPalette.primaryBlueLight,
-          surface: AppPalette.surfaceLight,
-          onSurface: AppPalette.textMainLight,
-        ),
-        dialogTheme: const DialogThemeData(
-          backgroundColor: AppPalette.surfaceLight,
-          surfaceTintColor: Colors.transparent,
-        ),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-      );
+    brightness: Brightness.light,
+    primaryColor: AppPalette.primaryBlueLight,
+    scaffoldBackgroundColor: AppPalette.bgLight,
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppPalette.bgLight,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      centerTitle: true,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+        systemNavigationBarColor: AppPalette.bgLight,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+      iconTheme: IconThemeData(color: AppPalette.textMainLight),
+      titleTextStyle: TextStyle(
+        color: AppPalette.textMainLight,
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AppPalette.primaryBlueLight,
+      brightness: Brightness.light,
+      primary: AppPalette.primaryBlueLight,
+      surface: AppPalette.surfaceLight,
+      onSurface: AppPalette.textMainLight,
+    ),
+    dialogTheme: const DialogThemeData(
+      backgroundColor: AppPalette.surfaceLight,
+      surfaceTintColor: Colors.transparent,
+    ),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
+  );
 
   // 🌙 Dark Theme
   static ThemeData get darkTheme => ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: AppPalette.primaryBlueDark,
-        scaffoldBackgroundColor: AppPalette.bgDark,
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppPalette.bgDark,
-          surfaceTintColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark,
-            systemNavigationBarColor: AppPalette.bgDark,
-            systemNavigationBarIconBrightness: Brightness.light,
-          ),
-          iconTheme: IconThemeData(color: AppPalette.textMainDark),
-          titleTextStyle: TextStyle(
-            color: AppPalette.textMainDark,
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        colorScheme: ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+    primaryColor: AppPalette.primaryBlueDark,
+    scaffoldBackgroundColor: AppPalette.bgDark,
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppPalette.bgDark,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      centerTitle: true,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+        systemNavigationBarColor: AppPalette.bgDark,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
+      iconTheme: IconThemeData(color: AppPalette.textMainDark),
+      titleTextStyle: TextStyle(
+        color: AppPalette.textMainDark,
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+    colorScheme:
+        ColorScheme.fromSeed(
           seedColor: AppPalette.primaryBlueDark,
           brightness: Brightness.dark,
           primary: AppPalette.primaryBlueDark,
@@ -85,15 +86,15 @@ class AppTheme {
           surface: AppPalette.surfaceDark,
           surfaceTint: Colors.transparent,
         ),
-        dialogTheme: const DialogThemeData(
-          backgroundColor: AppPalette.surfaceDark,
-          surfaceTintColor: Colors.transparent,
-        ),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-      );
+    dialogTheme: const DialogThemeData(
+      backgroundColor: AppPalette.surfaceDark,
+      surfaceTintColor: Colors.transparent,
+    ),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
+  );
 }

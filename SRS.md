@@ -199,7 +199,7 @@ draft ──(submit)──► pending ──(email opened)──► opened
 - [x] Daily Reminder Cron Job (9:00 AM)
 
 ### Testing & DevOps
-- ⬜ Unit Tests (invoice calculations, email validation, data mapping)
+- [x] Unit Tests (invoice calculations, email validation, data mapping, cubits, repositories, data sources)
 - ⬜ Widget Tests (Dashboard & form screens)
 - ⬜ Integration Tests — End-to-End flow
 - ⬜ GitHub Actions — Flutter pipeline (lint + test + build APK)

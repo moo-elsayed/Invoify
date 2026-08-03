@@ -15,13 +15,16 @@ class ClientsCubit extends Cubit<ClientsState> {
     this._getClientsUseCase,
     this._addClientUseCase,
     this._updateClientUseCase,
-    this._deleteClientUseCase,
-  ) : super(ClientsInitial());
+    this._deleteClientUseCase, {
+    FirebaseAuth? firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+       super(ClientsInitial());
 
   final GetClientsUseCase _getClientsUseCase;
   final AddClientUseCase _addClientUseCase;
   final UpdateClientUseCase _updateClientUseCase;
   final DeleteClientUseCase _deleteClientUseCase;
+  final FirebaseAuth _firebaseAuth;
 
   List<ClientEntity> _allClients = [];
   String _currentSearchQuery = '';
@@ -29,7 +32,7 @@ class ClientsCubit extends Cubit<ClientsState> {
   List<ClientEntity> get allClients => _allClients;
 
   Future<void> getClients() async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
+    final firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser == null) return;
 
     emit(ClientsLoading());
@@ -49,35 +52,13 @@ class ClientsCubit extends Cubit<ClientsState> {
     _emitClientsSuccess();
   }
 
-  void _emitClientsSuccess() {
-    if (_currentSearchQuery.isEmpty) {
-      emit(ClientsSuccess(
-        clients: _allClients,
-        filteredClients: List.from(_allClients),
-      ));
-    } else {
-      final filtered = _allClients.where((client) {
-        final nameMatch = client.name.toLowerCase().contains(_currentSearchQuery);
-        final emailMatch = client.email.toLowerCase().contains(_currentSearchQuery);
-        final phoneMatch = client.phone.toLowerCase().contains(_currentSearchQuery);
-        final addressMatch = client.address.toLowerCase().contains(_currentSearchQuery);
-        return nameMatch || emailMatch || phoneMatch || addressMatch;
-      }).toList();
-
-      emit(ClientsSuccess(
-        clients: _allClients,
-        filteredClients: filtered,
-      ));
-    }
-  }
-
   Future<void> addClient({
     required String name,
     required String email,
     required String phone,
     required String address,
   }) async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
+    final firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser == null) return;
 
     emit(ClientActionLoading());
@@ -134,6 +115,36 @@ class ClientsCubit extends Cubit<ClientsState> {
         _emitClientsSuccess();
       case NetworkFailure<void>():
         emit(ClientActionFailure(response.error));
+    }
+  }
+
+  /// Helper method to emit ClientsSuccess state with filtered clients based on search query
+  void _emitClientsSuccess() {
+    if (_currentSearchQuery.isEmpty) {
+      emit(
+        ClientsSuccess(
+          clients: _allClients,
+          filteredClients: List.from(_allClients),
+        ),
+      );
+    } else {
+      final filtered = _allClients.where((client) {
+        final nameMatch = client.name.toLowerCase().contains(
+          _currentSearchQuery,
+        );
+        final emailMatch = client.email.toLowerCase().contains(
+          _currentSearchQuery,
+        );
+        final phoneMatch = client.phone.toLowerCase().contains(
+          _currentSearchQuery,
+        );
+        final addressMatch = client.address.toLowerCase().contains(
+          _currentSearchQuery,
+        );
+        return nameMatch || emailMatch || phoneMatch || addressMatch;
+      }).toList();
+
+      emit(ClientsSuccess(clients: _allClients, filteredClients: filtered));
     }
   }
 }

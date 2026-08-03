@@ -21,16 +21,16 @@ class ClientSkeletonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Skeletonizer(
-        enabled: true,
-        child: ListView.separated(
-          padding: EdgeInsets.only(bottom: 90.h),
-          itemCount: _dummyClients.length,
-          separatorBuilder: (context, index) => Gap(12.h),
-          itemBuilder: (context, index) => ClientCard(
-            client: _dummyClients[index],
-            onEdit: () {},
-            onDelete: () {},
-          ),
-        ),
-      );
+    enabled: true,
+    child: ListView.separated(
+      padding: EdgeInsets.only(bottom: 90.h),
+      itemCount: _dummyClients.length,
+      separatorBuilder: (context, index) => Gap(12.h),
+      itemBuilder: (context, index) => ClientCard(
+        client: _dummyClients[index],
+        onEdit: () {},
+        onDelete: () {},
+      ),
+    ),
+  );
 }

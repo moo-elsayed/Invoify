@@ -35,6 +35,7 @@ import 'package:invoify/features/invoices/data/repo_imp/invoices_repo_imp.dart';
 import 'package:invoify/features/invoices/domain/repo/invoices_repo.dart';
 import 'package:invoify/features/invoices/domain/use_cases/create_invoice_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/delete_invoice_use_case.dart';
+import 'package:invoify/features/invoices/domain/use_cases/get_invoices_stream_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/get_invoices_use_case.dart';
 import 'package:invoify/features/invoices/domain/use_cases/update_invoice_use_case.dart';
 import 'package:invoify/features/invoices/presentation/view_models/invoices_cubit/invoices_cubit.dart';
@@ -59,9 +60,7 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<AppPreferencesService>(
     () => AppPreferencesServiceImpl(getIt<SharedPreferences>()),
   );
-  getIt.registerLazySingleton<NotificationService>(
-    () => NotificationService(),
-  );
+  getIt.registerLazySingleton<NotificationService>(() => NotificationService());
 
   // Data Sources
   getIt.registerLazySingleton<AuthRemoteDataSource>(
@@ -137,6 +136,9 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<GetInvoicesUseCase>(
     () => GetInvoicesUseCase(getIt<InvoicesRepo>()),
   );
+  getIt.registerLazySingleton<GetInvoicesStreamUseCase>(
+    () => GetInvoicesStreamUseCase(getIt<InvoicesRepo>()),
+  );
   getIt.registerLazySingleton<CreateInvoiceUseCase>(
     () => CreateInvoiceUseCase(getIt<InvoicesRepo>()),
   );
@@ -168,7 +170,7 @@ Future<void> setupGetIt() async {
 
   getIt.registerFactory<InvoicesCubit>(
     () => InvoicesCubit(
-      getIt<GetInvoicesUseCase>(),
+      getIt<GetInvoicesStreamUseCase>(),
       getIt<CreateInvoiceUseCase>(),
       getIt<UpdateInvoiceUseCase>(),
       getIt<DeleteInvoiceUseCase>(),
@@ -176,10 +178,8 @@ Future<void> setupGetIt() async {
   );
 
   getIt.registerFactory<DashboardCubit>(
-    () => DashboardCubit(
-      getIt<GetInvoicesUseCase>(),
-      getIt<GetClientsUseCase>(),
-    ),
+    () =>
+        DashboardCubit(getIt<GetInvoicesUseCase>(), getIt<GetClientsUseCase>()),
   );
 
   getIt.registerFactory<AppThemeCubit>(

@@ -16,28 +16,28 @@ class Invoify extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
-        designSize: const Size(375, 812),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) => MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => getIt<AppThemeCubit>()),
-            BlocProvider(create: (context) => getIt<UserInfoCubit>()),
-          ],
-          child: BlocBuilder<AppThemeCubit, ThemeMode>(
-            builder: (context, themeMode) => MaterialApp(
-              debugShowCheckedModeBanner: false,
-              navigatorKey: navigatorKey,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: themeMode,
-              initialRoute: Routes.splashView,
-              onGenerateRoute: appRouter.generateRoute,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-            ),
-          ),
+    designSize: const Size(375, 812),
+    minTextAdapt: true,
+    splitScreenMode: true,
+    builder: (context, child) => MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<AppThemeCubit>()),
+        BlocProvider(create: (context) => getIt<UserInfoCubit>()),
+      ],
+      child: BlocBuilder<AppThemeCubit, ThemeMode>(
+        builder: (context, themeMode) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeMode,
+          initialRoute: Routes.splashView,
+          onGenerateRoute: appRouter.generateRoute,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
         ),
-      );
+      ),
+    ),
+  );
 }

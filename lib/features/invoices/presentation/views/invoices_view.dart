@@ -38,135 +38,135 @@ class _InvoicesViewState extends State<InvoicesView> {
 
   @override
   Widget build(BuildContext context) => SafeArea(
-        bottom: false,
-        child: BlocConsumer<InvoicesCubit, InvoicesState>(
-          listener: (context, state) {
-            if (ModalRoute.of(context)?.isCurrent != true) return;
-            if (state is InvoiceActionSuccess) {
-              AppToast.show(
-                context: context,
-                title: state.message,
-                type: ToastificationType.success,
-              );
-            } else if (state is InvoicesFailure) {
-              AppToast.show(
-                context: context,
-                title: state.error,
-                type: ToastificationType.error,
-              );
-            }
-          },
-          builder: (context, state) {
-            final cubit = context.read<InvoicesCubit>();
-            final allInvoices = cubit.allInvoices;
+    bottom: false,
+    child: BlocConsumer<InvoicesCubit, InvoicesState>(
+      listener: (context, state) {
+        if (ModalRoute.of(context)?.isCurrent != true) return;
+        if (state is InvoiceActionSuccess) {
+          AppToast.show(
+            context: context,
+            title: state.message,
+            type: ToastificationType.success,
+          );
+        } else if (state is InvoicesFailure) {
+          AppToast.show(
+            context: context,
+            title: state.error,
+            type: ToastificationType.error,
+          );
+        }
+      },
+      builder: (context, state) {
+        final cubit = context.read<InvoicesCubit>();
+        final allInvoices = cubit.allInvoices;
 
-            return Padding(
-              padding: EdgeInsets.only(top: 12.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Screen Header & Action Button (with 16.w horizontal padding)
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: MainScreenHeader(
-                      title: AppStrings.invoices,
-                      action: HeaderActionButton(
-                        label: AppStrings.createInvoice,
-                        icon: Icons.add_rounded,
-                        onTap: () => context
-                            .pushNamed(
-                              Routes.addEditInvoiceView,
-                              arguments: AddEditInvoiceArgs(cubit: cubit),
-                            )
-                            .then((isUpdated) {
-                              if (isUpdated == true) {
-                                cubit.getInvoices();
-                              }
-                            }),
-                      ),
-                    ),
+        return Padding(
+          padding: EdgeInsets.only(top: 12.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Screen Header & Action Button (with 16.w horizontal padding)
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: MainScreenHeader(
+                  title: AppStrings.invoices,
+                  action: HeaderActionButton(
+                    label: AppStrings.createInvoice,
+                    icon: Icons.add_rounded,
+                    onTap: () => context
+                        .pushNamed(
+                          Routes.addEditInvoiceView,
+                          arguments: AddEditInvoiceArgs(cubit: cubit),
+                        )
+                        .then((isUpdated) {
+                          if (isUpdated == true) {
+                            cubit.getInvoices();
+                          }
+                        }),
                   ),
-                  Gap(16.h),
-
-                  // ValueListenableBuilder for reactive status filtering without setState
-                  Expanded(
-                    child: ValueListenableBuilder<InvoiceStatus?>(
-                      valueListenable: _selectedStatusNotifier,
-                      builder: (context, selectedStatus, child) {
-                        List<InvoiceEntity> filteredList = [];
-                        if (selectedStatus == null) {
-                          filteredList = List.from(allInvoices);
-                        } else {
-                          filteredList = allInvoices
-                              .where((inv) => inv.status == selectedStatus)
-                              .toList();
-                        }
-
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Status Filter Tabs (Scrolls edge-to-edge full width)
-                            InvoiceStatusTabs(
-                              selectedStatus: selectedStatus,
-                              allInvoices: allInvoices,
-                              onStatusSelected: (status) {
-                                _selectedStatusNotifier.value = status;
-                              },
-                            ),
-                            Gap(16.h),
-
-                            // Invoices Content Area
-                            Expanded(
-                              child: state is InvoicesLoading
-                                  ? const InvoiceSkeletonList()
-                                  : state is InvoicesFailure
-                                  ? CustomErrorWidget(
-                                      error: state.error,
-                                      onRetry: () => cubit.getInvoices(),
-                                    )
-                                  : filteredList.isEmpty
-                                  ? EmptyInvoicesWidget(
-                                      isFiltered: selectedStatus != null,
-                                    )
-                                  : RefreshIndicator(
-                                      onRefresh: () => cubit.getInvoices(),
-                                      color: context.colors.primary,
-                                      child: ListView.separated(
-                                        padding: EdgeInsets.only(
-                                          left: 16.w,
-                                          right: 16.w,
-                                          bottom: 90.h,
-                                        ),
-                                        itemCount: filteredList.length,
-                                        separatorBuilder: (context, index) =>
-                                            Gap(12.h),
-                                        itemBuilder: (context, index) {
-                                          final invoice = filteredList[index];
-                                          return InvoiceCard(
-                                            invoice: invoice,
-                                            onDelete: () => cubit.deleteInvoice(
-                                              invoice.invoiceId,
-                                            ),
-                                            onStatusChanged: (newStatus) {
-                                              final updated = invoice.copyWith(
-                                                status: newStatus,
-                                              );
-                                              cubit.updateInvoice(updated);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
-            );
-          },
-        ),
-      );
+              Gap(16.h),
+
+              // ValueListenableBuilder for reactive status filtering without setState
+              Expanded(
+                child: ValueListenableBuilder<InvoiceStatus?>(
+                  valueListenable: _selectedStatusNotifier,
+                  builder: (context, selectedStatus, child) {
+                    List<InvoiceEntity> filteredList = [];
+                    if (selectedStatus == null) {
+                      filteredList = List.from(allInvoices);
+                    } else {
+                      filteredList = allInvoices
+                          .where((inv) => inv.status == selectedStatus)
+                          .toList();
+                    }
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Status Filter Tabs (Scrolls edge-to-edge full width)
+                        InvoiceStatusTabs(
+                          selectedStatus: selectedStatus,
+                          allInvoices: allInvoices,
+                          onStatusSelected: (status) {
+                            _selectedStatusNotifier.value = status;
+                          },
+                        ),
+                        Gap(16.h),
+
+                        // Invoices Content Area
+                        Expanded(
+                          child: state is InvoicesLoading
+                              ? const InvoiceSkeletonList()
+                              : state is InvoicesFailure
+                              ? CustomErrorWidget(
+                                  error: state.error,
+                                  onRetry: () => cubit.getInvoices(),
+                                )
+                              : filteredList.isEmpty
+                              ? EmptyInvoicesWidget(
+                                  isFiltered: selectedStatus != null,
+                                )
+                              : RefreshIndicator(
+                                  onRefresh: () => cubit.getInvoices(),
+                                  color: context.colors.primary,
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.only(
+                                      left: 16.w,
+                                      right: 16.w,
+                                      bottom: 90.h,
+                                    ),
+                                    itemCount: filteredList.length,
+                                    separatorBuilder: (context, index) =>
+                                        Gap(12.h),
+                                    itemBuilder: (context, index) {
+                                      final invoice = filteredList[index];
+                                      return InvoiceCard(
+                                        invoice: invoice,
+                                        onDelete: () => cubit.deleteInvoice(
+                                          invoice.invoiceId,
+                                        ),
+                                        onStatusChanged: (newStatus) {
+                                          final updated = invoice.copyWith(
+                                            status: newStatus,
+                                          );
+                                          cubit.updateInvoice(updated);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  );
 }

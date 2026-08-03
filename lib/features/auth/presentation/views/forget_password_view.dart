@@ -72,7 +72,9 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                           shape: BoxShape.circle,
                           color: context.colors.primary.withValues(alpha: 0.1),
                           border: Border.all(
-                            color: context.colors.primary.withValues(alpha: 0.3),
+                            color: context.colors.primary.withValues(
+                              alpha: 0.3,
+                            ),
                             width: 2.w,
                           ),
                         ),
@@ -147,9 +149,9 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                         builder: (context, state) => CustomMaterialButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              context.read<ForgetPasswordCubit>().forgetPassword(
-                                _emailController.text,
-                              );
+                              context
+                                  .read<ForgetPasswordCubit>()
+                                  .forgetPassword(_emailController.text);
                             }
                           },
                           maxWidth: true,

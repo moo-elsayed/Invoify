@@ -38,11 +38,7 @@ class CustomIconActionButton extends StatelessWidget {
             color: effectiveBackgroundColor,
             borderRadius: effectiveBorderRadius,
           ),
-          child: Icon(
-            icon,
-            size: iconSize ?? 18.sp,
-            color: color,
-          ),
+          child: Icon(icon, size: iconSize ?? 18.sp, color: color),
         ),
       ),
     );

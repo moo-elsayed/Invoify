@@ -23,4 +23,4 @@ class SplashInitial extends SplashState {
 
 class SplashSuccess extends SplashState {
   const SplashSuccess(super.process);
-}
+}

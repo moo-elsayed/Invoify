@@ -22,6 +22,7 @@
   "userDisabled": "This user account has been disabled",
   "operationNotAllowed": "Operation is not allowed",
   "cacheError": "Failed to load or save local data",
+  "googleSignInCancelled": "Google sign in was cancelled",
 
   "emailCannotBeEmpty": "Email cannot be empty",
   "enterAValidEmailAddress": "Enter a valid email address",

@@ -37,6 +37,13 @@ class ServerFailure extends Failure {
     } else if (errorStr.contains('network-request-failed') ||
         errorStr.contains('socketexception')) {
       return ServerFailure(error: AppStrings.noInternetConnection);
+    } else if (errorStr.contains('web-context-canceled') ||
+        errorStr.contains('web_context_canceled') ||
+        errorStr.contains('popup-closed-by-user') ||
+        errorStr.contains('sign_in_canceled') ||
+        errorStr.contains('canceled') ||
+        errorStr.contains('cancelled')) {
+      return ServerFailure(error: AppStrings.googleSignInCancelled);
     }
 
     return ServerFailure(error: AppStrings.unexpectedError);

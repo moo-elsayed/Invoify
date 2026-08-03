@@ -119,7 +119,6 @@ class Validator {
     return null;
   }
 
-
   static String? validateDescription(String? val) {
     if (val == null || val.isEmpty) {
       return AppStrings.pleaseEnterDescription;

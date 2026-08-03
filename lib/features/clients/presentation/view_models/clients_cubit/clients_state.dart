@@ -7,10 +7,7 @@ class ClientsInitial extends ClientsState {}
 class ClientsLoading extends ClientsState {}
 
 class ClientsSuccess extends ClientsState {
-  ClientsSuccess({
-    required this.clients,
-    required this.filteredClients,
-  });
+  ClientsSuccess({required this.clients, required this.filteredClients});
 
   final List<ClientEntity> clients;
   final List<ClientEntity> filteredClients;

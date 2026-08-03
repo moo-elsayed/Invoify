@@ -161,15 +161,9 @@ class _TextFormFieldHelperState extends State<TextFormFieldHelper> {
         labelText: widget.labelText,
         labelStyle: widget.labelStyle,
         prefixIcon: widget.prefixIcon,
-        prefixIconConstraints: BoxConstraints(
-          minWidth: 36.w,
-          minHeight: 36.h,
-        ),
+        prefixIconConstraints: BoxConstraints(minWidth: 36.w, minHeight: 36.h),
         prefix: widget.prefix,
-        suffixIconConstraints: BoxConstraints(
-          minWidth: 40.w,
-          minHeight: 36.h,
-        ),
+        suffixIconConstraints: BoxConstraints(minWidth: 40.w, minHeight: 36.h),
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: _toggleObscureText,

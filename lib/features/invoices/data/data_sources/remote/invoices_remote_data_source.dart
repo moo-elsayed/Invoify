@@ -6,19 +6,13 @@ abstract class InvoicesRemoteDataSource {
     required String userId,
   });
 
-  Stream<List<InvoiceModel>> getInvoicesStream({
-    required String userId,
-  });
+  Stream<List<InvoiceModel>> getInvoicesStream({required String userId});
 
   Future<NetworkResponse<InvoiceModel>> createInvoice({
     required InvoiceModel invoice,
   });
 
-  Future<NetworkResponse<void>> updateInvoice({
-    required InvoiceModel invoice,
-  });
+  Future<NetworkResponse<void>> updateInvoice({required InvoiceModel invoice});
 
-  Future<NetworkResponse<void>> deleteInvoice({
-    required String invoiceId,
-  });
+  Future<NetworkResponse<void>> deleteInvoice({required String invoiceId});
 }

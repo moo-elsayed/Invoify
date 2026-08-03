@@ -6,15 +6,9 @@ abstract class ClientsRemoteDataSource {
     required String userId,
   });
 
-  Future<NetworkResponse<ClientModel>> addClient({
-    required ClientModel client,
-  });
+  Future<NetworkResponse<ClientModel>> addClient({required ClientModel client});
 
-  Future<NetworkResponse<void>> updateClient({
-    required ClientModel client,
-  });
+  Future<NetworkResponse<void>> updateClient({required ClientModel client});
 
-  Future<NetworkResponse<void>> deleteClient({
-    required String clientId,
-  });
+  Future<NetworkResponse<void>> deleteClient({required String clientId});
 }

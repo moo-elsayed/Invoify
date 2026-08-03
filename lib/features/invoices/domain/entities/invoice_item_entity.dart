@@ -23,11 +23,10 @@ class InvoiceItemEntity extends Equatable {
     String? name,
     double? quantity,
     double? unitPrice,
-  }) =>
-      InvoiceItemEntity(
-        itemId: itemId ?? this.itemId,
-        name: name ?? this.name,
-        quantity: quantity ?? this.quantity,
-        unitPrice: unitPrice ?? this.unitPrice,
-      );
+  }) => InvoiceItemEntity(
+    itemId: itemId ?? this.itemId,
+    name: name ?? this.name,
+    quantity: quantity ?? this.quantity,
+    unitPrice: unitPrice ?? this.unitPrice,
+  );
 }

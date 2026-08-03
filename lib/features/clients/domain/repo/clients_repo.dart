@@ -10,11 +10,7 @@ abstract class ClientsRepo {
     required ClientEntity client,
   });
 
-  Future<NetworkResponse<void>> updateClient({
-    required ClientEntity client,
-  });
+  Future<NetworkResponse<void>> updateClient({required ClientEntity client});
 
-  Future<NetworkResponse<void>> deleteClient({
-    required String clientId,
-  });
+  Future<NetworkResponse<void>> deleteClient({required String clientId});
 }

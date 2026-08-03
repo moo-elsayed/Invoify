@@ -64,9 +64,7 @@ class InvoiceDetailsSummaryCard extends StatelessWidget {
               ),
               Text(
                 context.formatCurrency(invoice.totalAmount),
-                style: AppTextStyles.font18Bold.copyWith(
-                  color: colors.primary,
-                ),
+                style: AppTextStyles.font18Bold.copyWith(color: colors.primary),
               ),
             ],
           ),

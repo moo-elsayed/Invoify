@@ -14,7 +14,11 @@ class ApiHelper {
       final result = await action();
       return NetworkSuccess(result);
     } catch (e, stackTrace) {
-      AppLogger.error('Error in $functionName', error: e, stackTrace: stackTrace);
+      AppLogger.error(
+        'Error in $functionName',
+        error: e,
+        stackTrace: stackTrace,
+      );
       if (e is BusinessException) {
         return NetworkFailure(ServerFailure(error: e.message));
       }

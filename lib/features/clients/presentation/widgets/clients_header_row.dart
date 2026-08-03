@@ -6,10 +6,7 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 
 class ClientsHeaderRow extends StatelessWidget {
-  const ClientsHeaderRow({
-    super.key,
-    required this.onAddClient,
-  });
+  const ClientsHeaderRow({super.key, required this.onAddClient});
 
   final VoidCallback onAddClient;
 
@@ -22,9 +19,7 @@ class ClientsHeaderRow extends StatelessWidget {
       children: [
         Text(
           AppStrings.clients,
-          style: AppTextStyles.font20Bold.copyWith(
-            color: colors.mainText,
-          ),
+          style: AppTextStyles.font20Bold.copyWith(color: colors.mainText),
         ),
         InkWell(
           onTap: onAddClient,
@@ -53,9 +48,7 @@ class ClientsHeaderRow extends StatelessWidget {
                 Gap(6.w),
                 Text(
                   AppStrings.addClient,
-                  style: AppTextStyles.font13Bold.copyWith(
-                    color: Colors.white,
-                  ),
+                  style: AppTextStyles.font13Bold.copyWith(color: Colors.white),
                 ),
               ],
             ),

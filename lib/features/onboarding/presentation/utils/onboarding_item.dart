@@ -14,20 +14,19 @@ class OnboardingItem {
 }
 
 List<OnboardingItem> get onboardingSlides => [
-      OnboardingItem(
-        animation: AppAssets.onboardingAnimation1,
-        title: AppStrings.onboardingTitle1,
-        description: AppStrings.onboardingDesc1,
-      ),
-      OnboardingItem(
-        animation: AppAssets.onboardingAnimation2,
-        title: AppStrings.onboardingTitle2,
-        description: AppStrings.onboardingDesc2,
-      ),
-      OnboardingItem(
-        animation: AppAssets.onboardingAnimation3,
-        title: AppStrings.onboardingTitle3,
-        description: AppStrings.onboardingDesc3,
-      ),
-    ];
-
+  OnboardingItem(
+    animation: AppAssets.onboardingAnimation1,
+    title: AppStrings.onboardingTitle1,
+    description: AppStrings.onboardingDesc1,
+  ),
+  OnboardingItem(
+    animation: AppAssets.onboardingAnimation2,
+    title: AppStrings.onboardingTitle2,
+    description: AppStrings.onboardingDesc2,
+  ),
+  OnboardingItem(
+    animation: AppAssets.onboardingAnimation3,
+    title: AppStrings.onboardingTitle3,
+    description: AppStrings.onboardingDesc3,
+  ),
+];

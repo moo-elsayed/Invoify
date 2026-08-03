@@ -5,8 +5,12 @@ class AppPalette {
 
   // --- Brand Colors (Derived from App Icon #4B9FE1) ---
   static const Color appIconBlue = Color(0xff4B9FE1); // لون الأيقونة الأساسي
-  static const Color primaryBlueLight = Color(0xff2563EB); // أزرق كهربائي حيوي ومريح للعين
-  static const Color primaryBlueDark = Color(0xff60A5FA); // أزرق ساطع عالي التباين للوضع الداكن
+  static const Color primaryBlueLight = Color(
+    0xff2563EB,
+  ); // أزرق كهربائي حيوي ومريح للعين
+  static const Color primaryBlueDark = Color(
+    0xff60A5FA,
+  ); // أزرق ساطع عالي التباين للوضع الداكن
   static const Color secondaryCyan = Color(0xff0EA5E9); // لون ثانوي سماوي
 
   // --- Accent & Status Colors ---
@@ -22,7 +26,9 @@ class AppPalette {
   static const Color black = Color(0xff000000);
 
   // --- Backgrounds & Surfaces (Light Theme) ---
-  static const Color bgLight = Color(0xffF1F5F9); // Slate 100 (خلفية متباينة للأكارت البيضاء)
+  static const Color bgLight = Color(
+    0xffF1F5F9,
+  ); // Slate 100 (خلفية متباينة للأكارت البيضاء)
   static const Color surfaceLight = Color(0xffFFFFFF); // White Surface
   static const Color borderLight = Color(0xffE2E8F0); // Slate 200
 
@@ -32,12 +38,16 @@ class AppPalette {
   static const Color borderDark = Color(0xff334155); // Slate 700
 
   // --- Text Colors (Light Theme) ---
-  static const Color textMainLight = Color(0xff0F172A); // Deep Slate 900 (عالي التباين)
+  static const Color textMainLight = Color(
+    0xff0F172A,
+  ); // Deep Slate 900 (عالي التباين)
   static const Color textBodyLight = Color(0xff334155); // Slate 700
   static const Color textSubLight = Color(0xff64748B); // Slate 500
 
   // --- Text Colors (Dark Theme) ---
-  static const Color textMainDark = Color(0xffF8FAFC); // Crisp Slate 50 (عالي التباين)
+  static const Color textMainDark = Color(
+    0xffF8FAFC,
+  ); // Crisp Slate 50 (عالي التباين)
   static const Color textBodyDark = Color(0xffCBD5E1); // Slate 300
   static const Color textSubDark = Color(0xff94A3B8); // Slate 400
 
