@@ -13,11 +13,11 @@ import 'package:invoify/core/widgets/app_toasts.dart';
 import 'package:invoify/core/widgets/custom_app_bar.dart';
 import 'package:invoify/core/widgets/custom_keyboard_unfocus.dart';
 import 'package:invoify/core/widgets/custom_material_button.dart';
+import 'package:invoify/core/widgets/custom_success_dialog.dart';
 import 'package:invoify/core/widgets/text_form_field_helper.dart';
 import 'package:invoify/features/auth/presentation/view_models/forget_password_cubit/forget_password_cubit.dart';
 import 'package:toastification/toastification.dart';
 import '../args/login_args.dart';
-import '../widgets/custom_dialog.dart';
 
 class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
@@ -125,7 +125,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                             );
                             showCupertinoDialog(
                               context: context,
-                              builder: (context) => CustomDialog(
+                              builder: (context) => CustomSuccessDialog(
                                 text: AppStrings.emailSentToReset,
                                 onPressed: () {
                                   context.pop();

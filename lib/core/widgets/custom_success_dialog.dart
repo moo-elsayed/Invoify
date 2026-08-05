@@ -6,11 +6,17 @@ import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 import 'package:invoify/core/widgets/custom_material_button.dart';
 
-class CustomDialog extends StatelessWidget {
-  const CustomDialog({super.key, required this.text, required this.onPressed});
+class CustomSuccessDialog extends StatelessWidget {
+  const CustomSuccessDialog({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.buttonText,
+  });
 
   final String text;
-  final void Function() onPressed;
+  final VoidCallback onPressed;
+  final String? buttonText;
 
   @override
   Widget build(BuildContext context) => PopScope(
@@ -41,7 +47,7 @@ class CustomDialog extends StatelessWidget {
             Gap(20.h),
             CustomMaterialButton(
               onPressed: onPressed,
-              text: AppStrings.ok,
+              text: buttonText ?? AppStrings.ok,
               maxWidth: true,
               textStyle: AppTextStyles.font16Bold.copyWith(color: Colors.white),
             ),

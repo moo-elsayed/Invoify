@@ -100,10 +100,13 @@ class CustomDatePickerBottomSheet extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
-                title ?? AppStrings.selectDate,
-                style: AppTextStyles.font16SemiBold.copyWith(
-                  color: colors.mainText,
+              Expanded(
+                child: Text(
+                  title ?? AppStrings.selectDate,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.font16SemiBold.copyWith(
+                    color: colors.mainText,
+                  ),
                 ),
               ),
               TextButton(

@@ -19,10 +19,9 @@ class InvoiceStatusTabs extends StatelessWidget {
   final ValueChanged<InvoiceStatus?> onStatusSelected;
   final List<InvoiceEntity> allInvoices;
 
-  int _getCount(InvoiceStatus? status) {
-    if (status == null) return allInvoices.length;
-    return allInvoices.where((inv) => inv.status == status).length;
-  }
+  int _getCount(InvoiceStatus? status) => status == null
+      ? allInvoices.length
+      : allInvoices.where((inv) => inv.status == status).length;
 
   @override
   Widget build(BuildContext context) {

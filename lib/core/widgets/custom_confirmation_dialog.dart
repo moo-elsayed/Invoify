@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:invoify/core/constants/app_assets.dart';
 import 'package:invoify/core/helpers/app_strings.dart';
-
 import '../helpers/extensions.dart';
 import '../theming/app_text_styles.dart';
 import 'custom_material_button.dart';

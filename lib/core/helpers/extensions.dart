@@ -113,7 +113,13 @@ extension AppTheme on BuildContext {
 }
 
 extension LanguageExtension on BuildContext {
-  bool get isArabic => locale.languageCode == 'ar';
+  bool get isArabic {
+    try {
+      return locale.languageCode == 'ar';
+    } catch (_) {
+      return false;
+    }
+  }
 
   bool get isRTL => Directionality.of(this) == ui.TextDirection.rtl;
 }

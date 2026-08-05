@@ -140,26 +140,32 @@ class InvoiceCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (issueDateStr.isNotEmpty)
-                      Text(
-                        '${AppStrings.issueDate}: $issueDateStr',
-                        style: AppTextStyles.font11Regular.copyWith(
-                          color: colors.subText,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (issueDateStr.isNotEmpty)
+                        Text(
+                          '${AppStrings.issueDate}: $issueDateStr',
+                          style: AppTextStyles.font11Regular.copyWith(
+                            color: colors.subText,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    if (dueDateStr.isNotEmpty) ...[
-                      Gap(2.h),
-                      Text(
-                        '${AppStrings.dueDate}: $dueDateStr',
-                        style: AppTextStyles.font11Regular.copyWith(
-                          color: colors.subText,
+                      if (dueDateStr.isNotEmpty) ...[
+                        Gap(2.h),
+                        Text(
+                          '${AppStrings.dueDate}: $dueDateStr',
+                          style: AppTextStyles.font11Regular.copyWith(
+                            color: colors.subText,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
                 Row(
                   children: [

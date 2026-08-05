@@ -13,12 +13,12 @@ import 'package:invoify/core/widgets/app_toasts.dart';
 import 'package:invoify/core/widgets/custom_app_bar.dart';
 import 'package:invoify/core/widgets/custom_keyboard_unfocus.dart';
 import 'package:invoify/core/widgets/custom_material_button.dart';
+import 'package:invoify/core/widgets/custom_success_dialog.dart';
 import 'package:invoify/core/widgets/text_form_field_helper.dart';
 import 'package:invoify/features/auth/presentation/view_models/signup_cubit/sign_up_cubit.dart';
 import 'package:toastification/toastification.dart';
 import '../args/login_args.dart';
 import '../widgets/auth_redirect_text.dart';
-import '../widgets/custom_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -150,7 +150,7 @@ class _RegisterViewState extends State<RegisterView> {
                             );
                             showCupertinoDialog(
                               context: context,
-                              builder: (context) => CustomDialog(
+                              builder: (context) => CustomSuccessDialog(
                                 text: AppStrings.emailSentToVerify,
                                 onPressed: () {
                                   context.pop();

@@ -20,14 +20,20 @@ class InvoiceSummaryRowTile extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          label,
-          style: AppTextStyles.font13Regular.copyWith(color: colors.subText),
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.font13Regular.copyWith(color: colors.subText),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        Text(
-          value,
-          style: AppTextStyles.font14Medium.copyWith(
-            color: valueColor ?? colors.mainText,
+        Flexible(
+          child: Text(
+            value,
+            style: AppTextStyles.font14Medium.copyWith(
+              color: valueColor ?? colors.mainText,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

@@ -16,10 +16,13 @@ class MainScreenHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.font20Bold.copyWith(
-            color: context.colors.mainText,
+        Expanded(
+          child: Text(
+            title,
+            style: AppTextStyles.font20Bold.copyWith(
+              color: context.colors.mainText,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         action ?? const SizedBox.shrink(),

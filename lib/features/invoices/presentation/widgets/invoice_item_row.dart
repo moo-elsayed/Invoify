@@ -41,9 +41,7 @@ class _InvoiceItemRowState extends State<InvoiceItemRow> {
           : widget.item.quantity.toStringAsFixed(0),
     );
     _priceController = TextEditingController(
-      text: widget.item.unitPrice == 0
-          ? ''
-          : widget.item.unitPrice.toStringAsFixed(2),
+      text: widget.item.unitPrice == 0 ? '' : widget.item.unitPrice.toString(),
     );
   }
 

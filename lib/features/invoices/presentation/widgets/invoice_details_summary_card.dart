@@ -56,15 +56,23 @@ class InvoiceDetailsSummaryCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                AppStrings.grandTotal,
-                style: AppTextStyles.font16Bold.copyWith(
-                  color: colors.mainText,
+              Expanded(
+                child: Text(
+                  AppStrings.grandTotal,
+                  style: AppTextStyles.font16Bold.copyWith(
+                    color: colors.mainText,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              Text(
-                context.formatCurrency(invoice.totalAmount),
-                style: AppTextStyles.font18Bold.copyWith(color: colors.primary),
+              Flexible(
+                child: Text(
+                  context.formatCurrency(invoice.totalAmount),
+                  style: AppTextStyles.font18Bold.copyWith(
+                    color: colors.primary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

@@ -199,10 +199,13 @@ class InvoiceCalculationSummary extends StatelessWidget {
                         color: colors.primary,
                       ),
                     ),
-                    Text(
-                      context.formatCurrency(grandTotal),
-                      style: AppTextStyles.font18Bold.copyWith(
-                        color: colors.primary,
+                    Flexible(
+                      child: Text(
+                        context.formatCurrency(grandTotal),
+                        style: AppTextStyles.font18Bold.copyWith(
+                          color: colors.primary,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
