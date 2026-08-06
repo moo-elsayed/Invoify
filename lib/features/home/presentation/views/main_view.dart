@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/core/helpers/notification_router.dart';
-import 'package:invoify/core/services/notification/notification_service.dart';
+import 'package:invoify/features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
 import 'package:invoify/features/clients/presentation/view_models/clients_cubit/clients_cubit.dart';
 import 'package:invoify/features/clients/presentation/views/clients_view.dart';
 import 'package:invoify/features/dashboard/presentation/view_models/dashboard_cubit/dashboard_cubit.dart';
@@ -32,8 +32,8 @@ class _MainViewState extends State<MainView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       NotificationRouter.markAppAsReady();
-      getIt<NotificationService>().updateLanguageCode(
-        context.locale.languageCode,
+      context.read<UserInfoCubit>().updateLanguageCode(
+        EasyLocalization.of(context)?.locale.languageCode ?? 'ar',
       );
     });
   }
@@ -71,7 +71,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     // Listen to locale changes so nav items and screens rebuild dynamically
-    final _ = context.locale;
+    final _ = EasyLocalization.of(context)?.locale;
 
     return MultiBlocProvider(
       providers: [

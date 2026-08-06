@@ -90,6 +90,19 @@ class UserModel {
       'lastTokenUpdate': Timestamp.fromDate(lastTokenUpdate!),
   };
 
+  Map<String, dynamic> toLocalJson() => {
+    'userId': uid,
+    'businessName': businessName,
+    'email': email,
+    'currency': currency,
+    'createdAt': createdAt.toIso8601String(),
+    'isVerified': isVerified,
+    if (fcmToken != null) 'fcmToken': fcmToken,
+    'languageCode': languageCode,
+    if (lastTokenUpdate != null)
+      'lastTokenUpdate': lastTokenUpdate!.toIso8601String(),
+  };
+
   UserEntity toUserEntity() => UserEntity(
     uid: uid,
     businessName: businessName,

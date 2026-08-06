@@ -129,12 +129,7 @@ void main() {
           ).thenAnswer((_) async => NetworkSuccess(tClientEntity));
           return sut();
         },
-        act: (cubit) => cubit.addClient(
-          name: 'John Doe',
-          email: 'john@example.com',
-          phone: '123456',
-          address: 'Street 1',
-        ),
+        act: (cubit) => cubit.addClient(tClientEntity),
         expect: () => [
           isA<ClientActionLoading>(),
           isA<ClientActionSuccess>(),
@@ -153,12 +148,7 @@ void main() {
           ).thenAnswer((_) async => const NetworkFailure(tFailure));
           return sut();
         },
-        act: (cubit) => cubit.addClient(
-          name: 'John Doe',
-          email: 'john@example.com',
-          phone: '123456',
-          address: 'Street 1',
-        ),
+        act: (cubit) => cubit.addClient(tClientEntity),
         expect: () => [isA<ClientActionLoading>(), isA<ClientActionFailure>()],
         verify: (_) {
           verify(() => mockAddClientUseCase(any())).called(1);

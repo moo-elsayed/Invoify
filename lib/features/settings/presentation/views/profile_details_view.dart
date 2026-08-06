@@ -85,7 +85,7 @@ class _ProfileDetailsViewState extends State<ProfileDetailsView> {
           String formattedDate = '';
           if (user?.createdAt != null) {
             formattedDate = DateFormat.yMMMMd(
-              context.locale.languageCode,
+              EasyLocalization.of(context)?.currentLocale?.languageCode,
             ).format(user!.createdAt!);
           }
 

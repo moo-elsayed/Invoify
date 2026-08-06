@@ -37,8 +37,7 @@ class AppPreferencesServiceImpl implements AppPreferencesService {
 
   @override
   Future<void> saveUser(UserEntity user) async {
-    final userMap = UserModel.fromUserEntity(user).toJson();
-    userMap['createdAt'] = user.createdAt?.toIso8601String();
+    final userMap = UserModel.fromUserEntity(user).toLocalJson();
     final jsonString = jsonEncode(userMap);
     await _sharedPreferences.setString(_keyUser, jsonString);
   }

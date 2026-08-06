@@ -52,27 +52,18 @@ class ClientsCubit extends Cubit<ClientsState> {
     _emitClientsSuccess();
   }
 
-  Future<void> addClient({
-    required String name,
-    required String email,
-    required String phone,
-    required String address,
-  }) async {
+  Future<void> addClient(ClientEntity client) async {
     final firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser == null) return;
 
     emit(ClientActionLoading());
 
-    final client = ClientEntity(
+    final newClient = client.copyWith(
       userId: firebaseUser.uid,
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      address: address.trim(),
       createdAt: DateTime.now(),
     );
 
-    final response = await _addClientUseCase(client);
+    final response = await _addClientUseCase(newClient);
     switch (response) {
       case NetworkSuccess<ClientEntity>():
         if (response.data != null) {

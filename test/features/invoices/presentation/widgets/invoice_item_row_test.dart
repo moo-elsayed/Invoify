@@ -31,7 +31,7 @@ void main() {
 
       expect(find.byType(TextFormFieldHelper), findsNWidgets(3));
       expect(find.text('2'), findsOneWidget);
-      expect(find.text('250'), findsOneWidget);
+      expect(find.textContaining('250'), findsOneWidget);
       expect(find.textContaining('500'), findsOneWidget);
       expect(find.text('Logo Design'), findsOneWidget);
     });

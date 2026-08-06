@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/network/network_response.dart';
 import 'package:invoify/core/services/app_preferences/app_preferences_service.dart';
+import 'package:invoify/core/services/notification/notification_service.dart';
 import 'package:invoify/features/auth/domain/entities/user_entity.dart';
 import 'package:invoify/features/auth/domain/use_cases/get_user_info_use_case.dart';
 import 'package:invoify/features/settings/domain/use_cases/update_business_name_use_case.dart';
@@ -16,6 +17,7 @@ class UserInfoCubit extends Cubit<UserInfoState> {
     this._getUserInfoUseCase,
     this._updateCurrencyUseCase,
     this._updateBusinessNameUseCase,
+    this._notificationService,
   ) : super(UserInfoInitial()) {
     loadCachedUser();
   }
@@ -24,6 +26,7 @@ class UserInfoCubit extends Cubit<UserInfoState> {
   final GetUserInfoUseCase _getUserInfoUseCase;
   final UpdateCurrencyUseCase _updateCurrencyUseCase;
   final UpdateBusinessNameUseCase _updateBusinessNameUseCase;
+  final NotificationService _notificationService;
 
   UserEntity? get currentUser {
     if (state is UserInfoSuccess) {
@@ -115,6 +118,10 @@ class UserInfoCubit extends Cubit<UserInfoState> {
       case NetworkFailure<void>():
         emit(UserUpdateFailure(user: user, error: response.error));
     }
+  }
+
+  Future<void> updateLanguageCode(String languageCode) async {
+    await _notificationService.updateLanguageCode(languageCode);
   }
 
   Future<void> saveUserLocally(UserEntity user) async {

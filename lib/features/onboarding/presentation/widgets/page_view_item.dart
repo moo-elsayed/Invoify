@@ -49,34 +49,36 @@ class PageViewItem extends StatelessWidget {
         flex: 2,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Column(
-            children: [
-              FadeInUp(
-                from: 20,
-                duration: const Duration(milliseconds: 500),
-                child: Text(
-                  slide.title,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.font24Bold.copyWith(
-                    color: context.colors.mainText,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                FadeInUp(
+                  from: 20,
+                  duration: const Duration(milliseconds: 500),
+                  child: Text(
+                    slide.title,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.font24Bold.copyWith(
+                      color: context.colors.mainText,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 12.h),
-              FadeInUp(
-                from: 20,
-                delay: const Duration(milliseconds: 150),
-                duration: const Duration(milliseconds: 500),
-                child: Text(
-                  slide.description,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.font15Medium.copyWith(
-                    color: context.colors.subText,
-                    height: 1.5,
+                SizedBox(height: 12.h),
+                FadeInUp(
+                  from: 20,
+                  delay: const Duration(milliseconds: 150),
+                  duration: const Duration(milliseconds: 500),
+                  child: Text(
+                    slide.description,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.font15Medium.copyWith(
+                      color: context.colors.subText,
+                      height: 1.5,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

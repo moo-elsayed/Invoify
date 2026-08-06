@@ -156,6 +156,7 @@ Future<void> setupGetIt() async {
       getIt<GetUserInfoUseCase>(),
       getIt<UpdateCurrencyUseCase>(),
       getIt<UpdateBusinessNameUseCase>(),
+      getIt<NotificationService>(),
     ),
   );
 

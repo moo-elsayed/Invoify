@@ -67,10 +67,12 @@ class _AddEditClientViewState extends State<AddEditClientView> {
         context.read<ClientsCubit>().updateClient(updatedClient);
       } else {
         context.read<ClientsCubit>().addClient(
-          name: _nameController.text.trim(),
-          email: _emailController.text.trim(),
-          phone: _phoneController.text.trim(),
-          address: _addressController.text.trim(),
+          ClientEntity(
+            name: _nameController.text.trim(),
+            email: _emailController.text.trim(),
+            phone: _phoneController.text.trim(),
+            address: _addressController.text.trim(),
+          )
         );
       }
     }

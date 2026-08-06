@@ -5,6 +5,7 @@ import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/theming/app_text_styles.dart';
 import 'package:invoify/features/auth/domain/entities/user_entity.dart';
+import 'package:invoify/features/settings/presentation/helpers/settings_helpers.dart';
 import 'package:invoify/features/settings/presentation/widgets/account_detail_row.dart';
 
 class AccountDetailsCard extends StatelessWidget {
@@ -63,7 +64,12 @@ class AccountDetailsCard extends StatelessWidget {
           AccountDetailRow(
             icon: Icons.monetization_on_outlined,
             label: AppStrings.currency,
-            value: user?.currency ?? 'USD',
+            value:
+                getSupportedCurrencies()
+                    .where((item) => item.code == user?.currency)
+                    .firstOrNull
+                    ?.name ??
+                'USD',
           ),
           Divider(height: 24.h, color: colors.border.withValues(alpha: 0.5)),
 
@@ -90,10 +96,13 @@ class AccountDetailsCard extends StatelessWidget {
                     color: isVerified ? colors.primary : colors.subText,
                   ),
                   Gap(4.w),
-                  Text(
-                    isVerified ? AppStrings.verified : AppStrings.unverified,
-                    style: AppTextStyles.font12Medium.copyWith(
-                      color: isVerified ? colors.primary : colors.subText,
+                  Flexible(
+                    child: Text(
+                      isVerified ? AppStrings.verified : AppStrings.unverified,
+                      style: AppTextStyles.font12Medium.copyWith(
+                        color: isVerified ? colors.primary : colors.subText,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

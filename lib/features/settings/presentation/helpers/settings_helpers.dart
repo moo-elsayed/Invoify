@@ -7,13 +7,13 @@ import 'package:invoify/core/helpers/app_strings.dart';
 import 'package:invoify/core/helpers/di.dart';
 import 'package:invoify/core/helpers/extensions.dart';
 import 'package:invoify/core/network/network_response.dart';
-import 'package:invoify/core/services/notification/notification_service.dart';
 import 'package:invoify/core/theming/app_theme_cubit.dart';
 import 'package:invoify/core/utils/custom_bottom_sheet_selection_item.dart';
 import 'package:invoify/core/widgets/app_toasts.dart';
 import 'package:invoify/core/widgets/custom_bottom_sheet.dart';
 import 'package:invoify/core/widgets/custom_confirmation_dialog.dart';
 import 'package:invoify/features/auth/domain/use_cases/forget_password_use_case.dart';
+import 'package:invoify/features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
 import 'package:invoify/features/settings/presentation/items/currency_item.dart';
 import 'package:invoify/features/settings/presentation/items/settings_card_item.dart';
 import 'package:toastification/toastification.dart';
@@ -36,7 +36,9 @@ List<CustomBottomSheetSelectionItem<String>> getLanguageItems({
     isSelected: context.isArabic,
     onTap: () async {
       await context.setLocale(const Locale('ar'));
-      await getIt<NotificationService>().updateLanguageCode('ar');
+      if (context.mounted) {
+        await context.read<UserInfoCubit>().updateLanguageCode('ar');
+      }
     },
   ),
   CustomBottomSheetSelectionItem<String>(
@@ -46,7 +48,9 @@ List<CustomBottomSheetSelectionItem<String>> getLanguageItems({
     isSelected: !context.isArabic,
     onTap: () async {
       await context.setLocale(const Locale('en'));
-      await getIt<NotificationService>().updateLanguageCode('en');
+      if (context.mounted) {
+        await context.read<UserInfoCubit>().updateLanguageCode('en');
+      }
     },
   ),
 ];

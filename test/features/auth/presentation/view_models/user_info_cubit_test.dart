@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:invoify/core/errors/failures.dart';
 import 'package:invoify/core/network/network_response.dart';
 import 'package:invoify/core/services/app_preferences/app_preferences_service.dart';
+import 'package:invoify/core/services/notification/notification_service.dart';
 import 'package:invoify/features/auth/domain/entities/user_entity.dart';
 import 'package:invoify/features/auth/domain/use_cases/get_user_info_use_case.dart';
 import 'package:invoify/features/auth/presentation/view_models/user_info_cubit/user_info_cubit.dart';
@@ -19,11 +20,14 @@ class MockUpdateCurrencyUseCase extends Mock implements UpdateCurrencyUseCase {}
 class MockUpdateBusinessNameUseCase extends Mock
     implements UpdateBusinessNameUseCase {}
 
+class MockNotificationService extends Mock implements NotificationService {}
+
 void main() {
   late MockAppPreferencesService mockAppPreferencesService;
   late MockGetUserInfoUseCase mockGetUserInfoUseCase;
   late MockUpdateCurrencyUseCase mockUpdateCurrencyUseCase;
   late MockUpdateBusinessNameUseCase mockUpdateBusinessNameUseCase;
+  late MockNotificationService mockNotificationService;
 
   const tUserEntity = UserEntity(
     uid: '123',
@@ -44,12 +48,16 @@ void main() {
     mockGetUserInfoUseCase = MockGetUserInfoUseCase();
     mockUpdateCurrencyUseCase = MockUpdateCurrencyUseCase();
     mockUpdateBusinessNameUseCase = MockUpdateBusinessNameUseCase();
+    mockNotificationService = MockNotificationService();
 
     when(() => mockAppPreferencesService.getUser()).thenReturn(null);
     when(
       () => mockAppPreferencesService.saveUser(any()),
     ).thenAnswer((_) async {});
     when(() => mockAppPreferencesService.clearUser()).thenAnswer((_) async {});
+    when(
+      () => mockNotificationService.updateLanguageCode(any()),
+    ).thenAnswer((_) async {});
   });
 
   UserInfoCubit createCubit() => UserInfoCubit(
@@ -57,6 +65,7 @@ void main() {
     mockGetUserInfoUseCase,
     mockUpdateCurrencyUseCase,
     mockUpdateBusinessNameUseCase,
+    mockNotificationService,
   );
 
   group('UserInfoCubit', () {
@@ -95,6 +104,12 @@ void main() {
         verify(() => mockAppPreferencesService.clearUser()).called(1);
       },
     );
+
+    test('updateLanguageCode calls NotificationService.updateLanguageCode', () async {
+      final cubit = createCubit();
+      await cubit.updateLanguageCode('en');
+      verify(() => mockNotificationService.updateLanguageCode('en')).called(1);
+    });
 
     group('updateBusinessName', () {
       const newName = 'Updated Business Ltd';

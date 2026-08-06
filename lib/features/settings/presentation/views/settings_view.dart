@@ -22,7 +22,7 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Listen to locale changes so app bar title and settings items rebuild dynamically
-    final _ = context.locale;
+    final _ = EasyLocalization.of(context)?.locale;
 
     return SafeArea(
       bottom: false,
