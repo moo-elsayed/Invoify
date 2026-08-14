@@ -1,0 +1,85 @@
+name: Flutter CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  flutter_ci:
+    name: Flutter Lint, Test, Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Verify Code Formatting & Lint
+        run: |
+          dart format --set-exit-if-changed .
+          flutter analyze
+
+      - name: Run Unit & Widget Tests
+        run: flutter test --coverage
+
+      - name: Build Release APK
+        run: flutter build apk --release
+
+      - name: Upload Release APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: invoify-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+
+      - name: Build Android Instrumentation Test APKs for Firebase Test Lab
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew app:assembleAndroidTest
+          ./gradlew app:assembleRelease -Ptarget=../integration_test/app_e2e_test.dart
+          cd ..
+
+      - name: Authenticate to Google Cloud for Firebase Test Lab
+        if: github.ref == 'refs/heads/main' && secrets.GCP_SA_KEY != ''
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        if: github.ref == 'refs/heads/main' && secrets.GCP_SA_KEY != ''
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Run Integration Tests on Firebase Test Lab
+        if: github.ref == 'refs/heads/main' && secrets.GCP_SA_KEY != ''
+        run: |
+          gcloud firebase test android run \
+            --type instrumentation \
+            --app build/app/outputs/flutter-apk/app-release.apk \
+            --test build/app/outputs/apk/androidTest/release/app-release-androidTest.apk \
+            --device model=Pixel6,version=33,locale=ar,orientation=portrait
+
+      - name: Deploy to Firebase App Distribution
+        if: github.ref == 'refs/heads/main' && secrets.FIREBASE_TOKEN != ''
+        run: |
+          npx firebase-tools appdistribution:app:deploy build/app/outputs/flutter-apk/app-release.apk \
+            --app "${{ secrets.FIREBASE_APP_ID }}" \
+            --token "${{ secrets.FIREBASE_TOKEN }}" \
+            --groups "testers" \
+            --release-notes "Automated release build from GitHub Actions CI/CD"

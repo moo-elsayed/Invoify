@@ -28,9 +28,8 @@ void main() {
     getIt.reset();
   });
 
-  Widget buildTestableWidget() => createWidgetForTesting(
-        child: const OnboardingView(),
-      );
+  Widget buildTestableWidget() =>
+      createWidgetForTesting(child: const OnboardingView());
 
   group('OnboardingView Widget Tests', () {
     testWidgets('renders OnboardingViewBody and next button', (

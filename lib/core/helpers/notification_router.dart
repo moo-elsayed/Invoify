@@ -56,10 +56,9 @@ class NotificationRouter {
       return;
     }
 
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return;
-
     try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
       final doc = await FirebaseFirestore.instance
           .collection('invoices')
           .doc(invoiceId)

@@ -29,9 +29,8 @@ void main() {
     getIt.reset();
   });
 
-  Widget buildTestableWidget() => createWidgetForTesting(
-        child: const AnimatedSplashView(),
-      );
+  Widget buildTestableWidget() =>
+      createWidgetForTesting(child: const AnimatedSplashView());
 
   group('AnimatedSplashView Widget Tests', () {
     testWidgets('renders AnimatedSplashViewBody and app title', (

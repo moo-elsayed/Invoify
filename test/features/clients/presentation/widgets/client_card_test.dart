@@ -21,11 +21,7 @@ void main() {
     ) async {
       await tester.pumpWidget(
         createWidgetForTesting(
-          child: ClientCard(
-            client: tClient,
-            onEdit: () {},
-            onDelete: () {},
-          ),
+          child: ClientCard(client: tClient, onEdit: () {}, onDelete: () {}),
         ),
       );
       await tester.pumpAndSettle();
@@ -61,11 +57,7 @@ void main() {
     ) async {
       await tester.pumpWidget(
         createWidgetForTesting(
-          child: ClientCard(
-            client: tClient,
-            onEdit: () {},
-            onDelete: () {},
-          ),
+          child: ClientCard(client: tClient, onEdit: () {}, onDelete: () {}),
         ),
       );
       await tester.pumpAndSettle();
@@ -77,30 +69,31 @@ void main() {
       expect(find.text(AppStrings.deleteClientConfirmation), findsOneWidget);
     });
 
-    testWidgets('triggers onDelete callback when confirm delete is pressed in dialog', (
-      WidgetTester tester,
-    ) async {
-      bool deleteConfirmed = false;
+    testWidgets(
+      'triggers onDelete callback when confirm delete is pressed in dialog',
+      (WidgetTester tester) async {
+        bool deleteConfirmed = false;
 
-      await tester.pumpWidget(
-        createWidgetForTesting(
-          child: ClientCard(
-            client: tClient,
-            onEdit: () {},
-            onDelete: () => deleteConfirmed = true,
+        await tester.pumpWidget(
+          createWidgetForTesting(
+            child: ClientCard(
+              client: tClient,
+              onEdit: () {},
+              onDelete: () => deleteConfirmed = true,
+            ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.byIcon(Icons.delete_outline_rounded));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byIcon(Icons.delete_outline_rounded));
+        await tester.pumpAndSettle();
 
-      final confirmBtn = find.text(AppStrings.deleteClient).last;
-      await tester.tap(confirmBtn);
-      await tester.pumpAndSettle();
+        final confirmBtn = find.text(AppStrings.deleteClient).last;
+        await tester.tap(confirmBtn);
+        await tester.pumpAndSettle();
 
-      expect(deleteConfirmed, isTrue);
-    });
+        expect(deleteConfirmed, isTrue);
+      },
+    );
   });
 }

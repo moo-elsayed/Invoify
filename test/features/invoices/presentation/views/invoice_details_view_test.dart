@@ -192,27 +192,26 @@ void main() {
       },
     );
 
-    testWidgets(
-      'renders only delete button when invoice status is paid',
-      (WidgetTester tester) async {
-        final paidInvoice = tInvoice.copyWith(status: InvoiceStatus.paid);
-        when(() => mockInvoicesCubit.allInvoices).thenReturn([paidInvoice]);
+    testWidgets('renders only delete button when invoice status is paid', (
+      WidgetTester tester,
+    ) async {
+      final paidInvoice = tInvoice.copyWith(status: InvoiceStatus.paid);
+      when(() => mockInvoicesCubit.allInvoices).thenReturn([paidInvoice]);
 
-        await tester.pumpWidget(
-          createWidgetForTesting(
-            child: BlocProvider<InvoicesCubit>.value(
-              value: mockInvoicesCubit,
-              child: InvoiceDetailsView(invoice: paidInvoice),
-            ),
+      await tester.pumpWidget(
+        createWidgetForTesting(
+          child: BlocProvider<InvoicesCubit>.value(
+            value: mockInvoicesCubit,
+            child: InvoiceDetailsView(invoice: paidInvoice),
           ),
-        );
-        await tester.pumpAndSettle();
+        ),
+      );
+      await tester.pumpAndSettle();
 
-        expect(find.text(AppStrings.deleteInvoice), findsOneWidget);
-        expect(find.text(AppStrings.sendInvoice), findsNothing);
-        expect(find.text(AppStrings.editInvoice), findsNothing);
-        expect(find.text(AppStrings.markAsPaid), findsNothing);
-      },
-    );
+      expect(find.text(AppStrings.deleteInvoice), findsOneWidget);
+      expect(find.text(AppStrings.sendInvoice), findsNothing);
+      expect(find.text(AppStrings.editInvoice), findsNothing);
+      expect(find.text(AppStrings.markAsPaid), findsNothing);
+    });
   });
 }

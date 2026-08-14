@@ -1,0 +1,47 @@
+name: Backend Cloud Functions CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'functions/**'
+      - '.github/workflows/backend_ci.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'functions/**'
+
+jobs:
+  backend_ci:
+    name: Test & Build Firebase Cloud Functions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: 'functions/package-lock.json'
+
+      - name: Install Dependencies
+        working-directory: ./functions
+        run: npm ci
+
+      - name: Lint TypeScript Code
+        working-directory: ./functions
+        run: npm run lint
+
+      - name: Build TypeScript Project
+        working-directory: ./functions
+        run: npm run build
+
+      - name: Deploy to Firebase Cloud Functions
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: ./functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: npx firebase-tools deploy --only functions --token "$FIREBASE_TOKEN"

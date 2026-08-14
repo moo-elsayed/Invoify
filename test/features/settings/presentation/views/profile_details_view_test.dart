@@ -34,44 +34,50 @@ void main() {
   });
 
   Widget buildTestableWidget() => createWidgetForTesting(
-        child: BlocProvider<UserInfoCubit>.value(
-          value: mockUserInfoCubit,
-          child: const ProfileDetailsView(),
-        ),
-      );
+    child: BlocProvider<UserInfoCubit>.value(
+      value: mockUserInfoCubit,
+      child: const ProfileDetailsView(),
+    ),
+  );
 
   group('ProfileDetailsView Widget Tests', () {
-    testWidgets('renders profile header, business name input, and account details', (
-      WidgetTester tester,
-    ) async {
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pumpAndSettle();
+    testWidgets(
+      'renders profile header, business name input, and account details',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(buildTestableWidget());
+        await tester.pumpAndSettle();
 
-      expect(find.text(AppStrings.profileInformation), findsOneWidget);
-      expect(find.byType(ProfileHeaderCard), findsOneWidget);
-      expect(find.byType(EditBusinessNameCard), findsOneWidget);
-      expect(find.byType(AccountDetailsCard), findsOneWidget);
-      expect(find.text('clark@dailyplanet.com'), findsWidgets);
-      expect(find.text('Daily Planet'), findsWidgets);
-    });
+        expect(find.text(AppStrings.profileInformation), findsOneWidget);
+        expect(find.byType(ProfileHeaderCard), findsOneWidget);
+        expect(find.byType(EditBusinessNameCard), findsOneWidget);
+        expect(find.byType(AccountDetailsCard), findsOneWidget);
+        expect(find.text('clark@dailyplanet.com'), findsWidgets);
+        expect(find.text('Daily Planet'), findsWidgets);
+      },
+    );
 
-    testWidgets('calls updateBusinessName on cubit when business name is modified and saved', (
-      WidgetTester tester,
-    ) async {
-      when(() => mockUserInfoCubit.updateBusinessName(any())).thenAnswer((_) async {});
+    testWidgets(
+      'calls updateBusinessName on cubit when business name is modified and saved',
+      (WidgetTester tester) async {
+        when(
+          () => mockUserInfoCubit.updateBusinessName(any()),
+        ).thenAnswer((_) async {});
 
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(buildTestableWidget());
+        await tester.pumpAndSettle();
 
-      final input = find.byType(EditBusinessNameCard);
-      await tester.enterText(input, 'Metropolis News Network');
-      await tester.pumpAndSettle();
+        final input = find.byType(EditBusinessNameCard);
+        await tester.enterText(input, 'Metropolis News Network');
+        await tester.pumpAndSettle();
 
-      final saveBtn = find.text(AppStrings.saveChanges);
-      await tester.tap(saveBtn);
-      await tester.pump();
+        final saveBtn = find.text(AppStrings.saveChanges);
+        await tester.tap(saveBtn);
+        await tester.pump();
 
-      verify(() => mockUserInfoCubit.updateBusinessName('Metropolis News Network')).called(1);
-    });
+        verify(
+          () => mockUserInfoCubit.updateBusinessName('Metropolis News Network'),
+        ).called(1);
+      },
+    );
   });
 }

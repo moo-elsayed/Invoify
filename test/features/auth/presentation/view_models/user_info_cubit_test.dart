@@ -105,11 +105,16 @@ void main() {
       },
     );
 
-    test('updateLanguageCode calls NotificationService.updateLanguageCode', () async {
-      final cubit = createCubit();
-      await cubit.updateLanguageCode('en');
-      verify(() => mockNotificationService.updateLanguageCode('en')).called(1);
-    });
+    test(
+      'updateLanguageCode calls NotificationService.updateLanguageCode',
+      () async {
+        final cubit = createCubit();
+        await cubit.updateLanguageCode('en');
+        verify(
+          () => mockNotificationService.updateLanguageCode('en'),
+        ).called(1);
+      },
+    );
 
     group('updateBusinessName', () {
       const newName = 'Updated Business Ltd';

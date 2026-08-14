@@ -72,7 +72,7 @@ class _AddEditClientViewState extends State<AddEditClientView> {
             email: _emailController.text.trim(),
             phone: _phoneController.text.trim(),
             address: _addressController.text.trim(),
-          )
+          ),
         );
       }
     }

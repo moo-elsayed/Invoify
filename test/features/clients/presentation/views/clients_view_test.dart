@@ -42,11 +42,11 @@ void main() {
   });
 
   Widget buildTestableWidget() => createWidgetForTesting(
-        child: BlocProvider<ClientsCubit>.value(
-          value: mockClientsCubit,
-          child: const ClientsView(),
-        ),
-      );
+    child: BlocProvider<ClientsCubit>.value(
+      value: mockClientsCubit,
+      child: const ClientsView(),
+    ),
+  );
 
   group('ClientsView Widget Tests', () {
     testWidgets('renders skeleton loading list when state is ClientsLoading', (
@@ -60,27 +60,28 @@ void main() {
       expect(find.byType(ClientSkeletonList), findsOneWidget);
     });
 
-    testWidgets('renders EmptyClientsWidget when state is ClientsSuccess with empty list', (
-      WidgetTester tester,
-    ) async {
-      when(() => mockClientsCubit.state).thenReturn(
-        ClientsSuccess(clients: const [], filteredClients: const []),
-      );
-      when(() => mockClientsCubit.allClients).thenReturn([]);
+    testWidgets(
+      'renders EmptyClientsWidget when state is ClientsSuccess with empty list',
+      (WidgetTester tester) async {
+        when(() => mockClientsCubit.state).thenReturn(
+          ClientsSuccess(clients: const [], filteredClients: const []),
+        );
+        when(() => mockClientsCubit.allClients).thenReturn([]);
 
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(buildTestableWidget());
+        await tester.pumpAndSettle();
 
-      expect(find.byType(EmptyClientsWidget), findsOneWidget);
-      expect(find.text(AppStrings.noClientsYet), findsOneWidget);
-    });
+        expect(find.byType(EmptyClientsWidget), findsOneWidget);
+        expect(find.text(AppStrings.noClientsYet), findsOneWidget);
+      },
+    );
 
     testWidgets('renders CustomErrorWidget when state is ClientsFailure', (
       WidgetTester tester,
     ) async {
-      when(() => mockClientsCubit.state).thenReturn(
-        ClientsFailure('Failed to load clients'),
-      );
+      when(
+        () => mockClientsCubit.state,
+      ).thenReturn(ClientsFailure('Failed to load clients'));
 
       await tester.pumpWidget(buildTestableWidget());
       await tester.pumpAndSettle();
@@ -89,56 +90,61 @@ void main() {
       expect(find.text('Failed to load clients'), findsOneWidget);
     });
 
-    testWidgets('renders list of ClientCards when state is ClientsSuccess with clients', (
-      WidgetTester tester,
-    ) async {
-      when(() => mockClientsCubit.state).thenReturn(
-        ClientsSuccess(clients: tClients, filteredClients: tClients),
-      );
-      when(() => mockClientsCubit.allClients).thenReturn(tClients);
+    testWidgets(
+      'renders list of ClientCards when state is ClientsSuccess with clients',
+      (WidgetTester tester) async {
+        when(() => mockClientsCubit.state).thenReturn(
+          ClientsSuccess(clients: tClients, filteredClients: tClients),
+        );
+        when(() => mockClientsCubit.allClients).thenReturn(tClients);
 
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(buildTestableWidget());
+        await tester.pumpAndSettle();
 
-      expect(find.byType(ClientCard), findsNWidgets(2));
-      expect(find.text('Acme Corp'), findsOneWidget);
-      expect(find.text('Stark Industries'), findsOneWidget);
-    });
+        expect(find.byType(ClientCard), findsNWidgets(2));
+        expect(find.text('Acme Corp'), findsOneWidget);
+        expect(find.text('Stark Industries'), findsOneWidget);
+      },
+    );
 
-    testWidgets('calls searchClients on cubit when user types query in ClientSearchBar', (
-      WidgetTester tester,
-    ) async {
-      when(() => mockClientsCubit.state).thenReturn(
-        ClientsSuccess(clients: tClients, filteredClients: tClients),
-      );
-      when(() => mockClientsCubit.allClients).thenReturn(tClients);
-      when(() => mockClientsCubit.searchClients(any())).thenAnswer((_) async {});
+    testWidgets(
+      'calls searchClients on cubit when user types query in ClientSearchBar',
+      (WidgetTester tester) async {
+        when(() => mockClientsCubit.state).thenReturn(
+          ClientsSuccess(clients: tClients, filteredClients: tClients),
+        );
+        when(() => mockClientsCubit.allClients).thenReturn(tClients);
+        when(
+          () => mockClientsCubit.searchClients(any()),
+        ).thenAnswer((_) async {});
 
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(buildTestableWidget());
+        await tester.pumpAndSettle();
 
-      final searchInput = find.byType(ClientSearchBar);
-      expect(searchInput, findsOneWidget);
+        final searchInput = find.byType(ClientSearchBar);
+        expect(searchInput, findsOneWidget);
 
-      await tester.enterText(searchInput, 'Stark');
-      await tester.pumpAndSettle();
+        await tester.enterText(searchInput, 'Stark');
+        await tester.pumpAndSettle();
 
-      verify(() => mockClientsCubit.searchClients('Stark')).called(1);
-    });
+        verify(() => mockClientsCubit.searchClients('Stark')).called(1);
+      },
+    );
 
-    testWidgets('renders filtered clients list when state contains filteredClients', (
-      WidgetTester tester,
-    ) async {
-      when(() => mockClientsCubit.state).thenReturn(
-        ClientsSuccess(clients: tClients, filteredClients: [tClients[1]]),
-      );
-      when(() => mockClientsCubit.allClients).thenReturn(tClients);
+    testWidgets(
+      'renders filtered clients list when state contains filteredClients',
+      (WidgetTester tester) async {
+        when(() => mockClientsCubit.state).thenReturn(
+          ClientsSuccess(clients: tClients, filteredClients: [tClients[1]]),
+        );
+        when(() => mockClientsCubit.allClients).thenReturn(tClients);
 
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(buildTestableWidget());
+        await tester.pumpAndSettle();
 
-      expect(find.text('Stark Industries'), findsOneWidget);
-      expect(find.text('Acme Corp'), findsNothing);
-    });
+        expect(find.text('Stark Industries'), findsOneWidget);
+        expect(find.text('Acme Corp'), findsNothing);
+      },
+    );
   });
 }

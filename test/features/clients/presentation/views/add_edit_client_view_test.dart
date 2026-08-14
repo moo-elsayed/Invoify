@@ -73,9 +73,7 @@ void main() {
     testWidgets(
       'calls addClient on cubit when submitting valid new client form',
       (WidgetTester tester) async {
-        when(
-          () => mockClientsCubit.addClient(any()),
-        ).thenAnswer((_) async {});
+        when(() => mockClientsCubit.addClient(any())).thenAnswer((_) async {});
 
         await tester.pumpWidget(buildTestableWidget());
         await tester.pumpAndSettle();
@@ -93,9 +91,7 @@ void main() {
         await tester.tap(saveBtn);
         await tester.pump();
 
-        verify(
-          () => mockClientsCubit.addClient(any()),
-        ).called(1);
+        verify(() => mockClientsCubit.addClient(any())).called(1);
       },
     );
 

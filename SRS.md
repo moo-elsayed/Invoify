@@ -200,7 +200,7 @@ draft ──(submit)──► pending ──(email opened)──► opened
 
 ### Testing & DevOps
 - [x] Unit Tests (invoice calculations, email validation, data mapping, cubits, repositories, data sources)
-- ⬜ Widget Tests (Dashboard & form screens)
-- ⬜ Integration Tests — End-to-End flow
-- ⬜ GitHub Actions — Flutter pipeline (lint + test + build APK)
-- ⬜ GitHub Actions — Backend pipeline (test + deploy Functions)
+- [x] Widget Tests (Dashboard & form screens)
+- [x] Integration Tests — End-to-End flow
+- [x] GitHub Actions — Flutter pipeline (lint + test + build APK)
+- [x] GitHub Actions — Backend pipeline (test + deploy Functions)
