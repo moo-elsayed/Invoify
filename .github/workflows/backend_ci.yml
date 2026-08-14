@@ -41,7 +41,6 @@ jobs:
 
       - name: Deploy to Firebase Cloud Functions
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        working-directory: ./functions
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: npx firebase-tools deploy --only functions --token "$FIREBASE_TOKEN"
+        run: npx firebase-tools deploy --only functions --token "$FIREBASE_TOKEN" --project invoify-7757d
