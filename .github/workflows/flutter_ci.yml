@@ -57,7 +57,7 @@ jobs:
           cd android
           chmod +x gradlew
           ./gradlew app:assembleAndroidTest
-          ./gradlew app:assembleRelease -Ptarget=../integration_test/app_e2e_test.dart
+          ./gradlew app:assembleRelease -Ptarget=integration_test/app_e2e_test.dart
           cd ..
 
       - name: Authenticate to Google Cloud for Firebase Test Lab
