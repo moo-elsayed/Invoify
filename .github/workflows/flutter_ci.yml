@@ -74,6 +74,7 @@ jobs:
         if: github.ref == 'refs/heads/main' && env.GCP_SA_KEY != ''
         run: |
           gcloud firebase test android run \
+            --project invoify-7757d \
             --type instrumentation \
             --app build/app/outputs/flutter-apk/app-release.apk \
             --test build/app/outputs/apk/androidTest/release/app-release-androidTest.apk \
