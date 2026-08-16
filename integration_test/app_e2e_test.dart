@@ -12,6 +12,7 @@ import 'package:invoify/core/routing/app_router.dart';
 import 'package:invoify/core/services/app_preferences/app_preferences_service.dart';
 import 'package:invoify/core/services/notification/notification_service.dart';
 import 'package:invoify/core/theming/app_theme_cubit.dart';
+import 'package:invoify/core/widgets/app_toasts.dart';
 import 'package:invoify/core/widgets/custom_material_button.dart';
 import 'package:invoify/core/widgets/custom_success_dialog.dart';
 import 'package:invoify/core/widgets/main_screen_header.dart';
@@ -67,7 +68,6 @@ import 'package:invoify/features/splash/presentation/view_models/splash_cubit/sp
 import 'package:invoify/invoify.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toastification/toastification.dart';
 
 // Mocks for Dependency Injection
 class MockAppPreferencesService extends Mock implements AppPreferencesService {}
@@ -263,6 +263,7 @@ void main() {
   );
 
   setUpAll(() {
+    AppToast.isEnabled = false;
     registerFallbackValue(FakeClientEntity());
     registerFallbackValue(FakeInvoiceEntity());
     registerFallbackValue(
@@ -519,8 +520,6 @@ void main() {
           await tester.tap(saveClientBtn);
           await tester.pumpAndSettle();
         }
-        toastification.dismissAll();
-        await tester.pumpAndSettle();
 
         // Assert successful pop back to ClientsView & newly added client is rendered
         expect(find.byType(ClientsView), findsOneWidget);
@@ -530,9 +529,6 @@ void main() {
         await _navigateToTab<InvoicesView>(tester, CupertinoIcons.doc_text);
         expect(find.byType(InvoiceCard), findsOneWidget);
         expect(find.text('INV-001'), findsOneWidget);
-
-        toastification.dismissAll();
-        await tester.pumpAndSettle();
 
         final addInvoiceHeaderBtn = find.byType(HeaderActionButton);
         expect(addInvoiceHeaderBtn, findsAtLeast(1));
@@ -589,9 +585,6 @@ void main() {
         );
         await tester.pumpAndSettle();
         await tester.tap(saveInvoiceBtn, warnIfMissed: false);
-        await tester.pumpAndSettle();
-
-        toastification.dismissAll();
         await tester.pumpAndSettle();
 
         // Assert successful pop back to InvoicesView & newly created invoice card is rendered

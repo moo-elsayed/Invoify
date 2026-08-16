@@ -6,6 +6,8 @@ import 'package:invoify/core/theming/app_text_styles.dart';
 import 'package:toastification/toastification.dart';
 
 class AppToast {
+  static bool isEnabled = true;
+
   static void show({
     required BuildContext context,
     required String title,
@@ -14,6 +16,8 @@ class AppToast {
     IconData? icon,
     VoidCallback? onTap,
   }) {
+    if (!isEnabled) return;
+
     final statusColor = type.getColor(context);
 
     toastification.showCustom(
