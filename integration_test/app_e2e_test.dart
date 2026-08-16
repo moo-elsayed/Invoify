@@ -163,8 +163,9 @@ Future<void> _pumpApp(WidgetTester tester, {Widget? home}) async {
       child: rootWidget,
     ),
   );
-  // Wait for SplashCubit 1500ms delay + animations
-  await tester.pump(const Duration(seconds: 2));
+  // Wait for SplashCubit 1500ms delay + animations in real time
+  await tester.pump(const Duration(milliseconds: 100));
+  await Future.delayed(const Duration(milliseconds: 2000));
   await tester.pumpAndSettle();
 }
 
@@ -523,7 +524,8 @@ void main() {
 
         // Step 7: User Navigates to Invoices View & Creates Detailed Invoice with Items & Pricing
         // Wait for AppToast (autoCloseDuration: 2.5s) to fully dismiss before tapping header button
-        await tester.pump(const Duration(seconds: 3));
+        await tester.pump(const Duration(milliseconds: 100));
+        await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
         await _navigateToTab<InvoicesView>(tester, CupertinoIcons.doc_text);
@@ -588,7 +590,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Wait for AppToast (autoCloseDuration: 2.5s) to fully dismiss
-        await tester.pump(const Duration(seconds: 3));
+        await tester.pump(const Duration(milliseconds: 100));
+        await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
         // Assert successful pop back to InvoicesView & newly created invoice card is rendered
