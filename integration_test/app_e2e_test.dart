@@ -183,7 +183,8 @@ Future<void> _navigateToTab<T extends Widget>(
 }
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  binding.testTextInput.register();
 
   late MockAppPreferencesService mockAppPreferencesService;
   late MockNotificationService mockNotificationService;
@@ -669,6 +670,12 @@ void main() {
       expect(find.byType(CustomSuccessDialog), findsOneWidget);
       final dialogTitle = find.text(AppStrings.emailSentToVerify);
       expect(dialogTitle, findsOneWidget);
+
+      final okBtn = find.widgetWithText(CustomMaterialButton, AppStrings.ok);
+      if (okBtn.evaluate().isNotEmpty) {
+        await tester.tap(okBtn);
+        await tester.pumpAndSettle();
+      }
     });
 
     testWidgets(
@@ -725,7 +732,17 @@ void main() {
         expect(find.byType(CustomSuccessDialog), findsOneWidget);
         final dialogTitle = find.text(AppStrings.emailSentToReset);
         expect(dialogTitle, findsOneWidget);
+
+        final okBtn = find.widgetWithText(CustomMaterialButton, AppStrings.ok);
+        if (okBtn.evaluate().isNotEmpty) {
+          await tester.tap(okBtn);
+          await tester.pumpAndSettle();
+        }
       },
     );
+
+    tearDownAll(() async {
+      await getIt.reset();
+    });
   });
 }
