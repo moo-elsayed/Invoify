@@ -78,8 +78,8 @@ jobs:
             --type instrumentation \
             --app build/app/outputs/apk/debug/app-debug.apk \
             --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-            --timeout 10m \
-            --device model=MediumPhone.arm,version=33,locale=ar,orientation=portrait
+            --timeout 3m \
+            --device model=redfin,version=30,locale=ar,orientation=portrait
 
       - name: Deploy to Firebase App Distribution
         if: github.ref == 'refs/heads/main' && env.FIREBASE_TOKEN != ''
