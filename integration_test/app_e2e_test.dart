@@ -184,6 +184,7 @@ Future<void> _navigateToTab<T extends Widget>(
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
   binding.testTextInput.register();
 
   late MockAppPreferencesService mockAppPreferencesService;
