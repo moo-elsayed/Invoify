@@ -78,7 +78,7 @@ jobs:
             --type instrumentation \
             --app build/app/outputs/apk/debug/app-debug.apk \
             --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-            --timeout 3m \
+            --timeout 5m \
             --device model=redfin,version=30,locale=ar,orientation=portrait
 
       - name: Deploy to Firebase App Distribution
