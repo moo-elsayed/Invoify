@@ -80,7 +80,7 @@ jobs:
             --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
             --timeout 5m \
             --no-record-video \
-            --device model=Pixel6,version=34,locale=ar,orientation=portrait
+            --device model=MediumPhone.arm,version=34,locale=ar,orientation=portrait
 
       - name: Deploy to Firebase App Distribution
         if: github.ref == 'refs/heads/main' && env.FIREBASE_TOKEN != ''
