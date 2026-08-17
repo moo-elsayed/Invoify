@@ -39,7 +39,7 @@ public class MainActivityTest {
                     } catch (Exception ignored) {
                     }
 
-                    for (Stage stage : new Stage[]{Stage.RESUMED, Stage.PAUSED, Stage.STARTED}) {
+                    for (Stage stage : new Stage[]{Stage.RESUMED, Stage.PAUSED, Stage.STARTED, Stage.STOPPED}) {
                         for (Activity activity : ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(stage)) {
                             if (activity != null && !activity.isFinishing()) {
                                 activity.finish();
@@ -47,6 +47,16 @@ public class MainActivityTest {
                         }
                     }
                 });
+            } catch (Exception ignored) {
+            }
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ignored) {
+            }
+
+            try {
+                InstrumentationRegistry.getInstrumentation().finish(Activity.RESULT_OK, new android.os.Bundle());
             } catch (Exception ignored) {
             }
         }
