@@ -80,7 +80,6 @@ jobs:
             --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
             --test-targets "class com.example.invoify.MainActivityTest" \
             --timeout 5m \
-            --no-record-video \
             --device model=MediumPhone.arm,version=34,locale=ar,orientation=portrait
 
       - name: Deploy to Firebase App Distribution
