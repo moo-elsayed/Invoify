@@ -184,10 +184,7 @@ Future<void> _navigateToTab<T extends Widget>(
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  // benchmarkLive runs at full speed like fullyLive but allows the process
-  // to exit cleanly when tests finish — fullyLive keeps pumping frames
-  // indefinitely which caused the Firebase Test Lab hang.
-  binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.benchmarkLive;
+  binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
   binding.testTextInput.register();
 
   late MockAppPreferencesService mockAppPreferencesService;
