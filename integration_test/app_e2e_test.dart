@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -186,7 +184,10 @@ Future<void> _navigateToTab<T extends Widget>(
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
+  // benchmarkLive runs at full speed like fullyLive but allows the process
+  // to exit cleanly when tests finish — fullyLive keeps pumping frames
+  // indefinitely which caused the Firebase Test Lab hang.
+  binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.benchmarkLive;
   binding.testTextInput.register();
 
   late MockAppPreferencesService mockAppPreferencesService;
@@ -746,12 +747,6 @@ void main() {
 
     tearDownAll(() async {
       await getIt.reset();
-      // Force-exit the process after tests complete to prevent the
-      // "Test Finished" black screen from hanging in Firebase Test Lab.
-      // The 2-second delay gives the binding time to report results
-      // back to the native instrumentation runner.
-      await Future.delayed(const Duration(seconds: 2));
-      exit(0);
     });
   });
 }
