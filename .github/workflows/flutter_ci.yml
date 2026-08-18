@@ -51,12 +51,12 @@ jobs:
       - name: Run E2E Integration Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: 30
+          target: google_apis
           arch: x86_64
-          target: default
           profile: pixel
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
           script: flutter test integration_test/app_e2e_test.dart
 
       - name: Build Release APK
