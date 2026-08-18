@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.RunNotifier;
+import org.junit.AfterClass;
 
 @RunWith(MainActivityTest.CustomRunner.class)
 public class MainActivityTest {
@@ -21,42 +22,22 @@ public class MainActivityTest {
             super(testClass);
         }
 
-        @Override
+                @Override
         public void run(RunNotifier notifier) {
             super.run(notifier);
+            // Ensure the instrumentation process ends cleanly.
             try {
-                InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
-                    try {
-                        Field ruleField = FlutterTestRunner.class.getDeclaredField("rule");
-                        ruleField.setAccessible(true);
-                        Object ruleObj = ruleField.get(this);
-                        if (ruleObj instanceof ActivityTestRule) {
-                            Activity activity = ((ActivityTestRule<?>) ruleObj).getActivity();
-                            if (activity != null && !activity.isFinishing()) {
-                                activity.finish();
-                            }
-                        }
-                    } catch (Exception ignored) {
-                    }
-
-                    for (Stage stage : new Stage[]{Stage.RESUMED, Stage.PAUSED, Stage.STARTED, Stage.STOPPED}) {
-                        for (Activity activity : ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(stage)) {
-                            if (activity != null && !activity.isFinishing()) {
-                                activity.finish();
-                            }
-                        }
-                    }
-                });
+                InstrumentationRegistry.getInstrumentation()
+                        .finish(Activity.RESULT_OK, new android.os.Bundle());
             } catch (Exception ignored) {
             }
-
+        }
+        /** Runs after *all* tests in this class have finished. Guarantees the instrumentation is terminated. */
+        @AfterClass
+        public static void tearDownInstrumentation() {
             try {
-                Thread.sleep(500);
-            } catch (InterruptedException ignored) {
-            }
-
-            try {
-                InstrumentationRegistry.getInstrumentation().finish(Activity.RESULT_OK, new android.os.Bundle());
+                InstrumentationRegistry.getInstrumentation()
+                        .finish(Activity.RESULT_OK, new android.os.Bundle());
             } catch (Exception ignored) {
             }
         }
