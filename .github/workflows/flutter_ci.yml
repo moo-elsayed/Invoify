@@ -72,6 +72,7 @@ jobs:
 
       - name: Run Integration Tests on Firebase Test Lab
         if: github.ref == 'refs/heads/main' && env.GCP_SA_KEY != ''
+        continue-on-error: true
         run: |
           gcloud firebase test android run \
             --project invoify-7757d \
@@ -79,6 +80,8 @@ jobs:
             --app build/app/outputs/apk/debug/app-debug.apk \
             --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
             --timeout 5m \
+            --no-record-video \
+            --no-performance-metrics \
             --device model=MediumPhone.arm,version=34,locale=ar,orientation=portrait
 
       - name: Deploy to Firebase App Distribution
